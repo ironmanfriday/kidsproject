@@ -23,197 +23,211 @@
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 #app{display:flex;flex-direction:column;height:100%;max-width:480px;margin:0 auto;position:relative}
 
-.header{
-  background:linear-gradient(135deg,var(--purple),var(--pink));
-  color:#fff;padding:env(safe-area-inset-top,12px) 16px 0;text-align:center;flex-shrink:0;
-}
+.header{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;padding:env(safe-area-inset-top,12px) 16px 0;text-align:center;flex-shrink:0}
 .header h1{font-size:22px;font-weight:900;letter-spacing:.5px;padding:10px 0 6px}
-.header h1 span{display:inline-block;animation:wiggle 2s ease-in-out infinite}
+.header h1 .wiggle{display:inline-block;animation:wiggle 2s ease-in-out infinite}
 @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(6deg)}75%{transform:rotate(-6deg)}}
 .sync-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;margin-left:6px;font-weight:800;vertical-align:middle;letter-spacing:.5px}
 .sync-badge.online{background:#00B894;color:#fff}
 .sync-badge.offline{background:#D63031;color:#fff}
 
-.tabs{display:flex;gap:4px;padding:0 8px 0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs{display:flex;gap:3px;padding:0 6px 0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{
-  flex:1 0 auto;min-width:0;padding:10px 14px;border-radius:14px 14px 0 0;
-  font-weight:800;font-size:13px;cursor:pointer;transition:.2s;
-  background:rgba(255,255,255,.18);color:rgba(255,255,255,.7);
-  white-space:nowrap;border:none;outline:none;font-family:inherit;
-}
+.tab{flex:1 0 auto;min-width:0;padding:9px 10px;border-radius:14px 14px 0 0;font-weight:800;font-size:12px;cursor:pointer;transition:.2s;background:rgba(255,255,255,.18);color:rgba(255,255,255,.7);white-space:nowrap;border:none;outline:none;font-family:inherit}
 .tab.active{background:var(--bg);color:var(--text)}
 
-.pages{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px calc(env(safe-area-inset-bottom,16px) + 16px)}
-.page{display:none}
-.page.active{display:block}
+.pages{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px calc(env(safe-area-inset-bottom,14px) + 14px)}
+.page{display:none}.page.active{display:block}
 
-.points-banner{
-  background:linear-gradient(135deg,var(--kid1),color-mix(in srgb,var(--kid1),#fff 30%));
-  border-radius:var(--radius);padding:20px;text-align:center;color:#fff;
-  margin-bottom:12px;box-shadow:var(--shadow);position:relative;overflow:hidden;
-}
-.points-banner::after{content:"⭐";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:48px;opacity:.25}
-.points-banner .label{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;opacity:.85}
-.points-banner .score{font-size:52px;font-weight:900;line-height:1.1}
+.points-banner{background:linear-gradient(135deg,var(--kid1),color-mix(in srgb,var(--kid1),#fff 30%));border-radius:var(--radius);padding:18px;text-align:center;color:#fff;margin-bottom:12px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.points-banner::after{content:"⭐";position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:44px;opacity:.25}
+.points-banner .label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;opacity:.85}
+.points-banner .score{font-size:48px;font-weight:900;line-height:1.1}
 .kid2-page .points-banner{background:linear-gradient(135deg,var(--kid2),color-mix(in srgb,var(--kid2),#fff 30%))}
 
-/* ── Date Picker ── */
-.date-picker{
-  display:flex;align-items:center;gap:8px;margin-bottom:16px;
-  background:var(--card);border-radius:var(--radius);padding:10px 12px;
-  box-shadow:var(--shadow);
-}
-.date-picker .arrow{
-  width:40px;height:40px;border-radius:12px;border:none;
-  background:#F0EDFF;color:var(--purple);font-size:20px;font-weight:900;
-  cursor:pointer;font-family:inherit;display:flex;align-items:center;
-  justify-content:center;flex-shrink:0;transition:.15s;
-}
+.date-picker{display:flex;align-items:center;gap:6px;margin-bottom:12px;background:var(--card);border-radius:var(--radius);padding:8px 10px;box-shadow:var(--shadow)}
+.date-picker .arrow{width:36px;height:36px;border-radius:10px;border:none;background:#F0EDFF;color:var(--purple);font-size:18px;font-weight:900;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s}
 .date-picker .arrow:active{transform:scale(.9);background:#E0DAF0}
 .date-picker .date-info{flex:1;text-align:center}
-.date-picker .date-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--textSoft)}
-.date-picker .date-value{font-size:17px;font-weight:900;color:var(--text);cursor:pointer}
+.date-picker .date-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--textSoft)}
+.date-picker .date-value{font-size:15px;font-weight:900;color:var(--text);cursor:pointer}
 .date-picker .date-value.is-today{color:var(--purple)}
-.date-picker .today-btn{
-  padding:6px 12px;border-radius:10px;border:2px solid var(--purple);
-  background:transparent;color:var(--purple);font-size:12px;font-weight:800;
-  cursor:pointer;font-family:inherit;flex-shrink:0;transition:.15s;
-}
+.date-picker .today-btn{padding:5px 10px;border-radius:8px;border:2px solid var(--purple);background:transparent;color:var(--purple);font-size:11px;font-weight:800;cursor:pointer;font-family:inherit;flex-shrink:0}
 .date-picker .today-btn:active{background:var(--purple);color:#fff}
 .date-picker .today-btn.hidden{display:none}
-
-/* Hidden native date input */
 .hidden-date-input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
 
-.section-title{font-size:15px;font-weight:800;color:var(--textSoft);margin:20px 0 10px;text-transform:uppercase;letter-spacing:1px}
+.date-stats{display:flex;gap:8px;margin-bottom:4px}
+.date-stat{flex:1;background:var(--card);border-radius:12px;padding:8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.date-stat .stat-val{font-size:20px;font-weight:900;color:var(--purple)}
+.date-stat .stat-label{font-size:9px;font-weight:700;color:var(--textSoft);text-transform:uppercase;letter-spacing:.5px}
+.kid2-page .date-stat .stat-val{color:var(--pink)}
 
-.chore-card{
-  background:var(--card);border-radius:var(--radius);padding:14px 16px;
-  margin-bottom:10px;display:flex;align-items:center;gap:12px;
-  box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s;
-  cursor:pointer;user-select:none;border-left:5px solid var(--teal);
-}
+.section-title{font-size:14px;font-weight:800;color:var(--textSoft);margin:18px 0 8px;text-transform:uppercase;letter-spacing:1px}
+
+.chore-card{background:var(--card);border-radius:var(--radius);padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);transition:transform .15s;cursor:pointer;user-select:none;border-left:5px solid var(--teal)}
 .chore-card:active{transform:scale(.97)}
 .chore-card.toggled{border-left-color:var(--green);background:linear-gradient(90deg,#E8FFF5,#fff)}
-.chore-card .emoji{font-size:28px;flex-shrink:0;width:36px;text-align:center}
+.chore-card .emoji{font-size:26px;flex-shrink:0;width:32px;text-align:center}
 .chore-card .info{flex:1;min-width:0}
-.chore-card .name{font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chore-card .pts{font-size:13px;font-weight:700;color:var(--teal)}
+.chore-card .name{font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chore-card .pts{font-size:12px;font-weight:700;color:var(--teal)}
 .chore-card.toggled .pts{color:var(--green)}
-
-.toggle{width:52px;height:30px;border-radius:30px;background:#D8D4E8;position:relative;flex-shrink:0;transition:.25s}
-.toggle::after{content:"";position:absolute;width:24px;height:24px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.25s;box-shadow:0 2px 4px rgba(0,0,0,.15)}
+.toggle{width:48px;height:28px;border-radius:28px;background:#D8D4E8;position:relative;flex-shrink:0;transition:.25s}
+.toggle::after{content:"";position:absolute;width:22px;height:22px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.25s;box-shadow:0 2px 4px rgba(0,0,0,.15)}
 .chore-card.toggled .toggle{background:var(--green)}
-.chore-card.toggled .toggle::after{left:25px}
-
-.penalty-card{border-left-color:var(--red) !important}
-.penalty-card .pts{color:var(--red) !important}
-.penalty-card.toggled{background:linear-gradient(90deg,#FFE8E8,#fff);border-left-color:var(--red) !important}
+.chore-card.toggled .toggle::after{left:23px}
+.penalty-card{border-left-color:var(--red)!important}
+.penalty-card .pts{color:var(--red)!important}
+.penalty-card.toggled{background:linear-gradient(90deg,#FFE8E8,#fff);border-left-color:var(--red)!important}
 .penalty-card.toggled .toggle{background:var(--red)}
 
-.adjust-row{display:flex;gap:8px;margin:12px 0 20px}
-.adjust-row input{
-  flex:1;padding:12px 14px;border-radius:12px;border:2px solid #E0DAF0;
-  font-size:16px;font-weight:700;font-family:inherit;background:#fff;outline:none;transition:.2s;
-}
+.adjust-row{display:flex;gap:8px;margin:10px 0 16px}
+.adjust-row input{flex:1;padding:10px 12px;border-radius:12px;border:2px solid #E0DAF0;font-size:15px;font-weight:700;font-family:inherit;background:#fff;outline:none}
 .adjust-row input:focus{border-color:var(--purple)}
-.adjust-row button{
-  padding:12px 20px;border-radius:12px;border:none;
-  background:var(--purple);color:#fff;font-weight:800;font-size:14px;
-  cursor:pointer;font-family:inherit;white-space:nowrap;
-}
+.adjust-row button{padding:10px 18px;border-radius:12px;border:none;background:var(--purple);color:#fff;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap}
 
-.btn{
-  display:block;width:100%;padding:14px;border-radius:var(--radius);
-  border:none;font-size:15px;font-weight:800;cursor:pointer;
-  font-family:inherit;margin-bottom:10px;transition:.15s;
-}
+.btn{display:block;width:100%;padding:13px;border-radius:var(--radius);border:none;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:10px;transition:.15s}
 .btn:active{transform:scale(.97)}
 .btn-outline{background:transparent;border:2px solid #D8D4E8;color:var(--textSoft)}
 .btn-danger{background:var(--red);color:#fff}
 .btn-primary{background:var(--purple);color:#fff}
 
+/* ── Mini Calendar ── */
+.mini-cal{background:var(--card);border-radius:var(--radius);padding:14px;margin:16px 0;box-shadow:var(--shadow)}
+.mini-cal-header{display:flex;align-items:center;margin-bottom:10px}
+.mini-cal-header .mcal-title{flex:1;text-align:center;font-size:15px;font-weight:900;color:var(--text)}
+.mini-cal-header .mcal-arrow{width:32px;height:32px;border-radius:8px;border:none;background:#F0EDFF;color:var(--purple);font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center}
+.mini-cal-header .mcal-arrow:active{background:#E0DAF0}
+.mcal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+.mcal-dow{font-size:10px;font-weight:800;color:var(--textSoft);padding:4px 0;text-transform:uppercase}
+.mcal-day{position:relative;padding:6px 0;font-size:12px;font-weight:700;cursor:pointer;border-radius:8px;transition:.15s;color:var(--text)}
+.mcal-day:hover{background:#F0EDFF}
+.mcal-day.empty{pointer-events:none}
+.mcal-day.today{font-weight:900;color:var(--purple)}
+.mcal-day.selected{background:var(--purple);color:#fff;border-radius:8px}
+.mcal-day.future{opacity:.3;pointer-events:none}
+.mcal-dot{display:block;width:6px;height:6px;border-radius:50%;margin:2px auto 0}
+.mcal-dot.dot-green{background:var(--green)}
+.mcal-dot.dot-yellow{background:var(--orange)}
+.mcal-dot.dot-none{background:transparent}
+.mcal-legend{display:flex;gap:14px;justify-content:center;margin-top:10px;font-size:10px;font-weight:700;color:var(--textSoft)}
+.mcal-legend span{display:flex;align-items:center;gap:4px}
+.mcal-legend .leg-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+/* ── Calendar Tab ── */
+.cal-kid-toggle{display:flex;gap:6px;margin-bottom:16px}
+.cal-kid-btn{flex:1;padding:10px;border-radius:12px;border:2px solid #E0DAF0;background:#fff;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;transition:.15s;text-align:center}
+.cal-kid-btn.active-k0{background:var(--purple);color:#fff;border-color:var(--purple)}
+.cal-kid-btn.active-k1{background:var(--pink);color:#fff;border-color:var(--pink)}
+.cal-view-toggle{display:flex;gap:6px;margin-bottom:16px}
+.cal-view-btn{flex:1;padding:9px;border-radius:10px;border:2px solid #E0DAF0;background:#fff;font-weight:800;font-size:12px;cursor:pointer;font-family:inherit;text-align:center;transition:.15s}
+.cal-view-btn.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+
+/* Weekly Grid */
+.week-nav{display:flex;align-items:center;margin-bottom:12px}
+.week-nav .wn-title{flex:1;text-align:center;font-size:14px;font-weight:800}
+.week-nav .wn-arrow{width:36px;height:36px;border-radius:10px;border:none;background:#F0EDFF;color:var(--purple);font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center}
+.week-grid{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px}
+.wg-header-row{display:grid;grid-template-columns:minmax(90px,1fr) repeat(7,1fr);background:#F0EDFF}
+.wg-header-row .wg-hcell{padding:8px 2px;font-size:10px;font-weight:800;text-align:center;color:var(--textSoft);text-transform:uppercase}
+.wg-header-row .wg-hcell.today-col{color:var(--purple);background:rgba(108,60,225,.08);border-radius:8px 8px 0 0}
+.wg-header-row .wg-label-cell{padding:8px;font-size:10px;font-weight:800;color:var(--textSoft)}
+.wg-row{display:grid;grid-template-columns:minmax(90px,1fr) repeat(7,1fr);border-top:1px solid #F0EDFF;align-items:center}
+.wg-row:nth-child(odd){background:#FAFAFE}
+.wg-chore-name{padding:8px;font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wg-cell{text-align:center;padding:6px 2px;font-size:16px}
+.wg-cell.today-col{background:rgba(108,60,225,.04)}
+.wg-total-row{display:grid;grid-template-columns:minmax(90px,1fr) repeat(7,1fr);border-top:2px solid #E0DAF0;background:#F8F6FF;font-weight:800}
+.wg-total-row .wg-chore-name{font-size:11px;color:var(--purple)}
+.wg-total-row .wg-cell{font-size:12px;font-weight:900;color:var(--purple)}
+
+/* Monthly Full */
+.month-full{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);margin-bottom:16px}
+.month-header{display:flex;align-items:center;margin-bottom:10px}
+.month-header .mh-title{flex:1;text-align:center;font-size:16px;font-weight:900}
+.month-header .mh-arrow{width:36px;height:36px;border-radius:10px;border:none;background:#F0EDFF;color:var(--purple);font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center}
+.mf-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
+.mf-dow{font-size:10px;font-weight:800;color:var(--textSoft);padding:4px 0}
+.mf-day{padding:6px 2px;border-radius:10px;cursor:pointer;transition:.15s;position:relative}
+.mf-day:hover{background:#F0EDFF}
+.mf-day.empty{pointer-events:none}
+.mf-day.future{opacity:.25;pointer-events:none}
+.mf-day .mf-num{font-size:13px;font-weight:800;color:var(--text)}
+.mf-day.today .mf-num{color:var(--purple);font-weight:900}
+.mf-day .mf-pts{font-size:9px;font-weight:700;color:var(--textSoft);margin-top:1px}
+.mf-day .mf-dot{display:block;width:7px;height:7px;border-radius:50%;margin:2px auto 0}
+.mf-day .mf-dot.dot-green{background:var(--green)}
+.mf-day .mf-dot.dot-yellow{background:var(--orange)}
+
+/* Day Detail Popup */
+.day-popup{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.day-popup.show{display:flex}
+.day-popup-box{background:#fff;border-radius:20px;padding:24px 20px;max-width:340px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.25);max-height:80vh;overflow-y:auto}
+.day-popup-box h3{font-size:16px;font-weight:900;color:var(--purple);margin-bottom:4px}
+.day-popup-box .dp-date{font-size:13px;color:var(--textSoft);font-weight:600;margin-bottom:14px}
+.dp-stat-row{display:flex;gap:8px;margin-bottom:14px}
+.dp-stat{flex:1;background:#F0EDFF;border-radius:10px;padding:10px;text-align:center}
+.dp-stat .dp-sv{font-size:22px;font-weight:900;color:var(--purple)}
+.dp-stat .dp-sl{font-size:9px;font-weight:700;color:var(--textSoft);text-transform:uppercase}
+.dp-section{margin-bottom:10px}
+.dp-section h4{font-size:12px;font-weight:800;color:var(--textSoft);text-transform:uppercase;margin-bottom:6px}
+.dp-item{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;font-weight:700}
+.dp-item .dp-check{color:var(--green);font-size:16px}
+.dp-item .dp-pen{color:var(--red);font-size:16px}
+.dp-item .dp-pts{margin-left:auto;font-size:12px;font-weight:800}
+.dp-empty{font-size:13px;color:var(--textSoft);font-style:italic;font-weight:600}
+.dp-close{display:block;width:100%;padding:12px;border-radius:12px;border:none;background:#F0EDFF;color:var(--purple);font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;margin-top:12px}
+.dp-close:active{background:#E0DAF0}
+.dp-goto{display:block;width:100%;padding:10px;border-radius:10px;border:none;background:var(--purple);color:#fff;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;margin-top:8px}
+
+/* Settings */
 .settings-section{margin-bottom:24px}
 .settings-section h3{font-size:16px;font-weight:800;margin-bottom:12px;color:var(--purple)}
-.setting-item{
-  background:var(--card);border-radius:14px;padding:14px;margin-bottom:8px;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;align-items:center;gap:10px;
-}
-.setting-item input{
-  flex:1;padding:10px 12px;border-radius:10px;border:2px solid #E0DAF0;
-  font-size:14px;font-weight:700;font-family:inherit;outline:none;min-width:0;
-}
+.setting-item{background:var(--card);border-radius:14px;padding:12px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;align-items:center;gap:8px}
+.setting-item input{flex:1;padding:9px 10px;border-radius:10px;border:2px solid #E0DAF0;font-size:14px;font-weight:700;font-family:inherit;outline:none;min-width:0}
 .setting-item input:focus{border-color:var(--purple)}
-.setting-item input[type="number"]{width:70px;flex:0 0 70px;text-align:center}
-.setting-item .del-btn{
-  width:36px;height:36px;border-radius:10px;border:none;
-  background:#FFE4E4;color:var(--red);font-size:18px;font-weight:900;
-  cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:inherit;
-}
-.add-row{display:flex;gap:8px;margin-top:8px}
-.add-row input{flex:1;padding:10px 12px;border-radius:10px;border:2px solid #E0DAF0;font-size:14px;font-weight:700;font-family:inherit;outline:none;min-width:0}
-.add-row input[type="number"]{width:70px;flex:0 0 70px;text-align:center}
-.add-row button{padding:10px 16px;border-radius:10px;border:none;background:var(--green);color:#fff;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;white-space:nowrap}
+.setting-item input[type="number"]{width:65px;flex:0 0 65px;text-align:center}
+.setting-item .del-btn{width:34px;height:34px;border-radius:10px;border:none;background:#FFE4E4;color:var(--red);font-size:18px;font-weight:900;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.add-row{display:flex;gap:6px;margin-top:8px}
+.add-row input{flex:1;padding:9px 10px;border-radius:10px;border:2px solid #E0DAF0;font-size:14px;font-weight:700;font-family:inherit;outline:none;min-width:0}
+.add-row input[type="number"]{width:65px;flex:0 0 65px;text-align:center}
+.add-row button{padding:9px 14px;border-radius:10px;border:none;background:var(--green);color:#fff;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap}
 
-.prompt-content{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);font-size:13.5px;line-height:1.7;color:var(--text)}
-.prompt-content h2{font-size:20px;font-weight:900;color:var(--purple);margin-bottom:16px;text-align:center}
-.prompt-content h3{font-size:15px;font-weight:800;color:var(--pink);margin:18px 0 8px;padding-bottom:4px;border-bottom:2px solid #F0EDFF}
-.prompt-content .intro{font-size:14px;font-weight:700;color:var(--textSoft);margin-bottom:12px;font-style:italic}
-.prompt-content ul{padding-left:20px;margin:6px 0 10px}
-.prompt-content li{margin-bottom:5px;font-weight:600}
-.prompt-content li::marker{color:var(--purple)}
+.prompt-content{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);font-size:13px;line-height:1.7}
+.prompt-content h2{font-size:18px;font-weight:900;color:var(--purple);margin-bottom:14px;text-align:center}
+.prompt-content h3{font-size:14px;font-weight:800;color:var(--pink);margin:16px 0 6px;padding-bottom:4px;border-bottom:2px solid #F0EDFF}
+.prompt-content .intro{font-size:13px;font-weight:700;color:var(--textSoft);margin-bottom:10px;font-style:italic}
+.prompt-content ul{padding-left:18px;margin:4px 0 8px}
+.prompt-content li{margin-bottom:4px;font-weight:600}
 
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:100;padding:24px}
 .overlay.show{display:flex}
-.overlay-box{background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25)}
-.overlay-box h3{font-size:18px;font-weight:900;margin-bottom:8px}
-.overlay-box p{font-size:14px;color:var(--textSoft);margin-bottom:20px;font-weight:600}
+.overlay-box{background:#fff;border-radius:20px;padding:24px 20px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.overlay-box h3{font-size:17px;font-weight:900;margin-bottom:8px}
+.overlay-box p{font-size:14px;color:var(--textSoft);margin-bottom:18px;font-weight:600}
 .overlay-box .btn-row{display:flex;gap:10px}
 .overlay-box .btn-row .btn{flex:1;margin:0}
 
-.setup-screen{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  min-height:100%;padding:40px 24px;text-align:center;
-}
+.setup-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:40px 24px;text-align:center}
 .setup-screen h2{font-size:24px;font-weight:900;color:var(--purple);margin-bottom:8px}
 .setup-screen p{font-size:14px;color:var(--textSoft);font-weight:600;margin-bottom:24px;line-height:1.6}
 .setup-screen .field{width:100%;max-width:320px;margin-bottom:16px}
 .setup-screen .field label{display:block;font-size:12px;font-weight:800;color:var(--textSoft);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;text-align:left}
-.setup-screen .field input{
-  width:100%;padding:14px 16px;border-radius:14px;border:2px solid #E0DAF0;
-  font-size:15px;font-weight:700;font-family:inherit;outline:none;text-align:center;
-}
-.setup-screen .field input:focus{border-color:var(--purple)}
-.setup-screen .field .hint{font-size:11px;color:var(--textSoft);margin-top:6px;font-weight:600}
+.setup-screen .field input{width:100%;padding:14px 16px;border-radius:14px;border:2px solid #E0DAF0;font-size:15px;font-weight:700;font-family:inherit;outline:none;text-align:center}
 .setup-screen .btn{max-width:320px}
 
-.config-box{background:var(--card);border-radius:var(--radius);padding:16px;margin-bottom:16px;box-shadow:var(--shadow)}
-.config-box h4{font-size:14px;font-weight:800;color:var(--purple);margin-bottom:4px}
+.config-box{background:var(--card);border-radius:var(--radius);padding:14px;margin-bottom:14px;box-shadow:var(--shadow)}
+.config-box h4{font-size:13px;font-weight:800;color:var(--purple);margin-bottom:4px}
 .config-box code{font-size:12px;word-break:break-all;color:var(--textSoft);font-weight:600}
 
-/* Date stats */
-.date-stats{
-  display:flex;gap:8px;margin-bottom:4px;
-}
-.date-stat{
-  flex:1;background:var(--card);border-radius:12px;padding:10px;text-align:center;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
-}
-.date-stat .stat-val{font-size:22px;font-weight:900;color:var(--purple)}
-.date-stat .stat-label{font-size:10px;font-weight:700;color:var(--textSoft);text-transform:uppercase;letter-spacing:.5px}
-.kid2-page .date-stat .stat-val{color:var(--pink)}
-
-.card-color-0{border-left-color:#6C3CE1}.card-color-1{border-left-color:#0984E3}
-.card-color-2{border-left-color:#00B894}.card-color-3{border-left-color:#F39C12}
-.card-color-4{border-left-color:#E84393}.card-color-5{border-left-color:#D63031}
-.card-color-6{border-left-color:#00CEC9}.card-color-7{border-left-color:#A29BFE}
+.card-color-0{border-left-color:#6C3CE1}.card-color-1{border-left-color:#0984E3}.card-color-2{border-left-color:#00B894}.card-color-3{border-left-color:#F39C12}.card-color-4{border-left-color:#E84393}.card-color-5{border-left-color:#D63031}.card-color-6{border-left-color:#00CEC9}.card-color-7{border-left-color:#A29BFE}
 </style>
 </head>
 <body>
 <div id="app">
   <div class="header">
-    <h1><span>⭐</span> Chore Tracker <span class="sync-badge" id="syncBadge">…</span></h1>
+    <h1><span class="wiggle">⭐</span> Chore Tracker <span class="sync-badge" id="syncBadge">…</span></h1>
     <div class="tabs" id="tabs"></div>
   </div>
   <div class="pages" id="pages"></div>
@@ -230,540 +244,335 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);-we
   </div>
 </div>
 
+<div class="day-popup" id="dayPopup">
+  <div class="day-popup-box" id="dayPopupContent"></div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
-/* ╔══════════════════════════════════════════════════════════════╗
-   ║  🔧  YOUR FIREBASE CONFIG                                  ║
-   ╚══════════════════════════════════════════════════════════════╝ */
 const FIREBASE_CONFIG = {
-  apiKey:       "AIzaSyDK8jiCT4-pfdJOuoe5nH-g5jZDrhCs2Lc",
-  databaseURL:  "https://sschee-chores-default-rtdb.firebaseio.com",
-  projectId:    "sschee-chores"
+  apiKey: "AIzaSyDK8jiCT4-pfdJOuoe5nH-g5jZDrhCs2Lc",
+  databaseURL: "https://sschee-chores-default-rtdb.firebaseio.com",
+  projectId: "sschee-chores"
 };
 
-const CHORE_EMOJIS = ["🛏️","🍽️","🎵","⚽","🧹","🧼","🛋️","📚","✏️","🎨","🐕","🌱","👕","🗑️","💪","🎯"];
-const PENALTY_EMOJIS = ["🥦","📱","😤","🚫","⏰","🔇"];
-const DEFAULT_DATA = {
-  kids:[
-    {name:"Kid 1",score:0,choreLog:{}},
-    {name:"Kid 2",score:0,choreLog:{}}
-  ],
-  chores:[
-    {id:1,name:"Make bed",points:5},{id:2,name:"Help with dishes",points:5},
-    {id:3,name:"Practice",points:10},{id:4,name:"Exercise / Play outdoors",points:10},
-    {id:5,name:"Tidy room",points:10},{id:6,name:"Cleanup after eating",points:5},
-    {id:7,name:"Help cleaning living room",points:10},{id:8,name:"Homework",points:15}
-  ],
-  penalties:[{id:100,name:"Not eating vegetables/fruits",points:10},{id:101,name:"Too much screen time",points:20}],
-  nextId:200
-};
+const CHORE_EMOJIS=["🛏️","🍽️","🎵","⚽","🧹","🧼","🛋️","📚","✏️","🎨","🐕","🌱","👕","🗑️","💪","🎯"];
+const PENALTY_EMOJIS=["🥦","📱","😤","🚫","⏰","🔇"];
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const MONTHS_S=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const DAYS_S=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-let data = null;
-let db = null;
-let dbRef = null;
-let activeTab = "kid-0";
-let familyCode = localStorage.getItem("choreTracker_familyCode") || "";
-let firebaseReady = false;
-let connected = false;
+const DEFAULT_DATA={kids:[{name:"Kid 1",score:0,choreLog:{}},{name:"Kid 2",score:0,choreLog:{}}],chores:[{id:1,name:"Make bed",points:5},{id:2,name:"Help with dishes",points:5},{id:3,name:"Practice",points:10},{id:4,name:"Exercise / Play outdoors",points:10},{id:5,name:"Tidy room",points:10},{id:6,name:"Cleanup after eating",points:5},{id:7,name:"Help cleaning living room",points:10},{id:8,name:"Homework",points:15}],penalties:[{id:100,name:"Not eating vegetables/fruits",points:10},{id:101,name:"Too much screen time",points:20}],nextId:200};
 
-// Each kid tracks which date they're viewing
-let selectedDates = [todayStr(), todayStr()];
+let data=null,db=null,dbRef=null,activeTab="kid-0",familyCode=localStorage.getItem("choreTracker_familyCode")||"",firebaseReady=false,connected=false;
+let selectedDates=[todayStr(),todayStr()];
+let miniCalMonths=[currentMonth(),currentMonth()]; // {year,month} for each kid
+let calTabKid=0, calView="weekly";
+let calWeekStart=getWeekStart(todayStr());
+let calMonth=currentMonth();
 
 function todayStr(){return new Date().toISOString().slice(0,10)}
+function currentMonth(){const d=new Date();return{year:d.getFullYear(),month:d.getMonth()}}
+function fmtDate(s){const d=new Date(s+"T12:00:00");return DAYS_S[d.getDay()]+", "+MONTHS_S[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()}
+function fmtDateShort(s){const d=new Date(s+"T12:00:00");return MONTHS_S[d.getMonth()]+" "+d.getDate()}
+function shiftDate(s,n){const d=new Date(s+"T12:00:00");d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)}
+function getWeekStart(s){const d=new Date(s+"T12:00:00");d.setDate(d.getDate()-d.getDay());return d.toISOString().slice(0,10)}
+function dateStr(y,m,d){return `${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`}
 
-function formatDateDisplay(dateStr){
-  const d = new Date(dateStr+"T12:00:00");
-  const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  return days[d.getDay()] + ", " + months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+function getLog(ki,ds){
+  const k=data.kids[ki];if(!k.choreLog)k.choreLog={};
+  if(!k.choreLog[ds])k.choreLog[ds]={chores:[],penalties:[]};
+  const l=k.choreLog[ds];if(!l.chores)l.chores=[];if(!l.penalties)l.penalties=[];return l;
+}
+function getDayPts(ki,ds){
+  const k=data.kids[ki];if(!k.choreLog||!k.choreLog[ds])return{pts:0,done:0};
+  const l=k.choreLog[ds];let pts=0,done=(l.chores||[]).length;
+  (l.chores||[]).forEach(cid=>{const c=(data.chores||[]).find(x=>x.id===cid);if(c)pts+=c.points});
+  (l.penalties||[]).forEach(pid=>{const p=(data.penalties||[]).find(x=>x.id===pid);if(p)pts-=p.points});
+  return{pts,done};
+}
+function getDotClass(ki,ds){
+  const k=data.kids[ki];if(!k.choreLog||!k.choreLog[ds])return"dot-none";
+  const l=k.choreLog[ds];const done=(l.chores||[]).length;if(done===0&&(!l.penalties||l.penalties.length===0))return"dot-none";
+  const total=(data.chores||[]).length;return done>=total?"dot-green":"dot-yellow";
 }
 
-function shiftDate(dateStr, days){
-  const d = new Date(dateStr+"T12:00:00");
-  d.setDate(d.getDate()+days);
-  return d.toISOString().slice(0,10);
-}
-
-function getLog(kidIdx, dateStr){
-  const k = data.kids[kidIdx];
-  if(!k.choreLog) k.choreLog = {};
-  if(!k.choreLog[dateStr]) k.choreLog[dateStr] = {chores:[],penalties:[]};
-  const log = k.choreLog[dateStr];
-  if(!log.chores) log.chores = [];
-  if(!log.penalties) log.penalties = [];
-  return log;
-}
-
-/* ══════════════════════════════════════════
-   MIGRATION: old format → new format
-   ══════════════════════════════════════════ */
 function migrateData(){
-  if(!data || !data.kids) return;
-  data.kids.forEach(k => {
-    // Migrate old toggledChores/toggledPenalties to choreLog
-    if(k.toggledChores && k.toggledChores.length > 0){
-      const dateKey = data.lastDate || todayStr();
-      if(!k.choreLog) k.choreLog = {};
-      if(!k.choreLog[dateKey]) k.choreLog[dateKey] = {chores:[],penalties:[]};
-      k.choreLog[dateKey].chores = k.toggledChores;
-      if(k.toggledPenalties) k.choreLog[dateKey].penalties = k.toggledPenalties;
+  if(!data||!data.kids)return;
+  data.kids.forEach(k=>{
+    if(k.toggledChores&&k.toggledChores.length>0){
+      const dk=data.lastDate||todayStr();if(!k.choreLog)k.choreLog={};
+      if(!k.choreLog[dk])k.choreLog[dk]={chores:[],penalties:[]};
+      k.choreLog[dk].chores=k.toggledChores;if(k.toggledPenalties)k.choreLog[dk].penalties=k.toggledPenalties;
     }
-    // Clean up old fields
-    delete k.toggledChores;
-    delete k.toggledPenalties;
-    if(!k.choreLog) k.choreLog = {};
+    delete k.toggledChores;delete k.toggledPenalties;if(!k.choreLog)k.choreLog={};
   });
 }
 
-/* ══════════════════════════════════════════
-   FIREBASE
-   ══════════════════════════════════════════ */
-function initFirebase(){
-  try{firebase.initializeApp(FIREBASE_CONFIG);db=firebase.database();return true}
-  catch(e){console.error("Firebase init failed:",e);return false}
-}
-
+/* ── Firebase ── */
+function initFirebase(){try{firebase.initializeApp(FIREBASE_CONFIG);db=firebase.database();return true}catch(e){return false}}
 function connectToFamily(code){
-  familyCode = code.trim().toLowerCase().replace(/[^a-z0-9_-]/g,"");
-  if(!familyCode) return;
+  familyCode=code.trim().toLowerCase().replace(/[^a-z0-9_-]/g,"");if(!familyCode)return;
   localStorage.setItem("choreTracker_familyCode",familyCode);
-  dbRef = db.ref("families/" + familyCode);
-
-  db.ref(".info/connected").on("value",snap=>{
-    connected = snap.val()===true;
-    updateSyncBadge();
-  });
-
-  dbRef.on("value",snap=>{
-    const val = snap.val();
-    if(val){
-      data = val;
-      data.kids = data.kids || DEFAULT_DATA.kids;
-      data.chores = data.chores || DEFAULT_DATA.chores;
-      data.penalties = data.penalties || [];
-      data.kids.forEach(k=>{
-        if(!k.choreLog) k.choreLog = {};
-      });
-      migrateData();
-    } else {
-      data = JSON.parse(JSON.stringify(DEFAULT_DATA));
-      saveData();
-    }
+  dbRef=db.ref("families/"+familyCode);
+  db.ref(".info/connected").on("value",s=>{connected=s.val()===true;updateSyncBadge()});
+  dbRef.on("value",s=>{
+    const v=s.val();
+    if(v){data=v;data.kids=data.kids||DEFAULT_DATA.kids;data.chores=data.chores||DEFAULT_DATA.chores;data.penalties=data.penalties||[];
+      data.kids.forEach(k=>{if(!k.choreLog)k.choreLog={}});migrateData();
+    }else{data=JSON.parse(JSON.stringify(DEFAULT_DATA));saveData()}
     renderApp();
   });
 }
+function saveData(){if(dbRef&&data){data.kids.forEach(k=>{if(!k.choreLog)k.choreLog={}});dbRef.set(data).catch(e=>console.error(e))}}
+function updateSyncBadge(){const b=document.getElementById("syncBadge");if(!firebaseReady||!familyCode){b.textContent="OFFLINE";b.className="sync-badge offline";return}if(connected){b.textContent="SYNCED";b.className="sync-badge online"}else{b.textContent="OFFLINE";b.className="sync-badge offline"}}
 
-function saveData(){
-  if(dbRef && data){
-    // Clean up undefined values Firebase doesn't like
-    data.kids.forEach(k => {
-      if(!k.choreLog) k.choreLog = {};
-    });
-    dbRef.set(data).catch(e=>console.error("Save failed:",e));
-  }
-}
-
-function updateSyncBadge(){
-  const b = document.getElementById("syncBadge");
-  if(!firebaseReady || !familyCode){b.textContent="OFFLINE";b.className="sync-badge offline";return}
-  if(connected){b.textContent="SYNCED";b.className="sync-badge online"}
-  else{b.textContent="OFFLINE";b.className="sync-badge offline"}
-}
-
-/* ══════════════════════════════════════════
-   SETUP
-   ══════════════════════════════════════════ */
+/* ── Setup ── */
 function renderSetup(){
-  document.getElementById("tabs").innerHTML = "";
-  const p = document.getElementById("pages");
-  const isConfigured = FIREBASE_CONFIG.apiKey !== "PASTE_YOUR_API_KEY_HERE";
-  if(!isConfigured){
-    p.innerHTML = `<div class="setup-screen"><h2>🔧 Firebase Not Configured</h2>
-      <p>Open this HTML file in a text editor and paste your Firebase config at the top of the script section.</p></div>`;
-    return;
-  }
-  firebaseReady = initFirebase();
-  if(!firebaseReady){
-    p.innerHTML = `<div class="setup-screen"><h2>❌ Connection Error</h2><p>Could not connect to Firebase.</p></div>`;
-    return;
-  }
+  document.getElementById("tabs").innerHTML="";const p=document.getElementById("pages");
+  if(FIREBASE_CONFIG.apiKey==="PASTE_YOUR_API_KEY_HERE"){p.innerHTML=`<div class="setup-screen"><h2>🔧 Firebase Not Configured</h2><p>Open this file in a text editor and paste your Firebase config.</p></div>`;return}
+  firebaseReady=initFirebase();if(!firebaseReady){p.innerHTML=`<div class="setup-screen"><h2>❌ Connection Error</h2></div>`;return}
   if(familyCode){connectToFamily(familyCode);return}
-  p.innerHTML = `<div class="setup-screen">
-    <h2>👨‍👩‍👧‍👦 Family Setup</h2>
-    <p>Enter a family code to sync your chores across all devices. Everyone in your family uses the same code.</p>
-    <div class="field">
-      <label>Family Code</label>
-      <input id="codeInput" placeholder="e.g. smith-family" autocapitalize="off" autocorrect="off" spellcheck="false">
-      <div class="hint">Letters, numbers, and dashes only</div>
-    </div>
-    <button class="btn btn-primary" onclick="handleJoin()">🚀 Start Tracking</button>
-  </div>`;
-  document.getElementById("codeInput").addEventListener("keydown",e=>{if(e.key==="Enter")handleJoin()});
-  updateSyncBadge();
+  p.innerHTML=`<div class="setup-screen"><h2>👨‍👩‍👧‍👦 Family Setup</h2><p>Enter a family code to sync across devices.</p><div class="field"><label>Family Code</label><input id="codeInput" placeholder="e.g. smith-family" autocapitalize="off"><div style="font-size:11px;color:var(--textSoft);margin-top:6px;font-weight:600">Letters, numbers, and dashes only</div></div><button class="btn btn-primary" onclick="handleJoin()">🚀 Start Tracking</button></div>`;
+  document.getElementById("codeInput").addEventListener("keydown",e=>{if(e.key==="Enter")handleJoin()});updateSyncBadge();
 }
-
-function handleJoin(){
-  const code = document.getElementById("codeInput").value.trim();
-  if(!code){alert("Please enter a family code!");return}
-  connectToFamily(code);
-}
+function handleJoin(){const c=document.getElementById("codeInput").value.trim();if(!c){alert("Please enter a family code!");return}connectToFamily(c)}
 
 /* ══════════════════════════════════════════
    RENDER
    ══════════════════════════════════════════ */
-function renderApp(){
-  if(!data) return;
-  renderTabs();
-  renderPages();
-  updateSyncBadge();
-}
-
+function renderApp(){if(!data)return;renderTabs();renderPages();updateSyncBadge()}
 function renderTabs(){
-  const t = document.getElementById("tabs");
-  let h = "";
-  data.kids.forEach((k,i)=>{
-    h+=`<button class="tab ${activeTab==="kid-"+i?"active":""}" onclick="switchTab('kid-${i}')">${escHtml(k.name)}</button>`;
-  });
-  h+=`<button class="tab ${activeTab==="settings"?"active":""}" onclick="switchTab('settings')">⚙️ Settings</button>`;
-  h+=`<button class="tab ${activeTab==="prompt"?"active":""}" onclick="switchTab('prompt')">📋 Prompt</button>`;
-  t.innerHTML = h;
+  const t=document.getElementById("tabs");let h="";
+  data.kids.forEach((k,i)=>{h+=`<button class="tab ${activeTab==="kid-"+i?"active":""}" onclick="switchTab('kid-${i}')">${esc(k.name)}</button>`});
+  h+=`<button class="tab ${activeTab==="calendar"?"active":""}" onclick="switchTab('calendar')">📅 Calendar</button>`;
+  h+=`<button class="tab ${activeTab==="settings"?"active":""}" onclick="switchTab('settings')">⚙️</button>`;
+  h+=`<button class="tab ${activeTab==="prompt"?"active":""}" onclick="switchTab('prompt')">📋</button>`;
+  t.innerHTML=h;
 }
 
 function renderPages(){
-  const p = document.getElementById("pages");
-  let h = "";
-
+  const p=document.getElementById("pages");let h="";
+  // Kid pages
   data.kids.forEach((k,i)=>{
-    const cls = i===1?"kid2-page":"";
-    const dateStr = selectedDates[i];
-    const isToday = dateStr === todayStr();
-    const log = getLog(i, dateStr);
-
-    // Count day's points
-    let dayPts = 0;
-    (log.chores||[]).forEach(cid=>{const c=(data.chores||[]).find(x=>x.id===cid);if(c)dayPts+=c.points});
-    (log.penalties||[]).forEach(pid=>{const pen=(data.penalties||[]).find(x=>x.id===pid);if(pen)dayPts-=pen.points});
-    const choresDone = (log.chores||[]).length;
-    const totalChores = (data.chores||[]).length;
-
+    const cls=i===1?"kid2-page":"",ds=selectedDates[i],isToday=ds===todayStr(),log=getLog(i,ds);
+    const dp=getDayPts(i,ds),totalChores=(data.chores||[]).length;
     h+=`<div class="page ${cls} ${activeTab==="kid-"+i?"active":""}">`;
-
-    // Points banner
-    h+=`<div class="points-banner" style="${i===1?"--kid1:var(--kid2)":""}">
-      <div class="label">${escHtml(k.name)}'s Total Points</div>
-      <div class="score">${k.score}</div>
-    </div>`;
-
+    h+=`<div class="points-banner" style="${i===1?"--kid1:var(--kid2)":""}"><div class="label">${esc(k.name)}'s Total Points</div><div class="score">${k.score}</div></div>`;
     // Date picker
-    h+=`<div class="date-picker">
-      <button class="arrow" onclick="changeDate(${i},-1)">‹</button>
-      <div class="date-info">
-        <div class="date-label">${isToday?"Today":"Viewing"}</div>
-        <div class="date-value ${isToday?"is-today":""}" onclick="openNativePicker(${i})">${formatDateDisplay(dateStr)}</div>
-        <input type="date" class="hidden-date-input" id="datepicker-${i}" value="${dateStr}" max="${todayStr()}" onchange="pickDate(${i},this.value)">
-      </div>
-      <button class="today-btn ${isToday?"hidden":""}" onclick="goToToday(${i})">Today</button>
-      <button class="arrow" onclick="changeDate(${i},1)" ${isToday?"disabled style='opacity:.3'":""}>›</button>
-    </div>`;
-
+    h+=`<div class="date-picker"><button class="arrow" onclick="changeDate(${i},-1)">‹</button><div class="date-info"><div class="date-label">${isToday?"Today":"Viewing"}</div><div class="date-value ${isToday?"is-today":""}" onclick="openPicker(${i})">${fmtDate(ds)}</div><input type="date" class="hidden-date-input" id="dp-${i}" value="${ds}" max="${todayStr()}" onchange="pickDate(${i},this.value)"></div><button class="today-btn ${isToday?"hidden":""}" onclick="goToday(${i})">Today</button><button class="arrow" onclick="changeDate(${i},1)" ${isToday?"disabled style='opacity:.3'":""}>›</button></div>`;
     // Day stats
-    h+=`<div class="date-stats">
-      <div class="date-stat"><div class="stat-val">${choresDone}/${totalChores}</div><div class="stat-label">Chores Done</div></div>
-      <div class="date-stat"><div class="stat-val">${dayPts>=0?"+":""}${dayPts}</div><div class="stat-label">Day's Points</div></div>
-    </div>`;
-
-    // Manual adjust
-    h+=`<div class="adjust-row">
-      <input type="number" id="adj-${i}" placeholder="±pts" inputmode="numeric">
-      <button onclick="applyAdjust(${i})">Apply</button>
-    </div>`;
-
+    h+=`<div class="date-stats"><div class="date-stat"><div class="stat-val">${dp.done}/${totalChores}</div><div class="stat-label">Chores Done</div></div><div class="date-stat"><div class="stat-val">${dp.pts>=0?"+":""}${dp.pts}</div><div class="stat-label">Day's Points</div></div></div>`;
+    h+=`<div class="adjust-row"><input type="number" id="adj-${i}" placeholder="±pts" inputmode="numeric"><button onclick="applyAdj(${i})">Apply</button></div>`;
     // Chores
     h+=`<div class="section-title">Chores</div>`;
-    (data.chores||[]).forEach((c,ci)=>{
-      const on = (log.chores||[]).includes(c.id);
-      const emoji = CHORE_EMOJIS[ci % CHORE_EMOJIS.length];
-      h+=`<div class="chore-card ${on?"toggled":""} card-color-${ci%8}" onclick="toggleChore(${i},'${dateStr}',${c.id})">
-        <div class="emoji">${emoji}</div>
-        <div class="info"><div class="name">${escHtml(c.name)}</div><div class="pts">+${c.points} pts</div></div>
-        <div class="toggle"></div>
-      </div>`;
-    });
-
-    // Penalties
-    if(data.penalties && data.penalties.length){
+    (data.chores||[]).forEach((c,ci)=>{const on=(log.chores||[]).includes(c.id);h+=`<div class="chore-card ${on?"toggled":""} card-color-${ci%8}" onclick="toggleChore(${i},'${ds}',${c.id})"><div class="emoji">${CHORE_EMOJIS[ci%CHORE_EMOJIS.length]}</div><div class="info"><div class="name">${esc(c.name)}</div><div class="pts">+${c.points} pts</div></div><div class="toggle"></div></div>`});
+    if(data.penalties&&data.penalties.length){
       h+=`<div class="section-title">Penalties</div>`;
-      data.penalties.forEach((pen,pi)=>{
-        const on = (log.penalties||[]).includes(pen.id);
-        const emoji = PENALTY_EMOJIS[pi % PENALTY_EMOJIS.length];
-        h+=`<div class="chore-card penalty-card ${on?"toggled":""}" onclick="togglePenalty(${i},'${dateStr}',${pen.id})">
-          <div class="emoji">${emoji}</div>
-          <div class="info"><div class="name">${escHtml(pen.name)}</div><div class="pts">−${pen.points} pts</div></div>
-          <div class="toggle"></div>
-        </div>`;
-      });
+      data.penalties.forEach((pen,pi)=>{const on=(log.penalties||[]).includes(pen.id);h+=`<div class="chore-card penalty-card ${on?"toggled":""}" onclick="togglePenalty(${i},'${ds}',${pen.id})"><div class="emoji">${PENALTY_EMOJIS[pi%PENALTY_EMOJIS.length]}</div><div class="info"><div class="name">${esc(pen.name)}</div><div class="pts">−${pen.points} pts</div></div><div class="toggle"></div></div>`});
     }
-
-    // Reset day
-    h+=`<div style="margin-top:24px">
-      <button class="btn btn-outline" onclick="confirmResetDay(${i},'${dateStr}')">🔄 Reset ${isToday?"Today's":"This Day's"} Switches</button>
-    </div></div>`;
+    // Mini calendar
+    h+=renderMiniCal(i);
+    h+=`<div style="margin-top:16px"><button class="btn btn-outline" onclick="confirmResetDay(${i},'${ds}')">🔄 Reset ${isToday?"Today's":"This Day's"} Switches</button></div></div>`;
   });
-
+  // Calendar tab
+  h+=`<div class="page ${activeTab==="calendar"?"active":""}">`;
+  h+=renderCalendarTab();
+  h+=`</div>`;
   // Settings
   h+=`<div class="page ${activeTab==="settings"?"active":""}">`;
-  h+=`<div class="settings-section"><h3>👧 Kid Names</h3>`;
-  data.kids.forEach((k,i)=>{
-    h+=`<div class="setting-item">
-      <input value="${escAttr(k.name)}" onchange="renameKid(${i},this.value)" placeholder="Name">
-    </div>`;
-  });
+  h+=renderSettings();
   h+=`</div>`;
-
-  h+=`<div class="settings-section"><h3>✅ Chores</h3>`;
-  (data.chores||[]).forEach(c=>{
-    h+=`<div class="setting-item">
-      <input value="${escAttr(c.name)}" onchange="editChoreName(${c.id},this.value)">
-      <input type="number" value="${c.points}" min="0" onchange="editChorePoints(${c.id},this.value)" inputmode="numeric">
-      <button class="del-btn" onclick="deleteChore(${c.id})">×</button>
-    </div>`;
-  });
-  h+=`<div class="add-row">
-    <input id="new-chore-name" placeholder="New chore name">
-    <input id="new-chore-pts" type="number" placeholder="Pts" value="5" min="0" inputmode="numeric">
-    <button onclick="addChore()">+ Add</button>
-  </div></div>`;
-
-  h+=`<div class="settings-section"><h3>⚠️ Penalties</h3>`;
-  (data.penalties||[]).forEach(p=>{
-    h+=`<div class="setting-item">
-      <input value="${escAttr(p.name)}" onchange="editPenaltyName(${p.id},this.value)">
-      <input type="number" value="${p.points}" min="0" onchange="editPenaltyPoints(${p.id},this.value)" inputmode="numeric">
-      <button class="del-btn" onclick="deletePenalty(${p.id})">×</button>
-    </div>`;
-  });
-  h+=`<div class="add-row">
-    <input id="new-pen-name" placeholder="New penalty name">
-    <input id="new-pen-pts" type="number" placeholder="Pts" value="10" min="0" inputmode="numeric">
-    <button onclick="addPenalty()">+ Add</button>
-  </div></div>`;
-
-  h+=`<div class="settings-section"><h3>🔗 Sync Info</h3>
-    <div class="config-box"><h4>Family Code</h4><code>${escHtml(familyCode)}</code>
-    <div style="margin-top:4px;font-size:11px;color:var(--textSoft)">Use this same code on all your devices</div></div>
-    <button class="btn btn-outline" onclick="changeFamilyCode()">🔄 Change Family Code</button>
-  </div>`;
-
-  h+=`<div class="settings-section"><h3>🔧 Reset</h3>
-    <button class="btn btn-danger" onclick="confirmTotalReset()">🗑️ Total Reset — Erase All Data</button>
-  </div></div>`;
-
   // Prompt
   h+=`<div class="page ${activeTab==="prompt"?"active":""}">`;
   h+=renderPrompt();
   h+=`</div>`;
+  p.innerHTML=h;
+}
 
-  p.innerHTML = h;
+/* ── Mini Calendar ── */
+function renderMiniCal(ki){
+  const mc=miniCalMonths[ki],y=mc.year,m=mc.month;
+  const firstDay=new Date(y,m,1).getDay(),daysInMonth=new Date(y,m+1,0).getDate();
+  let h=`<div class="mini-cal"><div class="mini-cal-header"><button class="mcal-arrow" onclick="shiftMiniCal(${ki},-1)">‹</button><div class="mcal-title">${MONTHS[m]} ${y}</div><button class="mcal-arrow" onclick="shiftMiniCal(${ki},1)">›</button></div>`;
+  h+=`<div class="mcal-grid">`;
+  DAYS_S.forEach(d=>{h+=`<div class="mcal-dow">${d.charAt(0)}</div>`});
+  for(let i=0;i<firstDay;i++)h+=`<div class="mcal-day empty"></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const ds=dateStr(y,m,d),isFuture=ds>todayStr(),isT=ds===todayStr(),isSel=ds===selectedDates[ki];
+    const dot=isFuture?"dot-none":getDotClass(ki,ds);
+    h+=`<div class="mcal-day${isFuture?" future":""}${isT?" today":""}${isSel?" selected":""}" onclick="miniCalClick(${ki},'${ds}')"><span>${d}</span><span class="mcal-dot ${dot}"></span></div>`;
+  }
+  h+=`</div><div class="mcal-legend"><span><span class="leg-dot" style="background:var(--green)"></span> All done</span><span><span class="leg-dot" style="background:var(--orange)"></span> Partial</span><span><span class="leg-dot" style="background:transparent;border:1.5px solid #ccc"></span> None</span></div></div>`;
+  return h;
+}
+
+/* ── Calendar Tab ── */
+function renderCalendarTab(){
+  const ki=calTabKid;
+  let h=`<div class="cal-kid-toggle">`;
+  data.kids.forEach((k,i)=>{h+=`<button class="cal-kid-btn ${i===ki?"active-k"+i:""}" onclick="calTabKid=${i};renderApp()">${esc(k.name)}</button>`});
+  h+=`</div>`;
+  h+=`<div class="cal-view-toggle"><button class="cal-view-btn ${calView==="weekly"?"active":""}" onclick="calView='weekly';renderApp()">📊 Weekly</button><button class="cal-view-btn ${calView==="monthly"?"active":""}" onclick="calView='monthly';renderApp()">📅 Monthly</button></div>`;
+  if(calView==="weekly") h+=renderWeeklyGrid(ki);
+  else h+=renderMonthlyFull(ki);
+  return h;
+}
+
+function renderWeeklyGrid(ki){
+  const ws=calWeekStart;
+  const days=[];for(let i=0;i<7;i++)days.push(shiftDate(ws,i));
+  const we=days[6];
+  let h=`<div class="week-nav"><button class="wn-arrow" onclick="shiftWeek(-1)">‹</button><div class="wn-title">${fmtDateShort(ws)} — ${fmtDateShort(we)}</div><button class="wn-arrow" onclick="shiftWeek(1)">›</button></div>`;
+  h+=`<div class="week-grid"><div class="wg-header-row"><div class="wg-label-cell">Chore</div>`;
+  days.forEach(d=>{const isT=d===todayStr();h+=`<div class="wg-hcell${isT?" today-col":""}">${DAYS_S[new Date(d+"T12:00:00").getDay()]}<br>${new Date(d+"T12:00:00").getDate()}</div>`});
+  h+=`</div>`;
+  (data.chores||[]).forEach(c=>{
+    h+=`<div class="wg-row"><div class="wg-chore-name">${esc(c.name)}</div>`;
+    days.forEach(d=>{
+      const isT=d===todayStr(),isFuture=d>todayStr();
+      const log=data.kids[ki].choreLog&&data.kids[ki].choreLog[d];
+      const done=log&&log.chores&&log.chores.includes(c.id);
+      h+=`<div class="wg-cell${isT?" today-col":""}">${isFuture?"":done?"✅":"—"}</div>`;
+    });
+    h+=`</div>`;
+  });
+  // Totals row
+  h+=`<div class="wg-total-row"><div class="wg-chore-name">Day Points</div>`;
+  days.forEach(d=>{const isT=d===todayStr(),isFuture=d>todayStr();const dp=getDayPts(ki,d);h+=`<div class="wg-cell${isT?" today-col":""}">${isFuture?"":dp.pts}</div>`});
+  h+=`</div></div>`;
+  // Penalties row
+  if(data.penalties&&data.penalties.length){
+    h+=`<div style="margin-top:12px"><div class="section-title" style="margin-top:0">Penalties This Week</div><div class="week-grid"><div class="wg-header-row"><div class="wg-label-cell">Penalty</div>`;
+    days.forEach(d=>{const isT=d===todayStr();h+=`<div class="wg-hcell${isT?" today-col":""}">${DAYS_S[new Date(d+"T12:00:00").getDay()]}</div>`});
+    h+=`</div>`;
+    data.penalties.forEach(pen=>{
+      h+=`<div class="wg-row"><div class="wg-chore-name">${esc(pen.name)}</div>`;
+      days.forEach(d=>{const isT=d===todayStr(),isFuture=d>todayStr();const log=data.kids[ki].choreLog&&data.kids[ki].choreLog[d];const on=log&&log.penalties&&log.penalties.includes(pen.id);h+=`<div class="wg-cell${isT?" today-col":""}">${isFuture?"":on?"🔴":"—"}</div>`});
+      h+=`</div>`;
+    });
+    h+=`</div></div>`;
+  }
+  return h;
+}
+
+function renderMonthlyFull(ki){
+  const y=calMonth.year,m=calMonth.month;
+  const firstDay=new Date(y,m,1).getDay(),dim=new Date(y,m+1,0).getDate();
+  let h=`<div class="month-full"><div class="month-header"><button class="mh-arrow" onclick="shiftCalMonth(-1)">‹</button><div class="mh-title">${MONTHS[m]} ${y}</div><button class="mh-arrow" onclick="shiftCalMonth(1)">›</button></div>`;
+  h+=`<div class="mf-grid">`;
+  DAYS_S.forEach(d=>{h+=`<div class="mf-dow">${d}</div>`});
+  for(let i=0;i<firstDay;i++)h+=`<div class="mf-day empty"></div>`;
+  for(let d=1;d<=dim;d++){
+    const ds=dateStr(y,m,d),isFuture=ds>todayStr(),isT=ds===todayStr();
+    const dp=getDayPts(ki,ds),dot=isFuture?"":getDotClass(ki,ds);
+    h+=`<div class="mf-day${isFuture?" future":""}${isT?" today":""}" onclick="showDayPopup(${ki},'${ds}')">`;
+    h+=`<div class="mf-num">${d}</div>`;
+    if(!isFuture&&dp.pts!==0)h+=`<div class="mf-pts">${dp.pts>0?"+":""}${dp.pts}</div>`;
+    if(!isFuture&&dot!=="dot-none")h+=`<span class="mf-dot ${dot}"></span>`;
+    h+=`</div>`;
+  }
+  h+=`</div>`;
+  h+=`<div class="mcal-legend" style="margin-top:12px"><span><span class="leg-dot" style="background:var(--green)"></span> All done</span><span><span class="leg-dot" style="background:var(--orange)"></span> Partial</span></div>`;
+  // Month summary
+  let totalPts=0,totalDone=0,activeDays=0;
+  for(let d=1;d<=dim;d++){const ds=dateStr(y,m,d);if(ds>todayStr())break;const dp=getDayPts(ki,ds);totalPts+=dp.pts;totalDone+=dp.done;if(dp.done>0)activeDays++}
+  h+=`<div class="dp-stat-row" style="margin-top:14px"><div class="dp-stat"><div class="dp-sv">${totalPts}</div><div class="dp-sl">Month Points</div></div><div class="dp-stat"><div class="dp-sv">${activeDays}</div><div class="dp-sl">Active Days</div></div><div class="dp-stat"><div class="dp-sv">${totalDone}</div><div class="dp-sl">Chores Done</div></div></div>`;
+  h+=`</div>`;
+  return h;
+}
+
+/* ── Day Popup ── */
+function showDayPopup(ki,ds){
+  if(ds>todayStr())return;
+  const k=data.kids[ki],dp=getDayPts(ki,ds),log=getLog(ki,ds);
+  const totalChores=(data.chores||[]).length;
+  let h=`<h3>${esc(k.name)}</h3><div class="dp-date">${fmtDate(ds)}</div>`;
+  h+=`<div class="dp-stat-row"><div class="dp-stat"><div class="dp-sv">${dp.done}/${totalChores}</div><div class="dp-sl">Completed</div></div><div class="dp-stat"><div class="dp-sv">${dp.pts>=0?"+":""}${dp.pts}</div><div class="dp-sl">Points</div></div></div>`;
+  // Chores
+  h+=`<div class="dp-section"><h4>✅ Chores</h4>`;
+  const doneChores=(log.chores||[]).map(cid=>(data.chores||[]).find(x=>x.id===cid)).filter(Boolean);
+  if(doneChores.length){doneChores.forEach(c=>{h+=`<div class="dp-item"><span class="dp-check">✓</span>${esc(c.name)}<span class="dp-pts" style="color:var(--green)">+${c.points}</span></div>`})}
+  else{h+=`<div class="dp-empty">No chores completed</div>`}
+  h+=`</div>`;
+  // Penalties
+  const donePens=(log.penalties||[]).map(pid=>(data.penalties||[]).find(x=>x.id===pid)).filter(Boolean);
+  if(donePens.length){h+=`<div class="dp-section"><h4>⚠️ Penalties</h4>`;donePens.forEach(p=>{h+=`<div class="dp-item"><span class="dp-pen">✗</span>${esc(p.name)}<span class="dp-pts" style="color:var(--red)">−${p.points}</span></div>`});h+=`</div>`}
+  // Undone chores
+  const undone=(data.chores||[]).filter(c=>!(log.chores||[]).includes(c.id));
+  if(undone.length){h+=`<div class="dp-section"><h4>⬜ Not Done</h4>`;undone.forEach(c=>{h+=`<div class="dp-item" style="opacity:.5">○ ${esc(c.name)}<span class="dp-pts">+${c.points}</span></div>`});h+=`</div>`}
+  h+=`<button class="dp-goto" onclick="gotoDayFromPopup(${ki},'${ds}')">📝 Edit This Day</button>`;
+  h+=`<button class="dp-close" onclick="closeDayPopup()">Close</button>`;
+  document.getElementById("dayPopupContent").innerHTML=h;
+  document.getElementById("dayPopup").classList.add("show");
+}
+function closeDayPopup(){document.getElementById("dayPopup").classList.remove("show")}
+function gotoDayFromPopup(ki,ds){closeDayPopup();selectedDates[ki]=ds;activeTab="kid-"+ki;renderApp();document.getElementById("pages").scrollTop=0}
+
+/* ── Settings ── */
+function renderSettings(){
+  let h=`<div class="settings-section"><h3>👧 Kid Names</h3>`;
+  data.kids.forEach((k,i)=>{h+=`<div class="setting-item"><input value="${escA(k.name)}" onchange="renameKid(${i},this.value)" placeholder="Name"></div>`});h+=`</div>`;
+  h+=`<div class="settings-section"><h3>✅ Chores</h3>`;
+  (data.chores||[]).forEach(c=>{h+=`<div class="setting-item"><input value="${escA(c.name)}" onchange="editCN(${c.id},this.value)"><input type="number" value="${c.points}" min="0" onchange="editCP(${c.id},this.value)" inputmode="numeric"><button class="del-btn" onclick="delChore(${c.id})">×</button></div>`});
+  h+=`<div class="add-row"><input id="ncn" placeholder="New chore name"><input id="ncp" type="number" placeholder="Pts" value="5" min="0" inputmode="numeric"><button onclick="addChore()">+ Add</button></div></div>`;
+  h+=`<div class="settings-section"><h3>⚠️ Penalties</h3>`;
+  (data.penalties||[]).forEach(p=>{h+=`<div class="setting-item"><input value="${escA(p.name)}" onchange="editPN(${p.id},this.value)"><input type="number" value="${p.points}" min="0" onchange="editPP(${p.id},this.value)" inputmode="numeric"><button class="del-btn" onclick="delPenalty(${p.id})">×</button></div>`});
+  h+=`<div class="add-row"><input id="npn" placeholder="New penalty name"><input id="npp" type="number" placeholder="Pts" value="10" min="0" inputmode="numeric"><button onclick="addPenalty()">+ Add</button></div></div>`;
+  h+=`<div class="settings-section"><h3>🔗 Sync Info</h3><div class="config-box"><h4>Family Code</h4><code>${esc(familyCode)}</code><div style="margin-top:4px;font-size:11px;color:var(--textSoft)">Use this code on all devices</div></div><button class="btn btn-outline" onclick="changeFamilyCode()">🔄 Change Family Code</button></div>`;
+  h+=`<div class="settings-section"><h3>🔧 Reset</h3><button class="btn btn-danger" onclick="confirmTotalReset()">🗑️ Total Reset — Erase All Data</button></div>`;
+  return h;
 }
 
 function renderPrompt(){
-  return `<div class="prompt-content">
-<h2>📋 App Recreation Prompt</h2>
-<p class="intro">Copy the prompt below and paste it into any AI assistant to recreate this app from scratch.</p>
-<h3>🏗️ Overview</h3>
-<p>Build a colorful chore and task tracking app for 2 kids as a single downloadable HTML file that works as a web app on android phone/ipad. Name it "Chore Tracker". Use Firebase Realtime Database for cross-device sync with a family code system.</p>
-<h3>📐 Layout &amp; Design</h3>
-<ul>
-  <li>Two separate kid dashboards as tabs at the top</li>
-  <li>Tab labels show each kid's name (customizable in Settings)</li>
-  <li>Bright, colorful kid-friendly theme</li>
-  <li>Each chore displayed as a colorful card with a toggle switch</li>
-  <li>Cumulative total points at the top of each kid's dashboard</li>
-  <li>Date picker below points banner — navigate by day or tap to pick any date</li>
-  <li>Day stats showing chores completed and points earned for selected date</li>
-</ul>
-<h3>⭐ Chores &amp; Points</h3>
-<ul>
-  <li>Default starters: Make bed (5), Help with dishes (5), Practice (10), Exercise/Play outdoors (10), Tidy room (10), Cleanup after eating (5), Help cleaning living room (10), Homework (15)</li>
-  <li>Tapping a chore card toggles it for the selected date and updates cumulative points</li>
-  <li>Can backfill past dates using the date picker</li>
-  <li>Manual ±point adjustment field on each kid's page</li>
-</ul>
-<h3>⚠️ Penalties</h3>
-<ul><li>Penalty items with negative points (e.g. not eating veggies −10, too much screen time −20)</li></ul>
-<h3>⚙️ Settings</h3>
-<ul>
-  <li>Rename kids, add/edit/delete chores and penalties</li>
-  <li>Total Reset with confirmation</li>
-  <li>Reset selected day's switches without wiping cumulative points</li>
-  <li>Family code display and change option</li>
-</ul>
-<h3>🔧 Technical</h3>
-<ul>
-  <li>Single HTML file with Firebase SDK from CDN</li>
-  <li>Firebase Realtime Database for cross-device sync</li>
-  <li>Family code system for private data spaces</li>
-  <li>Per-date chore logging stored in choreLog object</li>
-  <li>apple-mobile-web-app-capable meta tags</li>
-</ul>
-</div>`;
-}
-
-/* ══════════════════════════════════════════
-   DATE NAVIGATION
-   ══════════════════════════════════════════ */
-function changeDate(kidIdx, delta){
-  const newDate = shiftDate(selectedDates[kidIdx], delta);
-  if(newDate > todayStr()) return; // Can't go to future
-  selectedDates[kidIdx] = newDate;
-  renderApp();
-}
-
-function goToToday(kidIdx){
-  selectedDates[kidIdx] = todayStr();
-  renderApp();
-}
-
-function openNativePicker(kidIdx){
-  const picker = document.getElementById("datepicker-"+kidIdx);
-  if(picker){picker.showPicker ? picker.showPicker() : picker.click()}
-}
-
-function pickDate(kidIdx, val){
-  if(!val) return;
-  if(val > todayStr()) val = todayStr();
-  selectedDates[kidIdx] = val;
-  renderApp();
+  return `<div class="prompt-content"><h2>📋 App Recreation Prompt</h2><p class="intro">Copy the prompt below to recreate this app.</p>
+<h3>🏗️ Overview</h3><p>Build a colorful chore tracking app for 2 kids as a single HTML file with Firebase Realtime Database sync. Name it "Chore Tracker".</p>
+<h3>📐 Layout</h3><ul><li>Kid dashboards as tabs with customizable names</li><li>Bright, colorful kid-friendly theme with emoji chore cards</li><li>Date picker to navigate and log chores per day (including backfill)</li><li>Mini monthly calendar on each kid's page with color-coded dots</li><li>Dedicated Calendar tab with weekly grid and monthly view</li><li>Tap any day in calendar to see detailed chore breakdown</li></ul>
+<h3>⭐ Chores &amp; Points</h3><ul><li>Default: Make bed (5), Dishes (5), Practice (10), Exercise (10), Tidy room (10), Cleanup eating (5), Living room (10), Homework (15)</li><li>Toggle chores per date, cumulative points tracked</li><li>Manual ±point adjustment</li></ul>
+<h3>📅 Calendar Views</h3><ul><li>Mini-cal on kid pages: month grid, green dot = all done, yellow = partial, tap to navigate</li><li>Calendar tab: toggle between kids, weekly grid (chore × day matrix with ✅), monthly calendar with day points and dots</li><li>Tap a day to see popup with completed/missed chores and points</li><li>Monthly summary: total points, active days, chores completed</li></ul>
+<h3>⚙️ Settings</h3><ul><li>Rename kids, manage chores and penalties</li><li>Family code for cross-device sync</li><li>Total reset with confirmation</li></ul>
+<h3>🔧 Technical</h3><ul><li>Single HTML file, Firebase SDK from CDN</li><li>Per-date choreLog object in Firebase Realtime DB</li><li>Family code routing for private data spaces</li><li>PWA meta tags for home screen install</li></ul></div>`;
 }
 
 /* ══════════════════════════════════════════
    ACTIONS
    ══════════════════════════════════════════ */
 function switchTab(t){activeTab=t;renderApp();document.getElementById("pages").scrollTop=0}
+function changeDate(i,d){const n=shiftDate(selectedDates[i],d);if(n>todayStr())return;selectedDates[i]=n;renderApp()}
+function goToday(i){selectedDates[i]=todayStr();renderApp()}
+function openPicker(i){const p=document.getElementById("dp-"+i);p&&(p.showPicker?p.showPicker():p.click())}
+function pickDate(i,v){if(!v)return;if(v>todayStr())v=todayStr();selectedDates[i]=v;renderApp()}
+function shiftMiniCal(ki,d){const mc=miniCalMonths[ki];mc.month+=d;if(mc.month<0){mc.month=11;mc.year--}if(mc.month>11){mc.month=0;mc.year++}renderApp()}
+function miniCalClick(ki,ds){if(ds>todayStr())return;selectedDates[ki]=ds;renderApp();document.getElementById("pages").scrollTop=0}
+function shiftWeek(d){calWeekStart=shiftDate(calWeekStart,d*7);renderApp()}
+function shiftCalMonth(d){calMonth.month+=d;if(calMonth.month<0){calMonth.month=11;calMonth.year--}if(calMonth.month>11){calMonth.month=0;calMonth.year++}renderApp()}
 
-function toggleChore(kidIdx, dateStr, choreId){
-  const k = data.kids[kidIdx];
-  const c = (data.chores||[]).find(x=>x.id===choreId);
-  if(!c) return;
-  const log = getLog(kidIdx, dateStr);
-  const idx = log.chores.indexOf(choreId);
-  if(idx > -1){
-    log.chores.splice(idx,1);
-    k.score -= c.points;
-  } else {
-    log.chores.push(choreId);
-    k.score += c.points;
-  }
-  // Clean up empty logs to save space
-  if(log.chores.length===0 && log.penalties.length===0){
-    delete k.choreLog[dateStr];
-  }
-  saveData();
-}
+function toggleChore(ki,ds,cid){const k=data.kids[ki],c=(data.chores||[]).find(x=>x.id===cid);if(!c)return;const l=getLog(ki,ds);const idx=l.chores.indexOf(cid);if(idx>-1){l.chores.splice(idx,1);k.score-=c.points}else{l.chores.push(cid);k.score+=c.points}if(!l.chores.length&&!l.penalties.length)delete k.choreLog[ds];saveData()}
+function togglePenalty(ki,ds,pid){const k=data.kids[ki],p=(data.penalties||[]).find(x=>x.id===pid);if(!p)return;const l=getLog(ki,ds);const idx=l.penalties.indexOf(pid);if(idx>-1){l.penalties.splice(idx,1);k.score+=p.points}else{l.penalties.push(pid);k.score-=p.points}if(!l.chores.length&&!l.penalties.length)delete k.choreLog[ds];saveData()}
+function applyAdj(i){const inp=document.getElementById("adj-"+i);const v=parseInt(inp.value,10);if(isNaN(v))return;data.kids[i].score+=v;saveData()}
 
-function togglePenalty(kidIdx, dateStr, penId){
-  const k = data.kids[kidIdx];
-  const p = (data.penalties||[]).find(x=>x.id===penId);
-  if(!p) return;
-  const log = getLog(kidIdx, dateStr);
-  const idx = log.penalties.indexOf(penId);
-  if(idx > -1){
-    log.penalties.splice(idx,1);
-    k.score += p.points;
-  } else {
-    log.penalties.push(penId);
-    k.score -= p.points;
-  }
-  if(log.chores.length===0 && log.penalties.length===0){
-    delete k.choreLog[dateStr];
-  }
-  saveData();
-}
+function renameKid(i,v){data.kids[i].name=v.trim()||"Kid "+(i+1);saveData()}
+function editCN(id,v){const c=(data.chores||[]).find(x=>x.id===id);if(c){c.name=v.trim()||c.name;saveData()}}
+function editCP(id,v){const c=(data.chores||[]).find(x=>x.id===id);if(c){c.points=Math.max(0,parseInt(v,10)||0);saveData()}}
+function delChore(id){data.chores=(data.chores||[]).filter(x=>x.id!==id);data.kids.forEach(k=>{if(k.choreLog)Object.values(k.choreLog).forEach(l=>{if(l.chores)l.chores=l.chores.filter(x=>x!==id)})});saveData()}
+function addChore(){const n=document.getElementById("ncn").value.trim(),p=parseInt(document.getElementById("ncp").value,10)||5;if(!n)return;if(!data.chores)data.chores=[];data.chores.push({id:data.nextId++,name:n,points:Math.max(0,p)});saveData()}
+function editPN(id,v){const p=(data.penalties||[]).find(x=>x.id===id);if(p){p.name=v.trim()||p.name;saveData()}}
+function editPP(id,v){const p=(data.penalties||[]).find(x=>x.id===id);if(p){p.points=Math.max(0,parseInt(v,10)||0);saveData()}}
+function delPenalty(id){data.penalties=(data.penalties||[]).filter(x=>x.id!==id);data.kids.forEach(k=>{if(k.choreLog)Object.values(k.choreLog).forEach(l=>{if(l.penalties)l.penalties=l.penalties.filter(x=>x!==id)})});saveData()}
+function addPenalty(){const n=document.getElementById("npn").value.trim(),p=parseInt(document.getElementById("npp").value,10)||10;if(!n)return;if(!data.penalties)data.penalties=[];data.penalties.push({id:data.nextId++,name:n,points:Math.max(0,p)});saveData()}
+function changeFamilyCode(){familyCode="";localStorage.removeItem("choreTracker_familyCode");if(dbRef){dbRef.off();dbRef=null}data=null;renderSetup()}
 
-function applyAdjust(kidIdx){
-  const inp=document.getElementById("adj-"+kidIdx);
-  const v=parseInt(inp.value,10);
-  if(isNaN(v))return;
-  data.kids[kidIdx].score+=v;
-  saveData();
-}
-
-function renameKid(i,val){data.kids[i].name=val.trim()||("Kid "+(i+1));saveData()}
-function editChoreName(id,val){const c=(data.chores||[]).find(x=>x.id===id);if(c){c.name=val.trim()||c.name;saveData()}}
-function editChorePoints(id,val){const c=(data.chores||[]).find(x=>x.id===id);if(c){c.points=Math.max(0,parseInt(val,10)||0);saveData()}}
-function deleteChore(id){data.chores=(data.chores||[]).filter(x=>x.id!==id);data.kids.forEach(k=>{
-  if(k.choreLog){Object.values(k.choreLog).forEach(log=>{if(log.chores)log.chores=log.chores.filter(x=>x!==id)})}
-});saveData()}
-function addChore(){
-  const n=document.getElementById("new-chore-name").value.trim();
-  const p=parseInt(document.getElementById("new-chore-pts").value,10)||5;
-  if(!n)return;
-  if(!data.chores)data.chores=[];
-  data.chores.push({id:data.nextId++,name:n,points:Math.max(0,p)});
-  saveData();
-}
-
-function editPenaltyName(id,val){const p=(data.penalties||[]).find(x=>x.id===id);if(p){p.name=val.trim()||p.name;saveData()}}
-function editPenaltyPoints(id,val){const p=(data.penalties||[]).find(x=>x.id===id);if(p){p.points=Math.max(0,parseInt(val,10)||0);saveData()}}
-function deletePenalty(id){data.penalties=(data.penalties||[]).filter(x=>x.id!==id);data.kids.forEach(k=>{
-  if(k.choreLog){Object.values(k.choreLog).forEach(log=>{if(log.penalties)log.penalties=log.penalties.filter(x=>x!==id)})}
-});saveData()}
-function addPenalty(){
-  const n=document.getElementById("new-pen-name").value.trim();
-  const p=parseInt(document.getElementById("new-pen-pts").value,10)||10;
-  if(!n)return;
-  if(!data.penalties)data.penalties=[];
-  data.penalties.push({id:data.nextId++,name:n,points:Math.max(0,p)});
-  saveData();
-}
-
-function changeFamilyCode(){
-  familyCode="";localStorage.removeItem("choreTracker_familyCode");
-  if(dbRef){dbRef.off();dbRef=null}
-  data=null;renderSetup();
-}
-
-/* ── Overlays ── */
 let overlayAction=null;
-function showOverlay(title,msg,btnText,fn){
-  document.getElementById("overlay-title").textContent=title;
-  document.getElementById("overlay-msg").textContent=msg;
-  const btn=document.getElementById("overlay-confirm");
-  btn.textContent=btnText;
-  overlayAction=fn;
-  btn.onclick=()=>{closeOverlay();if(overlayAction)overlayAction()};
-  document.getElementById("overlay").classList.add("show");
-}
+function showOverlay(t,m,b,fn){document.getElementById("overlay-title").textContent=t;document.getElementById("overlay-msg").textContent=m;const btn=document.getElementById("overlay-confirm");btn.textContent=b;overlayAction=fn;btn.onclick=()=>{closeOverlay();if(overlayAction)overlayAction()};document.getElementById("overlay").classList.add("show")}
 function closeOverlay(){document.getElementById("overlay").classList.remove("show");overlayAction=null}
+function confirmResetDay(ki,ds){const isT=ds===todayStr();showOverlay("Reset Day","Undo all switches for "+data.kids[ki].name+" on "+(isT?"today":fmtDate(ds))+"?","Reset",()=>{const k=data.kids[ki],l=getLog(ki,ds);(l.chores||[]).forEach(cid=>{const c=(data.chores||[]).find(x=>x.id===cid);if(c)k.score-=c.points});(l.penalties||[]).forEach(pid=>{const p=(data.penalties||[]).find(x=>x.id===pid);if(p)k.score+=p.points});delete k.choreLog[ds];saveData()})}
+function confirmTotalReset(){showOverlay("Total Reset","Erase ALL data — points, names, history?","Yes, Erase All",()=>{data=JSON.parse(JSON.stringify(DEFAULT_DATA));activeTab="kid-0";selectedDates=[todayStr(),todayStr()];saveData()})}
 
-function confirmResetDay(kidIdx, dateStr){
-  const isToday = dateStr === todayStr();
-  const label = isToday ? "today" : formatDateDisplay(dateStr);
-  showOverlay("Reset Day","Undo all switches for "+data.kids[kidIdx].name+" on "+label+"? Cumulative points will be adjusted.","Reset Switches",()=>{
-    const k = data.kids[kidIdx];
-    const log = getLog(kidIdx, dateStr);
-    (log.chores||[]).forEach(cid=>{const c=(data.chores||[]).find(x=>x.id===cid);if(c)k.score-=c.points});
-    (log.penalties||[]).forEach(pid=>{const pen=(data.penalties||[]).find(x=>x.id===pid);if(pen)k.score+=pen.points});
-    delete k.choreLog[dateStr];
-    saveData();
-  });
-}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function escA(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
 
-function confirmTotalReset(){
-  showOverlay("Total Reset","This will erase ALL data — points, names, chores, all history. Are you sure?","Yes, Erase All",()=>{
-    data=JSON.parse(JSON.stringify(DEFAULT_DATA));
-    activeTab="kid-0";
-    selectedDates=[todayStr(),todayStr()];
-    saveData();
-  });
-}
-
-function escHtml(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
-function escAttr(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
-
-/* ── INIT ── */
 renderSetup();
 </script>
 </body>
