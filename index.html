@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Chore Tracker">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#6C3CE1">
+<title>Chore Tracker</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --purple:#6C3CE1;--pink:#E84393;--orange:#F39C12;--teal:#00B894;
+  --blue:#0984E3;--red:#D63031;--green:#00B894;--yellow:#FDCB6E;
+  --bg:#F0EDFF;--card:#FFFFFF;--text:#2D2042;--textSoft:#6B5F80;
+  --radius:16px;--shadow:0 4px 16px rgba(108,60,225,.12);
+  --kid1:#6C3CE1;--kid2:#E84393;
+  font-family:"Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap');
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#app{display:flex;flex-direction:column;height:100%;max-width:480px;margin:0 auto;position:relative}
+
+/* ── Header ── */
+.header{
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  color:#fff;padding:env(safe-area-inset-top,12px) 16px 0;
+  text-align:center;flex-shrink:0;
+}
+.header h1{font-size:22px;font-weight:900;letter-spacing:.5px;padding:10px 0 6px}
+.header h1 span{display:inline-block;animation:wiggle 2s ease-in-out infinite}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(6deg)}75%{transform:rotate(-6deg)}}
+
+/* ── Tabs ── */
+.tabs{display:flex;gap:4px;padding:0 8px 0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex:1 0 auto;min-width:0;padding:10px 14px;border-radius:14px 14px 0 0;
+  font-weight:800;font-size:13px;cursor:pointer;transition:.2s;
+  background:rgba(255,255,255,.18);color:rgba(255,255,255,.7);
+  white-space:nowrap;border:none;outline:none;
+  font-family:inherit;
+}
+.tab.active{background:var(--bg);color:var(--text)}
+.tab[data-tab="settings"]{background:rgba(255,255,255,.1)}
+.tab[data-tab="settings"].active{background:var(--bg);color:var(--text)}
+.tab[data-tab="prompt"]{background:rgba(255,255,255,.1)}
+.tab[data-tab="prompt"].active{background:var(--bg);color:var(--text)}
+
+/* ── Pages ── */
+.pages{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px calc(env(safe-area-inset-bottom,16px) + 16px)}
+.page{display:none}
+.page.active{display:block}
+
+/* ── Points Banner ── */
+.points-banner{
+  background:linear-gradient(135deg,var(--kid1),color-mix(in srgb,var(--kid1),#fff 30%));
+  border-radius:var(--radius);padding:20px;text-align:center;color:#fff;
+  margin-bottom:16px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.points-banner::after{content:"⭐";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:48px;opacity:.25}
+.points-banner .label{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;opacity:.85}
+.points-banner .score{font-size:52px;font-weight:900;line-height:1.1}
+.kid2-page .points-banner{background:linear-gradient(135deg,var(--kid2),color-mix(in srgb,var(--kid2),#fff 30%))}
+
+/* ── Section Title ── */
+.section-title{font-size:15px;font-weight:800;color:var(--textSoft);margin:20px 0 10px;text-transform:uppercase;letter-spacing:1px}
+
+/* ── Chore Card ── */
+.chore-card{
+  background:var(--card);border-radius:var(--radius);padding:14px 16px;
+  margin-bottom:10px;display:flex;align-items:center;gap:12px;
+  box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s;
+  cursor:pointer;user-select:none;border-left:5px solid var(--teal);
+}
+.chore-card:active{transform:scale(.97)}
+.chore-card.toggled{border-left-color:var(--green);background:linear-gradient(90deg,#E8FFF5,#fff)}
+.chore-card .emoji{font-size:28px;flex-shrink:0;width:36px;text-align:center}
+.chore-card .info{flex:1;min-width:0}
+.chore-card .name{font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chore-card .pts{font-size:13px;font-weight:700;color:var(--teal)}
+.chore-card.toggled .pts{color:var(--green)}
+
+/* Toggle */
+.toggle{width:52px;height:30px;border-radius:30px;background:#D8D4E8;position:relative;flex-shrink:0;transition:.25s}
+.toggle::after{content:"";position:absolute;width:24px;height:24px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.25s;box-shadow:0 2px 4px rgba(0,0,0,.15)}
+.chore-card.toggled .toggle{background:var(--green)}
+.chore-card.toggled .toggle::after{left:25px}
+
+/* Penalty Card */
+.penalty-card{border-left-color:var(--red) !important}
+.penalty-card .pts{color:var(--red) !important}
+.penalty-card.toggled{background:linear-gradient(90deg,#FFE8E8,#fff);border-left-color:var(--red) !important}
+.penalty-card.toggled .toggle{background:var(--red)}
+
+/* ── Manual Adjust ── */
+.adjust-row{
+  display:flex;gap:8px;margin:12px 0 20px;
+}
+.adjust-row input{
+  flex:1;padding:12px 14px;border-radius:12px;border:2px solid #E0DAF0;
+  font-size:16px;font-weight:700;font-family:inherit;background:#fff;
+  outline:none;transition:.2s;
+}
+.adjust-row input:focus{border-color:var(--purple)}
+.adjust-row button{
+  padding:12px 20px;border-radius:12px;border:none;
+  background:var(--purple);color:#fff;font-weight:800;font-size:14px;
+  cursor:pointer;font-family:inherit;white-space:nowrap;
+}
+
+/* ── Action Buttons ── */
+.btn{
+  display:block;width:100%;padding:14px;border-radius:var(--radius);
+  border:none;font-size:15px;font-weight:800;cursor:pointer;
+  font-family:inherit;margin-bottom:10px;transition:.15s;
+}
+.btn:active{transform:scale(.97)}
+.btn-outline{background:transparent;border:2px solid #D8D4E8;color:var(--textSoft)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-primary{background:var(--purple);color:#fff}
+.btn-green{background:var(--green);color:#fff}
+
+/* ── Settings ── */
+.settings-section{margin-bottom:24px}
+.settings-section h3{font-size:16px;font-weight:800;margin-bottom:12px;color:var(--purple)}
+.setting-item{
+  background:var(--card);border-radius:14px;padding:14px;margin-bottom:8px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;align-items:center;gap:10px;
+}
+.setting-item input{
+  flex:1;padding:10px 12px;border-radius:10px;border:2px solid #E0DAF0;
+  font-size:14px;font-weight:700;font-family:inherit;outline:none;min-width:0;
+}
+.setting-item input:focus{border-color:var(--purple)}
+.setting-item input[type="number"]{width:70px;flex:0 0 70px;text-align:center}
+.setting-item .del-btn{
+  width:36px;height:36px;border-radius:10px;border:none;
+  background:#FFE4E4;color:var(--red);font-size:18px;font-weight:900;
+  cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-family:inherit;
+}
+.add-row{display:flex;gap:8px;margin-top:8px}
+.add-row input{
+  flex:1;padding:10px 12px;border-radius:10px;border:2px solid #E0DAF0;
+  font-size:14px;font-weight:700;font-family:inherit;outline:none;min-width:0;
+}
+.add-row input[type="number"]{width:70px;flex:0 0 70px;text-align:center}
+.add-row button{
+  padding:10px 16px;border-radius:10px;border:none;
+  background:var(--green);color:#fff;font-weight:800;font-size:14px;
+  cursor:pointer;font-family:inherit;white-space:nowrap;
+}
+
+/* ── Prompt Tab ── */
+.prompt-content{
+  background:var(--card);border-radius:var(--radius);padding:20px;
+  box-shadow:var(--shadow);font-size:13.5px;line-height:1.7;color:var(--text);
+}
+.prompt-content h2{font-size:20px;font-weight:900;color:var(--purple);margin-bottom:16px;text-align:center}
+.prompt-content h3{font-size:15px;font-weight:800;color:var(--pink);margin:18px 0 8px;padding-bottom:4px;border-bottom:2px solid #F0EDFF}
+.prompt-content .intro{font-size:14px;font-weight:700;color:var(--textSoft);margin-bottom:12px;font-style:italic}
+.prompt-content ul{padding-left:20px;margin:6px 0 10px}
+.prompt-content li{margin-bottom:5px;font-weight:600}
+.prompt-content li::marker{color:var(--purple)}
+
+/* ── Confirm Overlay ── */
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;
+  align-items:center;justify-content:center;z-index:100;padding:24px;
+}
+.overlay.show{display:flex}
+.overlay-box{
+  background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;
+  width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+.overlay-box h3{font-size:18px;font-weight:900;margin-bottom:8px}
+.overlay-box p{font-size:14px;color:var(--textSoft);margin-bottom:20px;font-weight:600}
+.overlay-box .btn-row{display:flex;gap:10px}
+.overlay-box .btn-row .btn{flex:1;margin:0}
+
+/* ── Emoji Palette for chore cards ── */
+.card-color-0{border-left-color:#6C3CE1}.card-color-1{border-left-color:#0984E3}
+.card-color-2{border-left-color:#00B894}.card-color-3{border-left-color:#F39C12}
+.card-color-4{border-left-color:#E84393}.card-color-5{border-left-color:#D63031}
+.card-color-6{border-left-color:#00CEC9}.card-color-7{border-left-color:#A29BFE}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <h1><span>⭐</span> Chore Tracker</h1>
+    <div class="tabs" id="tabs"></div>
+  </div>
+  <div class="pages" id="pages"></div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="overlay-box">
+    <h3 id="overlay-title">Confirm</h3>
+    <p id="overlay-msg">Are you sure?</p>
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="closeOverlay()">Cancel</button>
+      <button class="btn btn-danger" id="overlay-confirm">Yes, Reset</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   DATA & DEFAULTS
+   ══════════════════════════════════════════ */
+const CHORE_EMOJIS = ["🛏️","🍽️","🎵","⚽","🧹","🧼","🛋️","📚","✏️","🎨","🐕","🌱","👕","🗑️","💪","🎯"];
+const PENALTY_EMOJIS = ["🥦","📱","😤","🚫","⏰","🔇"];
+const DEFAULT_CHORES = [
+  {id:1,name:"Make bed",points:5},
+  {id:2,name:"Help with dishes",points:5},
+  {id:3,name:"Practice",points:10},
+  {id:4,name:"Exercise / Play outdoors",points:10},
+  {id:5,name:"Tidy room",points:10},
+  {id:6,name:"Cleanup after eating",points:5},
+  {id:7,name:"Help cleaning living room",points:10},
+  {id:8,name:"Homework",points:15}
+];
+const DEFAULT_PENALTIES = [
+  {id:100,name:"Not eating vegetables/fruits",points:10},
+  {id:101,name:"Too much screen time",points:20}
+];
+
+function loadData(){
+  const raw = localStorage.getItem("choreTracker_v2");
+  if(raw) return JSON.parse(raw);
+  return {
+    kids:[{name:"Kid 1",score:0,toggledChores:[],toggledPenalties:[]},{name:"Kid 2",score:0,toggledChores:[],toggledPenalties:[]}],
+    chores:DEFAULT_CHORES.map(c=>({...c})),
+    penalties:DEFAULT_PENALTIES.map(p=>({...p})),
+    nextId:200,
+    lastDate:todayStr()
+  };
+}
+function saveData(){localStorage.setItem("choreTracker_v2",JSON.stringify(data))}
+function todayStr(){return new Date().toISOString().slice(0,10)}
+
+let data = loadData();
+let activeTab = "kid-0";
+
+// Auto-reset toggles on new day
+if(data.lastDate !== todayStr()){
+  data.kids.forEach(k=>{k.toggledChores=[];k.toggledPenalties=[]});
+  data.lastDate = todayStr();
+  saveData();
+}
+
+/* ══════════════════════════════════════════
+   RENDER
+   ══════════════════════════════════════════ */
+function render(){
+  renderTabs();
+  renderPages();
+}
+
+function renderTabs(){
+  const t = document.getElementById("tabs");
+  let h = "";
+  data.kids.forEach((k,i)=>{
+    h+=`<button class="tab ${activeTab==="kid-"+i?"active":""}" data-tab="kid-${i}" onclick="switchTab('kid-${i}')">${escHtml(k.name)}</button>`;
+  });
+  h+=`<button class="tab ${activeTab==="settings"?"active":""}" data-tab="settings" onclick="switchTab('settings')">⚙️ Settings</button>`;
+  h+=`<button class="tab ${activeTab==="prompt"?"active":""}" data-tab="prompt" onclick="switchTab('prompt')">📋 Prompt</button>`;
+  t.innerHTML = h;
+}
+
+function renderPages(){
+  const p = document.getElementById("pages");
+  let h = "";
+  data.kids.forEach((k,i)=>{
+    const cls = i===1?"kid2-page":"";
+    h+=`<div class="page ${cls} ${activeTab==="kid-"+i?"active":""}" id="page-kid-${i}">`;
+    h+=`<div class="points-banner" style="${i===1?"--kid1:var(--kid2)":""}">
+      <div class="label">${escHtml(k.name)}'s Points</div>
+      <div class="score">${k.score}</div>
+    </div>`;
+
+    // Manual adjust
+    h+=`<div class="adjust-row">
+      <input type="number" id="adj-${i}" placeholder="±pts" inputmode="numeric">
+      <button onclick="applyAdjust(${i})">Apply</button>
+    </div>`;
+
+    // Chores
+    h+=`<div class="section-title">Today's Chores</div>`;
+    data.chores.forEach((c,ci)=>{
+      const on = k.toggledChores.includes(c.id);
+      const colorCls = "card-color-"+ci%8;
+      const emoji = CHORE_EMOJIS[ci % CHORE_EMOJIS.length];
+      h+=`<div class="chore-card ${on?"toggled":""} ${colorCls}" onclick="toggleChore(${i},${c.id})">
+        <div class="emoji">${emoji}</div>
+        <div class="info"><div class="name">${escHtml(c.name)}</div><div class="pts">+${c.points} pts</div></div>
+        <div class="toggle"></div>
+      </div>`;
+    });
+
+    // Penalties
+    if(data.penalties.length){
+      h+=`<div class="section-title">Penalties</div>`;
+      data.penalties.forEach((pen,pi)=>{
+        const on = k.toggledPenalties.includes(pen.id);
+        const emoji = PENALTY_EMOJIS[pi % PENALTY_EMOJIS.length];
+        h+=`<div class="chore-card penalty-card ${on?"toggled":""}" onclick="togglePenalty(${i},${pen.id})">
+          <div class="emoji">${emoji}</div>
+          <div class="info"><div class="name">${escHtml(pen.name)}</div><div class="pts">−${pen.points} pts</div></div>
+          <div class="toggle"></div>
+        </div>`;
+      });
+    }
+
+    // Reset today
+    h+=`<div style="margin-top:24px">
+      <button class="btn btn-outline" onclick="confirmResetToday(${i})">🔄 Reset Today's Switches</button>
+    </div>`;
+    h+=`</div>`;
+  });
+
+  // Settings
+  h+=`<div class="page ${activeTab==="settings"?"active":""}" id="page-settings">`;
+  h+=renderSettings();
+  h+=`</div>`;
+
+  // Prompt
+  h+=`<div class="page ${activeTab==="prompt"?"active":""}" id="page-prompt">`;
+  h+=renderPrompt();
+  h+=`</div>`;
+
+  p.innerHTML = h;
+}
+
+function renderSettings(){
+  let h = "";
+
+  // Kid names
+  h+=`<div class="settings-section"><h3>👧 Kid Names</h3>`;
+  data.kids.forEach((k,i)=>{
+    h+=`<div class="setting-item">
+      <input value="${escAttr(k.name)}" onchange="renameKid(${i},this.value)" placeholder="Name">
+    </div>`;
+  });
+  h+=`</div>`;
+
+  // Chores
+  h+=`<div class="settings-section"><h3>✅ Chores</h3>`;
+  data.chores.forEach(c=>{
+    h+=`<div class="setting-item">
+      <input value="${escAttr(c.name)}" onchange="editChoreName(${c.id},this.value)">
+      <input type="number" value="${c.points}" min="0" onchange="editChorePoints(${c.id},this.value)" inputmode="numeric">
+      <button class="del-btn" onclick="deleteChore(${c.id})">×</button>
+    </div>`;
+  });
+  h+=`<div class="add-row">
+    <input id="new-chore-name" placeholder="New chore name">
+    <input id="new-chore-pts" type="number" placeholder="Pts" value="5" min="0" inputmode="numeric">
+    <button onclick="addChore()">+ Add</button>
+  </div></div>`;
+
+  // Penalties
+  h+=`<div class="settings-section"><h3>⚠️ Penalties</h3>`;
+  data.penalties.forEach(p=>{
+    h+=`<div class="setting-item">
+      <input value="${escAttr(p.name)}" onchange="editPenaltyName(${p.id},this.value)">
+      <input type="number" value="${p.points}" min="0" onchange="editPenaltyPoints(${p.id},this.value)" inputmode="numeric">
+      <button class="del-btn" onclick="deletePenalty(${p.id})">×</button>
+    </div>`;
+  });
+  h+=`<div class="add-row">
+    <input id="new-pen-name" placeholder="New penalty name">
+    <input id="new-pen-pts" type="number" placeholder="Pts" value="10" min="0" inputmode="numeric">
+    <button onclick="addPenalty()">+ Add</button>
+  </div></div>`;
+
+  // Total reset
+  h+=`<div class="settings-section"><h3>🔧 Reset</h3>
+    <button class="btn btn-danger" onclick="confirmTotalReset()">🗑️ Total Reset — Erase All Data</button>
+  </div>`;
+
+  return h;
+}
+
+function renderPrompt(){
+  return `<div class="prompt-content">
+<h2>📋 App Recreation Prompt</h2>
+<p class="intro">Copy the prompt below and paste it into any AI assistant to recreate this app from scratch.</p>
+
+<h3>🏗️ Overview</h3>
+<p>Build a colorful chore and task tracking app for 2 kids as a single downloadable HTML file that works as a web app on android phone/ipad (saved to home screen via any browser). Name it "Chore Tracker".</p>
+<p>Next to the Settings button, add a tab named "Prompt" where the below prompt is pasted and nicely formatted — for anyone who wants to recreate the app using this prompt.</p>
+
+<h3>📐 Layout &amp; Design</h3>
+<ul>
+  <li>Two separate kid dashboards as tabs at the top</li>
+  <li>Tab labels should show the kid's actual name (customizable)</li>
+  <li>Theme with bright, colorful kid-friendly design</li>
+  <li>Each chore displayed as a colorful card with a toggle switch</li>
+  <li>Cumulative points displayed at the top of each kid's dashboard</li>
+</ul>
+
+<h3>⭐ Chores &amp; Points</h3>
+<ul>
+  <li>Default starter chores: Make bed (5pts), Help with dishes (5pts), Practice (10pts), Exercise/Play outdoors (10pts), Tidy room (10pts), Cleanup after eating (5pts), Help cleaning living room (10pts), Homework (15pts)</li>
+  <li>Tapping a chore card toggles it on/off and adds/deducts points accordingly</li>
+  <li>A manual point adjustment field on each kid's page — type any positive or negative number and tap Apply to instantly update their total</li>
+</ul>
+
+<h3>⚠️ Penalties</h3>
+<ul>
+  <li>A separate Penalties section in Settings where you can add negative-point items if needed (e.g. not eating vegetables/fruits −10 pts, too much screen time −20 pts)</li>
+</ul>
+
+<h3>⚙️ Settings Panel</h3>
+<ul>
+  <li>Rename each kid (names update everywhere including tabs)</li>
+  <li>Add, edit, and delete chores with custom names and point values</li>
+  <li>Add, edit, and delete penalty items with custom names and point values</li>
+  <li>Total Reset should happen only with confirmation</li>
+  <li>A separate "Reset today's switches" button on each kid's dashboard that clears daily toggles without wiping cumulative points</li>
+</ul>
+
+<h3>🔧 Technical Requirements</h3>
+<ul>
+  <li>Single self-contained HTML file, no external dependencies</li>
+  <li>Uses localStorage to persist all data (points, names, chores, today's switches) between sessions</li>
+  <li>Includes apple-mobile-web-app-capable meta tags so it works cleanly when added to iPad home screen</li>
+</ul>
+</div>`;
+}
+
+/* ══════════════════════════════════════════
+   ACTIONS
+   ══════════════════════════════════════════ */
+function switchTab(t){activeTab=t;render();document.getElementById("pages").scrollTop=0}
+
+function toggleChore(kidIdx,choreId){
+  const k=data.kids[kidIdx];
+  const c=data.chores.find(x=>x.id===choreId);
+  if(!c)return;
+  const idx=k.toggledChores.indexOf(choreId);
+  if(idx>-1){k.toggledChores.splice(idx,1);k.score-=c.points}
+  else{k.toggledChores.push(choreId);k.score+=c.points}
+  saveData();render();
+}
+
+function togglePenalty(kidIdx,penId){
+  const k=data.kids[kidIdx];
+  const p=data.penalties.find(x=>x.id===penId);
+  if(!p)return;
+  const idx=k.toggledPenalties.indexOf(penId);
+  if(idx>-1){k.toggledPenalties.splice(idx,1);k.score+=p.points}
+  else{k.toggledPenalties.push(penId);k.score-=p.points}
+  saveData();render();
+}
+
+function applyAdjust(kidIdx){
+  const inp=document.getElementById("adj-"+kidIdx);
+  const v=parseInt(inp.value,10);
+  if(isNaN(v))return;
+  data.kids[kidIdx].score+=v;
+  saveData();render();
+}
+
+function renameKid(i,val){data.kids[i].name=val.trim()||("Kid "+(i+1));saveData();render()}
+
+function editChoreName(id,val){const c=data.chores.find(x=>x.id===id);if(c){c.name=val.trim()||c.name;saveData();render()}}
+function editChorePoints(id,val){const c=data.chores.find(x=>x.id===id);if(c){c.points=Math.max(0,parseInt(val,10)||0);saveData();render()}}
+function deleteChore(id){
+  data.chores=data.chores.filter(x=>x.id!==id);
+  data.kids.forEach(k=>{k.toggledChores=k.toggledChores.filter(x=>x!==id)});
+  saveData();render();
+}
+function addChore(){
+  const n=document.getElementById("new-chore-name").value.trim();
+  const p=parseInt(document.getElementById("new-chore-pts").value,10)||5;
+  if(!n)return;
+  data.chores.push({id:data.nextId++,name:n,points:Math.max(0,p)});
+  saveData();render();
+}
+
+function editPenaltyName(id,val){const p=data.penalties.find(x=>x.id===id);if(p){p.name=val.trim()||p.name;saveData();render()}}
+function editPenaltyPoints(id,val){const p=data.penalties.find(x=>x.id===id);if(p){p.points=Math.max(0,parseInt(val,10)||0);saveData();render()}}
+function deletePenalty(id){
+  data.penalties=data.penalties.filter(x=>x.id!==id);
+  data.kids.forEach(k=>{k.toggledPenalties=k.toggledPenalties.filter(x=>x!==id)});
+  saveData();render();
+}
+function addPenalty(){
+  const n=document.getElementById("new-pen-name").value.trim();
+  const p=parseInt(document.getElementById("new-pen-pts").value,10)||10;
+  if(!n)return;
+  data.penalties.push({id:data.nextId++,name:n,points:Math.max(0,p)});
+  saveData();render();
+}
+
+/* ── Overlays ── */
+let overlayAction=null;
+function showOverlay(title,msg,btnText,fn){
+  document.getElementById("overlay-title").textContent=title;
+  document.getElementById("overlay-msg").textContent=msg;
+  const btn=document.getElementById("overlay-confirm");
+  btn.textContent=btnText;
+  overlayAction=fn;
+  btn.onclick=()=>{closeOverlay();if(overlayAction)overlayAction()};
+  document.getElementById("overlay").classList.add("show");
+}
+function closeOverlay(){document.getElementById("overlay").classList.remove("show");overlayAction=null}
+
+function confirmResetToday(kidIdx){
+  showOverlay("Reset Today","Clear all of today's switches for "+data.kids[kidIdx].name+"? Cumulative points stay.","Reset Switches",()=>{
+    // Undo toggled chores
+    const k=data.kids[kidIdx];
+    k.toggledChores.forEach(cid=>{const c=data.chores.find(x=>x.id===cid);if(c)k.score-=c.points});
+    k.toggledPenalties.forEach(pid=>{const p=data.penalties.find(x=>x.id===pid);if(p)k.score+=p.points});
+    k.toggledChores=[];
+    k.toggledPenalties=[];
+    saveData();render();
+  });
+}
+
+function confirmTotalReset(){
+  showOverlay("Total Reset","This will erase ALL data — points, names, chores, everything. Are you sure?","Yes, Erase All",()=>{
+    localStorage.removeItem("choreTracker_v2");
+    data=loadData();
+    activeTab="kid-0";
+    render();
+  });
+}
+
+/* ── Helpers ── */
+function escHtml(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function escAttr(s){return s.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+
+/* ── INIT ── */
+render();
+</script>
+</body>
+</html>
