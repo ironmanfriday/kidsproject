@@ -24,6 +24,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);-we
 .sb.on{background:#00B894;color:#fff}.sb.off{background:#D63031;color:#fff}
 .sw-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);padding:5px 10px;border-radius:8px;border:2px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:4px}
 .sw-btn:active{background:rgba(255,255,255,.15)}
+.user-tag{position:absolute;left:0;top:50%;transform:translateY(-50%);padding:4px 10px;border-radius:8px;background:rgba(255,255,255,.2);color:#fff;font-size:11px;font-weight:800;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tabs{display:flex;gap:3px;padding:0 6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
 .tab{flex:1 0 auto;min-width:0;padding:9px 10px;border-radius:14px 14px 0 0;font-weight:800;font-size:12px;cursor:pointer;transition:.2s;background:rgba(255,255,255,.18);color:rgba(255,255,255,.7);white-space:nowrap;border:none;outline:none;font-family:inherit;position:relative}
 .tab.active{background:var(--bg);color:var(--text)}
@@ -194,6 +195,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);-we
 <div id="app">
   <div class="header">
     <div class="hdr-top">
+      <span class="user-tag" id="userTag" style="display:none"></span>
       <h1><span class="w">⭐</span> Chore Tracker <span class="sb" id="syncBadge">…</span></h1>
       <button class="sw-btn" id="swBtn" onclick="switchUser()" style="display:none">👤 Switch</button>
     </div>
@@ -248,7 +250,7 @@ function myKidIdx(){if(activeUser==="kid-0")return 0;if(activeUser==="kid-1")ret
 function migrate(){if(!data||!data.kids)return;data.kids.forEach(k=>{if(k.toggledChores){const dk=data.lastDate||todayStr();if(!k.choreLog)k.choreLog={};if(!k.choreLog[dk])k.choreLog[dk]={chores:[],penalties:[]};k.choreLog[dk].chores=k.toggledChores;if(k.toggledPenalties)k.choreLog[dk].penalties=k.toggledPenalties}delete k.toggledChores;delete k.toggledPenalties;if(!k.choreLog)k.choreLog={};if(!k.passcode)k.passcode=""});(data.chores||[]).forEach(c=>{if(!c.kidIds)c.kidIds=[0,1]});if(!data.requests)data.requests=[];if(!data.parentPasscode)data.parentPasscode=""}
 
 function initFB(){try{firebase.initializeApp(FBC);db=firebase.database();return true}catch(e){return false}}
-function connectFamily(code){familyCode=code.trim().toLowerCase().replace(/[^a-z0-9_-]/g,"");if(!familyCode)return;localStorage.setItem("choreTracker_familyCode",familyCode);dbRef=db.ref("families/"+familyCode);db.ref(".info/connected").on("value",s=>{connected=s.val()===true;updBadge()});dbRef.on("value",s=>{const v=s.val();if(v){data=v;data.kids=data.kids||DEFAULT_DATA.kids;data.chores=data.chores||DEFAULT_DATA.chores;data.penalties=data.penalties||[];if(!data.requests)data.requests=[];if(!data.parentPasscode)data.parentPasscode="";data.kids.forEach(k=>{if(!k.choreLog)k.choreLog={};if(!k.passcode)k.passcode=""});migrate()}else{data=JSON.parse(JSON.stringify(DEFAULT_DATA));save()}decideScreen()})}
+function connectFamily(code){familyCode=code.trim().toLowerCase().replace(/[^a-z0-9_-]/g,"");if(!familyCode)return;localStorage.setItem("choreTracker_familyCode",familyCode);dbRef=db.ref("families/"+familyCode);db.ref(".info/connected").on("value",s=>{connected=s.val()===true;updBadge()});dbRef.on("value",s=>{const v=s.val();if(v){data=v;data.kids=data.kids||DEFAULT_DATA.kids;data.chores=data.chores||DEFAULT_DATA.chores;data.penalties=data.penalties||[];if(!data.requests)data.requests=[];if(!data.parentPasscode)data.parentPasscode="";data.kids.forEach(k=>{if(!k.choreLog)k.choreLog={};if(!k.passcode)k.passcode=""});migrate()}else{data=JSON.parse(JSON.stringify(DEFAULT_DATA));save()}if(appScreen==="app"){render()}else{decideScreen()}})}
 function save(){if(dbRef&&data){data.kids.forEach(k=>{if(!k.choreLog)k.choreLog={}});dbRef.set(data).catch(e=>console.error(e))}}
 function updBadge(){const b=document.getElementById("syncBadge");if(!firebaseReady||!familyCode){b.textContent="OFFLINE";b.className="sb off";return}b.textContent=connected?"SYNCED":"OFFLINE";b.className="sb "+(connected?"on":"off")}
 
@@ -291,7 +293,9 @@ function renderScreen(){
   const tabs=document.getElementById("tabs");
   const pages=document.getElementById("pages");
   const swBtn=document.getElementById("swBtn");
+  const userTag=document.getElementById("userTag");
   swBtn.style.display="none";
+  userTag.style.display="none";
 
   if(appScreen==="loading"){tabs.innerHTML="";pages.innerHTML="";return}
   if(appScreen==="family"){tabs.innerHTML="";renderFamilyScreen(pages);updBadge();return}
@@ -299,6 +303,8 @@ function renderScreen(){
   if(appScreen==="passcode"){tabs.innerHTML="";renderPasscodeScreen(pages);updBadge();return}
   // app
   swBtn.style.display="flex";
+  userTag.style.display="block";
+  userTag.textContent=getUserDisplayName(activeUser);
   renderTabs();renderPages();updBadge();
 }
 
@@ -330,8 +336,8 @@ function renderPasscodeScreen(p){
   setTimeout(()=>{
     const el=document.getElementById("pc0");if(el)el.focus();
     for(let i=0;i<4;i++){const inp=document.getElementById("pc"+i);if(inp){
-      inp.addEventListener("input",()=>{if(inp.value.length===1&&i<3)document.getElementById("pc"+(i+1)).focus()});
-      inp.addEventListener("keydown",e=>{if(e.key==="Backspace"&&!inp.value&&i>0)document.getElementById("pc"+(i-1)).focus()});
+      inp.addEventListener("input",()=>{if(inp.value.length===1){if(i<3)document.getElementById("pc"+(i+1)).focus();else setTimeout(submitPasscode,100)}});
+      inp.addEventListener("keydown",e=>{if(e.key==="Backspace"&&!inp.value&&i>0)document.getElementById("pc"+(i-1)).focus();if(e.key==="Enter")submitPasscode()});
     }}
   },100);
 }
@@ -427,6 +433,20 @@ function renderKidPage(i){
         h+=`<div class="cc pc ${on?"on":""}" onclick="tgP(${i},'${ds}',${pen.id})"><div class="em">${PE[pi%PE.length]}</div><div class="inf"><div class="nm">${esc(pen.name)}</div><div class="pt">−${pen.points} pts</div></div><div class="tg"></div></div>`;
       }
     });
+  }
+  // Show pending requests on kid page for parent
+  if(isParent()){
+    const kidReqs=(data.requests||[]).filter(r=>r.kidIdx===i);
+    if(kidReqs.length){
+      h+=`<div class="st2">⏳ Pending Requests (${kidReqs.length})</div>`;
+      kidReqs.forEach(r=>{
+        const ri=(data.requests||[]).indexOf(r);
+        const item=r.itemType==="chore"?(data.chores||[]).find(x=>x.id===r.itemId):(data.penalties||[]).find(x=>x.id===r.itemId);
+        const itemName=item?item.name:"Unknown";
+        const actionLabel=r.itemType==="chore"?(r.action==="add"?"Mark as done":"Undo"):(r.action==="add"?"Apply penalty":"Remove penalty");
+        h+=`<div class="req-card"><div class="req-header"><span class="req-date">${fmt(r.date)}</span></div><div class="req-body"><span class="req-action ${r.action}">${r.action==="add"?"➕":"➖"} ${actionLabel}</span><br><strong>${esc(itemName)}</strong>${item?" ("+item.points+" pts)":""}</div><div class="req-btns"><button class="approve" onclick="approveReq(${ri})">✅ Approve</button><button class="deny" onclick="denyReq(${ri})">❌ Deny</button></div></div>`;
+      });
+    }
   }
   h+=renderMiniCal(i);
   if(isParent()&&isT)h+=`<div style="margin-top:14px"><button class="btn bo" onclick="cfmRD(${i},'${ds}')">🔄 Reset Today's Switches</button></div>`;
@@ -528,13 +548,13 @@ function reqChange(ki,ds,itemId,itemType,currentlyOn){
   const item=itemType==="chore"?(data.chores||[]).find(x=>x.id===itemId):(data.penalties||[]).find(x=>x.id===itemId);
   const name=item?item.name:"this item";const action=currentlyOn?"remove":"add";
   const desc=itemType==="chore"?(currentlyOn?"undo '"+name+"'":"mark '"+name+"' as done"):(currentlyOn?"remove '"+name+"' penalty":"apply '"+name+"' penalty");
-  showOv("Request Change?","Ask parent to "+desc+"?","Send Request",()=>{if(!data.requests)data.requests=[];data.requests.push({kidIdx:ki,date:ds,itemId,itemType,action,timestamp:new Date().toISOString()});save()})
+  showOv("Request Change?","Ask parent to "+desc+"?","Send Request",()=>{if(!data.requests)data.requests=[];data.requests.push({kidIdx:ki,date:ds,itemId,itemType,action,timestamp:new Date().toISOString()});save();render()})
 }
-function approveReq(idx){const r=(data.requests||[])[idx];if(!r)return;const k=data.kids[r.kidIdx],log=getLog(r.kidIdx,r.date);if(r.itemType==="chore"){const c=(data.chores||[]).find(x=>x.id===r.itemId);if(c){if(r.action==="add"){if(!log.chores.includes(c.id)){log.chores.push(c.id);k.score+=c.points}}else{const i2=log.chores.indexOf(c.id);if(i2>-1){log.chores.splice(i2,1);k.score-=c.points}}}}else{const p=(data.penalties||[]).find(x=>x.id===r.itemId);if(p){if(r.action==="add"){if(!log.penalties.includes(p.id)){log.penalties.push(p.id);k.score-=p.points}}else{const i2=log.penalties.indexOf(p.id);if(i2>-1){log.penalties.splice(i2,1);k.score+=p.points}}}}if(!log.chores.length&&!log.penalties.length)delete k.choreLog[r.date];data.requests.splice(idx,1);save()}
-function denyReq(idx){data.requests.splice(idx,1);save()}
+function approveReq(idx){const r=(data.requests||[])[idx];if(!r)return;const k=data.kids[r.kidIdx],log=getLog(r.kidIdx,r.date);if(r.itemType==="chore"){const c=(data.chores||[]).find(x=>x.id===r.itemId);if(c){if(r.action==="add"){if(!log.chores.includes(c.id)){log.chores.push(c.id);k.score+=c.points}}else{const i2=log.chores.indexOf(c.id);if(i2>-1){log.chores.splice(i2,1);k.score-=c.points}}}}else{const p=(data.penalties||[]).find(x=>x.id===r.itemId);if(p){if(r.action==="add"){if(!log.penalties.includes(p.id)){log.penalties.push(p.id);k.score-=p.points}}else{const i2=log.penalties.indexOf(p.id);if(i2>-1){log.penalties.splice(i2,1);k.score+=p.points}}}}if(!log.chores.length&&!log.penalties.length)delete k.choreLog[r.date];data.requests.splice(idx,1);save();render()}
+function denyReq(idx){data.requests.splice(idx,1);save();render()}
 
 let ovAct=null;
-function showOv(t,m,b,fn){document.getElementById("ovT").textContent=t;document.getElementById("ovM").textContent=m;const btn=document.getElementById("ovC");btn.textContent=b;ovAct=fn;btn.onclick=()=>{closeOv();if(ovAct)ovAct()};document.getElementById("overlay").classList.add("show")}
+function showOv(t,m,b,fn){document.getElementById("ovT").textContent=t;document.getElementById("ovM").textContent=m;const btn=document.getElementById("ovC");btn.textContent=b;ovAct=fn;btn.onclick=()=>{const cb=ovAct;closeOv();if(cb)cb()};document.getElementById("overlay").classList.add("show")}
 function closeOv(){document.getElementById("overlay").classList.remove("show");ovAct=null}
 function cfmRD(ki,ds){showOv("Reset Day","Undo all switches for "+data.kids[ki].name+" today?","Reset",()=>{const k=data.kids[ki],l=getLog(ki,ds);(l.chores||[]).forEach(cid=>{const c=(data.chores||[]).find(x=>x.id===cid);if(c)k.score-=c.points});(l.penalties||[]).forEach(pid=>{const p2=(data.penalties||[]).find(x=>x.id===pid);if(p2)k.score+=p2.points});delete k.choreLog[ds];save()})}
 function cfmTR(){showOv("Total Reset","Erase ALL data?","Yes, Erase",()=>{data=JSON.parse(JSON.stringify(DEFAULT_DATA));activeTab="kid-0";selDates=[todayStr(),todayStr()];save()})}
