@@ -16,16 +16,49 @@
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 #app{display:flex;flex-direction:column;height:100%;max-width:480px;margin:0 auto;position:relative}
 .header{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;padding:env(safe-area-inset-top,12px) 16px 0;text-align:center;flex-shrink:0}
-.header h1{font-size:21px;font-weight:900;letter-spacing:.5px;padding:10px 0 6px}
-.header h1 .w{display:inline-block;animation:wig 2s ease-in-out infinite}
+.hdr-top{display:flex;align-items:center;justify-content:center;padding:8px 0 4px;position:relative}
+.hdr-top h1{font-size:20px;font-weight:900;letter-spacing:.5px}
+.hdr-top .w{display:inline-block;animation:wig 2s ease-in-out infinite}
 @keyframes wig{0%,100%{transform:rotate(0)}25%{transform:rotate(6deg)}75%{transform:rotate(-6deg)}}
-.sb{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;margin-left:6px;font-weight:800;vertical-align:middle;letter-spacing:.5px}
+.sb{display:inline-block;font-size:9px;padding:2px 7px;border-radius:20px;margin-left:5px;font-weight:800;vertical-align:middle}
 .sb.on{background:#00B894;color:#fff}.sb.off{background:#D63031;color:#fff}
+.sw-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);padding:5px 10px;border-radius:8px;border:2px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:4px}
+.sw-btn:active{background:rgba(255,255,255,.15)}
+.user-tag{position:absolute;left:0;top:50%;transform:translateY(-50%);padding:4px 10px;border-radius:8px;background:rgba(255,255,255,.2);color:#fff;font-size:11px;font-weight:800;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tabs{display:flex;gap:3px;padding:0 6px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
-.tab{flex:1 0 auto;min-width:0;padding:9px 10px;border-radius:14px 14px 0 0;font-weight:800;font-size:12px;cursor:pointer;transition:.2s;background:rgba(255,255,255,.18);color:rgba(255,255,255,.7);white-space:nowrap;border:none;outline:none;font-family:inherit}
+.tab{flex:1 0 auto;min-width:0;padding:9px 10px;border-radius:14px 14px 0 0;font-weight:800;font-size:12px;cursor:pointer;transition:.2s;background:rgba(255,255,255,.18);color:rgba(255,255,255,.7);white-space:nowrap;border:none;outline:none;font-family:inherit;position:relative}
 .tab.active{background:var(--bg);color:var(--text)}
+.badge{position:absolute;top:3px;right:3px;min-width:18px;height:18px;border-radius:9px;background:var(--red);color:#fff;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 4px}
 .pages{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px calc(env(safe-area-inset-bottom,14px)+14px)}
 .page{display:none}.page.active{display:block}
+
+/* ── User Select Screen ── */
+.user-select{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;text-align:center}
+.user-select h2{font-size:22px;font-weight:900;color:var(--purple);margin-bottom:6px}
+.user-select p{font-size:13px;color:var(--textSoft);font-weight:600;margin-bottom:24px}
+.user-cards{display:flex;flex-direction:column;gap:12px;width:100%;max-width:300px}
+.user-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);cursor:pointer;transition:.15s;display:flex;align-items:center;gap:14px;border:3px solid transparent}
+.user-card:active{transform:scale(.97)}
+.user-card:hover{border-color:#E0DAF0}
+.user-card .uc-avatar{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#fff;flex-shrink:0}
+.uc-av0{background:var(--purple)}.uc-av1{background:var(--pink)}.uc-avp{background:linear-gradient(135deg,var(--purple),var(--pink))}
+.user-card .uc-info{text-align:left}
+.user-card .uc-name{font-size:16px;font-weight:900}
+.user-card .uc-role{font-size:11px;font-weight:700;color:var(--textSoft)}
+.user-card .uc-arrow{margin-left:auto;font-size:20px;color:var(--textSoft)}
+
+/* ── Passcode Screen ── */
+.pass-screen{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;text-align:center}
+.pass-screen h2{font-size:20px;font-weight:900;color:var(--purple);margin-bottom:4px}
+.pass-screen .ps-user{font-size:14px;font-weight:700;color:var(--textSoft);margin-bottom:20px}
+.pass-screen p{font-size:13px;color:var(--textSoft);font-weight:600;margin-bottom:20px}
+.pin-row{display:flex;gap:10px;justify-content:center;margin-bottom:16px}
+.pin-row input{width:48px;height:56px;border-radius:14px;border:2px solid #E0DAF0;font-size:24px;font-weight:900;font-family:inherit;text-align:center;outline:none;-webkit-text-security:disc}
+.pin-row input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(108,60,225,.15)}
+.pin-err{color:var(--red);font-size:12px;font-weight:700;margin-bottom:10px;min-height:18px}
+.pass-back{margin-top:12px;background:transparent;border:none;color:var(--textSoft);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;padding:8px}
+
+/* ── Rest of styles (same as v6) ── */
 .pb{background:linear-gradient(135deg,var(--kid1),color-mix(in srgb,var(--kid1),#fff 30%));border-radius:var(--radius);padding:16px;text-align:center;color:#fff;margin-bottom:10px;box-shadow:var(--shadow);position:relative;overflow:hidden}
 .pb::after{content:"⭐";position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:42px;opacity:.25}
 .pb .lb{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;opacity:.85}
@@ -45,8 +78,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);-we
 .k2 .sv{color:var(--pink)}
 .st2{font-size:13px;font-weight:800;color:var(--textSoft);margin:16px 0 7px;text-transform:uppercase;letter-spacing:1px}
 .cc{background:var(--card);border-radius:var(--radius);padding:11px 13px;margin-bottom:7px;display:flex;align-items:center;gap:9px;box-shadow:var(--shadow);transition:transform .15s;cursor:pointer;user-select:none;border-left:5px solid var(--teal)}
-.cc:active{transform:scale(.97)}
-.cc.on{border-left-color:var(--green);background:linear-gradient(90deg,#E8FFF5,#fff)}
+.cc:active{transform:scale(.97)}.cc.on{border-left-color:var(--green);background:linear-gradient(90deg,#E8FFF5,#fff)}
 .cc .em{font-size:24px;flex-shrink:0;width:30px;text-align:center}
 .cc .inf{flex:1;min-width:0}.cc .nm{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cc .pt{font-size:11px;font-weight:700;color:var(--teal)}.cc.on .pt{color:var(--green)}
@@ -55,6 +87,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);-we
 .cc.on .tg{background:var(--green)}.cc.on .tg::after{left:23px}
 .pc{border-left-color:var(--red)!important}.pc .pt{color:var(--red)!important}
 .pc.on{background:linear-gradient(90deg,#FFE8E8,#fff);border-left-color:var(--red)!important}.pc.on .tg{background:var(--red)}
+.cc.locked{opacity:.85;cursor:pointer}.cc.locked:active{transform:scale(.98)}
+.lock-icon{font-size:18px;flex-shrink:0;width:46px;text-align:center;color:var(--textSoft)}
+.cc.locked.has-req .lock-icon{color:var(--orange)}
+.pending-tag{font-size:9px;font-weight:800;color:var(--orange);text-transform:uppercase}
+.lock-banner{display:flex;align-items:center;gap:8px;background:#FFF8E1;border-radius:12px;padding:10px 14px;margin-bottom:10px;border-left:4px solid var(--orange)}
+.lock-banner .lb-icon{font-size:20px}.lock-banner .lb-text{font-size:12px;font-weight:700;color:#7A6B00}
 .adj{display:flex;gap:7px;margin:8px 0 14px}
 .adj input{flex:1;padding:9px 11px;border-radius:11px;border:2px solid #E0DAF0;font-size:14px;font-weight:700;font-family:inherit;background:#fff;outline:none}
 .adj input:focus{border-color:var(--purple)}
@@ -63,55 +101,42 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);-we
 .btn:active{transform:scale(.97)}
 .bo{background:transparent;border:2px solid #D8D4E8;color:var(--textSoft)}
 .bd{background:var(--red);color:#fff}.bp{background:var(--purple);color:#fff}
-/* Mini Cal */
 .mc{background:var(--card);border-radius:var(--radius);padding:12px;margin:14px 0;box-shadow:var(--shadow)}
 .mch{display:flex;align-items:center;margin-bottom:8px}
 .mch .mt{flex:1;text-align:center;font-size:14px;font-weight:900}
 .mch .ma{width:30px;height:30px;border-radius:8px;border:none;background:#F0EDFF;color:var(--purple);font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center}
 .mg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
 .mdow{font-size:9px;font-weight:800;color:var(--textSoft);padding:3px 0}
-.md{position:relative;padding:5px 0;font-size:11px;font-weight:700;cursor:pointer;border-radius:7px;transition:.15s}
+.md{padding:5px 0;font-size:11px;font-weight:700;cursor:pointer;border-radius:7px;transition:.15s}
 .md:hover{background:#F0EDFF}.md.emp{pointer-events:none}.md.tod{font-weight:900;color:var(--purple)}.md.sel{background:var(--purple);color:#fff}.md.fut{opacity:.3;pointer-events:none}
 .dot{display:block;width:5px;height:5px;border-radius:50%;margin:1px auto 0}.dot.dg{background:var(--green)}.dot.dy{background:var(--orange)}.dot.dn{background:transparent}
-.lg{display:flex;gap:12px;justify-content:center;margin-top:8px;font-size:9px;font-weight:700;color:var(--textSoft)}
-.lg span{display:flex;align-items:center;gap:3px}
-.lg .ld{width:7px;height:7px;border-radius:50%;display:inline-block}
-/* Cal Tab */
+.lg{display:flex;gap:12px;justify-content:center;margin-top:8px;font-size:9px;font-weight:700;color:var(--textSoft)}.lg span{display:flex;align-items:center;gap:3px}.lg .ld{width:7px;height:7px;border-radius:50%}
 .ckt{display:flex;gap:5px;margin-bottom:12px}
 .ckb{flex:1;padding:9px;border-radius:11px;border:2px solid #E0DAF0;background:#fff;font-weight:800;font-size:12px;cursor:pointer;font-family:inherit;text-align:center;transition:.15s}
 .ckb.a0{background:var(--purple);color:#fff;border-color:var(--purple)}.ckb.a1{background:var(--pink);color:#fff;border-color:var(--pink)}
 .cvt{display:flex;gap:5px;margin-bottom:12px}
-.cvb{flex:1;padding:8px;border-radius:9px;border:2px solid #E0DAF0;background:#fff;font-weight:800;font-size:11px;cursor:pointer;font-family:inherit;text-align:center;transition:.15s}
-.cvb.act{background:var(--purple);color:#fff;border-color:var(--purple)}
+.cvb{flex:1;padding:8px;border-radius:9px;border:2px solid #E0DAF0;background:#fff;font-weight:800;font-size:11px;cursor:pointer;font-family:inherit;text-align:center}.cvb.act{background:var(--purple);color:#fff;border-color:var(--purple)}
 .wn{display:flex;align-items:center;margin-bottom:10px}
 .wn .wt{flex:1;text-align:center;font-size:13px;font-weight:800}
 .wn .wa{width:34px;height:34px;border-radius:9px;border:none;background:#F0EDFF;color:var(--purple);font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center}
 .wg{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:14px}
 .whr{display:grid;grid-template-columns:minmax(80px,1fr) repeat(7,1fr);background:#F0EDFF}
-.whc{padding:7px 2px;font-size:9px;font-weight:800;text-align:center;color:var(--textSoft);text-transform:uppercase}
-.whc.tc{color:var(--purple);background:rgba(108,60,225,.08);border-radius:7px 7px 0 0}
+.whc{padding:7px 2px;font-size:9px;font-weight:800;text-align:center;color:var(--textSoft)}.whc.tc{color:var(--purple);background:rgba(108,60,225,.08)}
 .wlc{padding:7px;font-size:9px;font-weight:800;color:var(--textSoft)}
-.wr{display:grid;grid-template-columns:minmax(80px,1fr) repeat(7,1fr);border-top:1px solid #F0EDFF;align-items:center}
-.wr:nth-child(odd){background:#FAFAFE}
+.wr{display:grid;grid-template-columns:minmax(80px,1fr) repeat(7,1fr);border-top:1px solid #F0EDFF;align-items:center}.wr:nth-child(odd){background:#FAFAFE}
 .wcn{padding:6px;font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wc{text-align:center;padding:5px 2px;font-size:14px}.wc.tc{background:rgba(108,60,225,.04)}
-.wtr{display:grid;grid-template-columns:minmax(80px,1fr) repeat(7,1fr);border-top:2px solid #E0DAF0;background:#F8F6FF;font-weight:800}
-.wtr .wcn{font-size:10px;color:var(--purple)}.wtr .wc{font-size:11px;font-weight:900;color:var(--purple)}
-/* Month Full */
+.wtr{display:grid;grid-template-columns:minmax(80px,1fr) repeat(7,1fr);border-top:2px solid #E0DAF0;background:#F8F6FF}
+.wtr .wcn{font-size:10px;font-weight:800;color:var(--purple)}.wtr .wc{font-size:11px;font-weight:900;color:var(--purple)}
 .mf{background:var(--card);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow);margin-bottom:14px}
 .mfh{display:flex;align-items:center;margin-bottom:8px}
 .mfh .mft{flex:1;text-align:center;font-size:15px;font-weight:900}
 .mfh .mfa{width:34px;height:34px;border-radius:9px;border:none;background:#F0EDFF;color:var(--purple);font-size:15px;font-weight:900;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center}
 .mfg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
 .mfdow{font-size:9px;font-weight:800;color:var(--textSoft);padding:3px 0}
-.mfd{padding:5px 1px;border-radius:8px;cursor:pointer;transition:.15s;position:relative}
-.mfd:hover{background:#F0EDFF}.mfd.emp{pointer-events:none}.mfd.fut{opacity:.25;pointer-events:none}
-.mfd .mn{font-size:12px;font-weight:800}.mfd.tod .mn{color:var(--purple);font-weight:900}
-.mfd .mp{font-size:8px;font-weight:700;color:var(--textSoft);margin-top:1px}
-.mfd .mdot{display:block;width:6px;height:6px;border-radius:50%;margin:1px auto 0}.mdot.dg{background:var(--green)}.mdot.dy{background:var(--orange)}
-/* Day Popup */
-.dpp{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:100;padding:18px}
-.dpp.show{display:flex}
+.mfd{padding:5px 1px;border-radius:8px;cursor:pointer;transition:.15s}.mfd:hover{background:#F0EDFF}.mfd.emp{pointer-events:none}.mfd.fut{opacity:.25;pointer-events:none}
+.mfd .mn{font-size:12px;font-weight:800}.mfd.tod .mn{color:var(--purple)}.mfd .mp{font-size:8px;font-weight:700;color:var(--textSoft)}.mfd .mdot{display:block;width:6px;height:6px;border-radius:50%;margin:1px auto 0}.mdot.dg{background:var(--green)}.mdot.dy{background:var(--orange)}
+.dpp{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:100;padding:18px}.dpp.show{display:flex}
 .dpb{background:#fff;border-radius:18px;padding:22px 18px;max-width:340px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.25);max-height:80vh;overflow-y:auto}
 .dpb h3{font-size:15px;font-weight:900;color:var(--purple);margin-bottom:3px}
 .dpb .dd{font-size:12px;color:var(--textSoft);font-weight:600;margin-bottom:12px}
@@ -119,38 +144,39 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);-we
 .dss{flex:1;background:#F0EDFF;border-radius:9px;padding:8px;text-align:center}
 .dss .dsv{font-size:20px;font-weight:900;color:var(--purple)}.dss .dsl{font-size:8px;font-weight:700;color:var(--textSoft);text-transform:uppercase}
 .dps{margin-bottom:8px}.dps h4{font-size:11px;font-weight:800;color:var(--textSoft);text-transform:uppercase;margin-bottom:4px}
-.dpi{display:flex;align-items:center;gap:7px;padding:4px 0;font-size:12px;font-weight:700}
-.dpi .dppt{margin-left:auto;font-size:11px;font-weight:800}
+.dpi{display:flex;align-items:center;gap:7px;padding:4px 0;font-size:12px;font-weight:700}.dpi .dppt{margin-left:auto;font-size:11px;font-weight:800}
 .dpe{font-size:12px;color:var(--textSoft);font-style:italic;font-weight:600}
 .dpcl{display:block;width:100%;padding:10px;border-radius:10px;border:none;background:#F0EDFF;color:var(--purple);font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;margin-top:10px}
 .dpgo{display:block;width:100%;padding:9px;border-radius:9px;border:none;background:var(--purple);color:#fff;font-weight:800;font-size:12px;cursor:pointer;font-family:inherit;margin-top:7px}
-/* Settings */
+.req-card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:var(--shadow);border-left:4px solid var(--orange)}
+.req-card .req-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.req-card .req-kid{font-size:11px;font-weight:800;color:#fff;padding:2px 8px;border-radius:6px}
+.req-card .req-kid.rk0{background:var(--purple)}.req-card .req-kid.rk1{background:var(--pink)}
+.req-card .req-date{font-size:11px;font-weight:700;color:var(--textSoft)}
+.req-card .req-body{font-size:13px;font-weight:700;margin-bottom:10px;line-height:1.4}
+.req-card .req-action{font-size:11px;font-weight:800;padding:3px 8px;border-radius:6px;display:inline-block}
+.req-card .req-action.add{background:#E8FFF5;color:var(--green)}.req-card .req-action.remove{background:#FFE8E8;color:var(--red)}
+.req-btns{display:flex;gap:8px}
+.req-btns button{flex:1;padding:10px;border-radius:10px;border:none;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit}
+.req-btns .approve{background:var(--green);color:#fff}.req-btns .deny{background:#FFE4E4;color:var(--red)}
+.no-req{text-align:center;padding:40px 20px;color:var(--textSoft);font-weight:700;font-size:14px}
 .ss{margin-bottom:22px}.ss h3{font-size:15px;font-weight:800;margin-bottom:10px;color:var(--purple)}
 .si{background:var(--card);border-radius:12px;padding:10px;margin-bottom:7px;box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .si input{flex:1;padding:8px 9px;border-radius:9px;border:2px solid #E0DAF0;font-size:13px;font-weight:700;font-family:inherit;outline:none;min-width:0}
 .si input:focus{border-color:var(--purple)}
 .si input[type="number"]{width:55px;flex:0 0 55px;text-align:center}
 .si .db{width:30px;height:30px;border-radius:8px;border:none;background:#FFE4E4;color:var(--red);font-size:16px;font-weight:900;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:inherit}
-/* Kid assignment pills */
-.kp{display:flex;gap:3px;flex-shrink:0}
-.kp .pill{width:26px;height:26px;border-radius:7px;border:2px solid #E0DAF0;font-size:10px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;background:#fff;color:var(--textSoft)}
-.kp .pill.ak0{background:var(--purple);color:#fff;border-color:var(--purple)}
-.kp .pill.ak1{background:var(--pink);color:#fff;border-color:var(--pink)}
 .ar2{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap;align-items:center}
 .ar2 input{flex:1;padding:8px 9px;border-radius:9px;border:2px solid #E0DAF0;font-size:13px;font-weight:700;font-family:inherit;outline:none;min-width:0}
 .ar2 input[type="number"]{width:55px;flex:0 0 55px;text-align:center}
 .ar2 button{padding:8px 12px;border-radius:9px;border:none;background:var(--green);color:#fff;font-weight:800;font-size:12px;cursor:pointer;font-family:inherit;white-space:nowrap}
-.ar2 select{padding:8px;border-radius:9px;border:2px solid #E0DAF0;font-size:12px;font-weight:700;font-family:inherit;background:#fff;outline:none}
 .prc{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);font-size:12px;line-height:1.7}
 .prc h2{font-size:17px;font-weight:900;color:var(--purple);margin-bottom:12px;text-align:center}
 .prc h3{font-size:13px;font-weight:800;color:var(--pink);margin:14px 0 5px;padding-bottom:3px;border-bottom:2px solid #F0EDFF}
-.prc .intro{font-size:12px;font-weight:700;color:var(--textSoft);margin-bottom:8px;font-style:italic}
 .prc ul{padding-left:16px;margin:3px 0 6px}.prc li{margin-bottom:3px;font-weight:600}
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:100;padding:22px}
-.ov.show{display:flex}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:100;padding:22px}.ov.show{display:flex}
 .ovb{background:#fff;border-radius:18px;padding:22px 18px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25)}
-.ovb h3{font-size:16px;font-weight:900;margin-bottom:6px}
-.ovb p{font-size:13px;color:var(--textSoft);margin-bottom:16px;font-weight:600}
+.ovb h3{font-size:16px;font-weight:900;margin-bottom:6px}.ovb p{font-size:13px;color:var(--textSoft);margin-bottom:16px;font-weight:600}
 .ovb .br{display:flex;gap:8px}.ovb .br .btn{flex:1;margin:0}
 .sus{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:36px 22px;text-align:center}
 .sus h2{font-size:22px;font-weight:900;color:var(--purple);margin-bottom:8px}
@@ -168,267 +194,367 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);-we
 <body>
 <div id="app">
   <div class="header">
-    <h1><span class="w">⭐</span> Chore Tracker <span class="sb" id="syncBadge">…</span></h1>
+    <div class="hdr-top">
+      <span class="user-tag" id="userTag" style="display:none"></span>
+      <h1><span class="w">⭐</span> Chore Tracker <span class="sb" id="syncBadge">…</span></h1>
+      <button class="sw-btn" id="swBtn" onclick="switchUser()" style="display:none">👤 Switch</button>
+    </div>
     <div class="tabs" id="tabs"></div>
   </div>
   <div class="pages" id="pages"></div>
 </div>
-<div class="ov" id="overlay"><div class="ovb"><h3 id="ovT">Confirm</h3><p id="ovM">Are you sure?</p><div class="br"><button class="btn bo" onclick="closeOv()">Cancel</button><button class="btn bd" id="ovC">Yes</button></div></div></div>
+<div class="ov" id="overlay"><div class="ovb"><h3 id="ovT"></h3><p id="ovM"></p><div class="br"><button class="btn bo" onclick="closeOv()">Cancel</button><button class="btn bd" id="ovC">Yes</button></div></div></div>
 <div class="dpp" id="dayPopup"><div class="dpb" id="dpCon"></div></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
 const FBC={apiKey:"AIzaSyDK8jiCT4-pfdJOuoe5nH-g5jZDrhCs2Lc",databaseURL:"https://sschee-chores-default-rtdb.firebaseio.com",projectId:"sschee-chores"};
-
 const CE=["🛏️","🍽️","🎵","⚽","🧹","🧼","🛋️","📚","✏️","🎨","🐕","🌱","👕","🗑️","💪","🎯","⏰","🪥","🏃","🍳","🚌","🎒","🥗","📖","🛁","👔","💆","🍽️","📕","😴"];
 const PE=["🥦","📱","😤","🚫","⏰","🔇"];
 const MO=["January","February","March","April","May","June","July","August","September","October","November","December"];
 const MS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const DS=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const DSN=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-const SHARED_CHORES=[
-  {id:1,name:"Make bed",points:5,kidIds:[0,1]},
-  {id:2,name:"Help with dishes",points:5,kidIds:[0,1]},
-  {id:3,name:"Practice",points:10,kidIds:[0,1]},
-  {id:4,name:"Exercise / Play outdoors",points:10,kidIds:[0,1]},
-  {id:5,name:"Tidy room",points:10,kidIds:[0,1]},
-  {id:6,name:"Cleanup after eating",points:5,kidIds:[0,1]},
-  {id:7,name:"Help cleaning living room",points:10,kidIds:[0,1]},
-  {id:8,name:"Homework",points:15,kidIds:[0,1]}
-];
-const SRIMAN_CHORES=[
-  {id:201,name:"Wake up at 5:30 (Mon/Wed/Thu/Fri)",points:10,kidIds:[0]},
-  {id:202,name:"Brush neat & tongue clean",points:5,kidIds:[0]},
-  {id:203,name:"Exercise 10 mins",points:10,kidIds:[0]},
-  {id:204,name:"Breakfast & ready by 7:20 AM",points:10,kidIds:[0]},
-  {id:205,name:"Don't miss the school bus",points:10,kidIds:[0]},
-  {id:206,name:"Keep bags away & wash hands",points:5,kidIds:[0]},
-  {id:207,name:"Eat healthy snack",points:5,kidIds:[0]},
-  {id:208,name:"Don't miss any classes",points:10,kidIds:[0]},
-  {id:209,name:"10-min bath",points:5,kidIds:[0]},
-  {id:210,name:"Dirty clothes in laundry",points:5,kidIds:[0]},
-  {id:211,name:"Moisturize & comb hair",points:5,kidIds:[0]},
-  {id:212,name:"Finish dinner in 15 mins",points:5,kidIds:[0]},
-  {id:213,name:"Read book 15 mins before bed",points:10,kidIds:[0]},
-  {id:214,name:"Sleep by 9 PM",points:10,kidIds:[0]}
-];
+const DEFAULT_DATA={kids:[{name:"Sriman",score:0,choreLog:{},passcode:""},{name:"Sivansh",score:0,choreLog:{},passcode:""}],
+chores:[{id:1,name:"Make bed",points:5,kidIds:[0,1]},{id:2,name:"Help with dishes",points:5,kidIds:[0,1]},{id:3,name:"Practice",points:10,kidIds:[0,1]},{id:4,name:"Exercise / Play outdoors",points:10,kidIds:[0,1]},{id:5,name:"Tidy room",points:10,kidIds:[0,1]},{id:6,name:"Cleanup after eating",points:5,kidIds:[0,1]},{id:7,name:"Help cleaning living room",points:10,kidIds:[0,1]},{id:8,name:"Homework",points:15,kidIds:[0,1]},
+{id:201,name:"Wake up at 5:30 (Mon/Wed/Thu/Fri)",points:10,kidIds:[0]},{id:202,name:"Brush neat & tongue clean",points:5,kidIds:[0]},{id:203,name:"Exercise 10 mins",points:10,kidIds:[0]},{id:204,name:"Breakfast & ready by 7:20 AM",points:10,kidIds:[0]},{id:205,name:"Don't miss the school bus",points:10,kidIds:[0]},{id:206,name:"Keep bags away & wash hands",points:5,kidIds:[0]},{id:207,name:"Eat healthy snack",points:5,kidIds:[0]},{id:208,name:"Don't miss any classes",points:10,kidIds:[0]},{id:209,name:"10-min bath",points:5,kidIds:[0]},{id:210,name:"Dirty clothes in laundry",points:5,kidIds:[0]},{id:211,name:"Moisturize & comb hair",points:5,kidIds:[0]},{id:212,name:"Finish dinner in 15 mins",points:5,kidIds:[0]},{id:213,name:"Read book 15 mins before bed",points:10,kidIds:[0]},{id:214,name:"Sleep by 9 PM",points:10,kidIds:[0]}],
+penalties:[{id:100,name:"Not eating vegetables/fruits",points:10},{id:101,name:"Too much screen time",points:20}],
+nextId:300,parentPasscode:"",requests:[],redemptions:[],centsPerPoint:1};
 
-const DEFAULT_DATA={
-  kids:[{name:"Sriman",score:0,choreLog:{}},{name:"Sivansh",score:0,choreLog:{}}],
-  chores:[...SHARED_CHORES,...SRIMAN_CHORES],
-  penalties:[{id:100,name:"Not eating vegetables/fruits",points:10},{id:101,name:"Too much screen time",points:20}],
-  nextId:300
-};
-
-let data=null,db=null,dbRef=null,activeTab="kid-0",familyCode=localStorage.getItem("choreTracker_familyCode")||"",firebaseReady=false,connected=false;
-let selDates=[todayStr(),todayStr()];
-let mcMonths=[curMonth(),curMonth()];
+let data=null,db=null,dbRef=null,familyCode=localStorage.getItem("choreTracker_familyCode")||"",firebaseReady=false,connected=false;
+// activeUser: "parent","kid-0","kid-1", or "" (not logged in)
+let activeUser="";
+let activeTab="",appScreen="loading"; // loading, family, userselect, passcode, app
+let selDates=[todayStr(),todayStr()],mcMonths=[curMonth(),curMonth()];
 let ctKid=0,ctView="weekly",cwStart=getWS(todayStr()),cMonth=curMonth();
+let passTarget="",passMode=""; // for passcode screen: passTarget=who, passMode=create|enter
 
 function todayStr(){return new Date().toISOString().slice(0,10)}
 function curMonth(){const d=new Date();return{year:d.getFullYear(),month:d.getMonth()}}
-function fmt(s){const d=new Date(s+"T12:00:00");return DS[d.getDay()]+", "+MS[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()}
+function fmt(s){const d=new Date(s+"T12:00:00");return DSN[d.getDay()]+", "+MS[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()}
 function fmtS(s){const d=new Date(s+"T12:00:00");return MS[d.getMonth()]+" "+d.getDate()}
 function shD(s,n){const d=new Date(s+"T12:00:00");d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)}
 function getWS(s){const d=new Date(s+"T12:00:00");d.setDate(d.getDate()-d.getDay());return d.toISOString().slice(0,10)}
 function dStr(y,m,d){return`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`}
-
-function choresForKid(ki){return(data.chores||[]).filter(c=>{const k=c.kidIds||[0,1];return k.includes(ki)})}
-
+function choresForKid(ki){return(data.chores||[]).filter(c=>(c.kidIds||[0,1]).includes(ki))}
 function getLog(ki,ds){const k=data.kids[ki];if(!k.choreLog)k.choreLog={};if(!k.choreLog[ds])k.choreLog[ds]={chores:[],penalties:[]};const l=k.choreLog[ds];if(!l.chores)l.chores=[];if(!l.penalties)l.penalties=[];return l}
 function getDayPts(ki,ds){const k=data.kids[ki];if(!k.choreLog||!k.choreLog[ds])return{pts:0,done:0};const l=k.choreLog[ds];let pts=0,done=0;(l.chores||[]).forEach(cid=>{const c=(data.chores||[]).find(x=>x.id===cid);if(c){pts+=c.points;done++}});(l.penalties||[]).forEach(pid=>{const p=(data.penalties||[]).find(x=>x.id===pid);if(p)pts-=p.points});return{pts,done}}
-function getDot(ki,ds){const k=data.kids[ki];if(!k.choreLog||!k.choreLog[ds])return"dn";const l=k.choreLog[ds];const done=(l.chores||[]).length;if(done===0&&(!l.penalties||!l.penalties.length))return"dn";const total=choresForKid(ki).length;return done>=total?"dg":"dy"}
+function getDot(ki,ds){const k=data.kids[ki];if(!k.choreLog||!k.choreLog[ds])return"dn";const l=k.choreLog[ds];const done=(l.chores||[]).length;if(!done&&(!l.penalties||!l.penalties.length))return"dn";return done>=choresForKid(ki).length?"dg":"dy"}
+function isLocked(ds){return ds<todayStr()}
+function pendingCount(){return(data.requests||[]).length+(data.redemptions||[]).filter(r=>r.status==="pending").length}
+function hasRequest(ki,ds,itemId){return(data.requests||[]).some(r=>r.kidIdx===ki&&r.date===ds&&r.itemId===itemId)}
+function isParent(){return activeUser==="parent"}
+function myKidIdx(){if(activeUser==="kid-0")return 0;if(activeUser==="kid-1")return 1;return-1}
 
-function migrate(){
-  if(!data||!data.kids)return;
-  data.kids.forEach(k=>{
-    if(k.toggledChores&&k.toggledChores.length>0){const dk=data.lastDate||todayStr();if(!k.choreLog)k.choreLog={};if(!k.choreLog[dk])k.choreLog[dk]={chores:[],penalties:[]};k.choreLog[dk].chores=k.toggledChores;if(k.toggledPenalties)k.choreLog[dk].penalties=k.toggledPenalties}
-    delete k.toggledChores;delete k.toggledPenalties;if(!k.choreLog)k.choreLog={};
-  });
-  // Add kidIds to chores that don't have it
-  (data.chores||[]).forEach(c=>{if(!c.kidIds)c.kidIds=[0,1]});
-}
+function migrate(){if(!data||!data.kids)return;data.kids.forEach(k=>{if(k.toggledChores){const dk=data.lastDate||todayStr();if(!k.choreLog)k.choreLog={};if(!k.choreLog[dk])k.choreLog[dk]={chores:[],penalties:[]};k.choreLog[dk].chores=k.toggledChores;if(k.toggledPenalties)k.choreLog[dk].penalties=k.toggledPenalties}delete k.toggledChores;delete k.toggledPenalties;if(!k.choreLog)k.choreLog={};if(!k.passcode)k.passcode=""});(data.chores||[]).forEach(c=>{if(!c.kidIds)c.kidIds=[0,1]});if(!data.requests)data.requests=[];if(!data.parentPasscode)data.parentPasscode=""}
 
 function initFB(){try{firebase.initializeApp(FBC);db=firebase.database();return true}catch(e){return false}}
-function connectFamily(code){
-  familyCode=code.trim().toLowerCase().replace(/[^a-z0-9_-]/g,"");if(!familyCode)return;
-  localStorage.setItem("choreTracker_familyCode",familyCode);
-  dbRef=db.ref("families/"+familyCode);
-  db.ref(".info/connected").on("value",s=>{connected=s.val()===true;updBadge()});
-  dbRef.on("value",s=>{
-    const v=s.val();
-    if(v){data=v;data.kids=data.kids||DEFAULT_DATA.kids;data.chores=data.chores||DEFAULT_DATA.chores;data.penalties=data.penalties||[];
-      data.kids.forEach(k=>{if(!k.choreLog)k.choreLog={}});migrate();
-    }else{data=JSON.parse(JSON.stringify(DEFAULT_DATA));save()}
-    render();
-  });
-}
+function connectFamily(code){familyCode=code.trim().toLowerCase().replace(/[^a-z0-9_-]/g,"");if(!familyCode)return;localStorage.setItem("choreTracker_familyCode",familyCode);dbRef=db.ref("families/"+familyCode);db.ref(".info/connected").on("value",s=>{connected=s.val()===true;updBadge()});dbRef.on("value",s=>{const v=s.val();if(v){data=v;data.kids=data.kids||DEFAULT_DATA.kids;data.chores=data.chores||DEFAULT_DATA.chores;data.penalties=data.penalties||[];if(!data.requests)data.requests=[];if(!data.redemptions)data.redemptions=[];if(!data.centsPerPoint)data.centsPerPoint=1;if(!data.parentPasscode)data.parentPasscode="";data.kids.forEach(k=>{if(!k.choreLog)k.choreLog={};if(!k.passcode)k.passcode=""});migrate()}else{data=JSON.parse(JSON.stringify(DEFAULT_DATA));save()}if(appScreen==="app"){render()}else{decideScreen()}})}
 function save(){if(dbRef&&data){data.kids.forEach(k=>{if(!k.choreLog)k.choreLog={}});dbRef.set(data).catch(e=>console.error(e))}}
 function updBadge(){const b=document.getElementById("syncBadge");if(!firebaseReady||!familyCode){b.textContent="OFFLINE";b.className="sb off";return}b.textContent=connected?"SYNCED":"OFFLINE";b.className="sb "+(connected?"on":"off")}
 
-function renderSetup(){
-  document.getElementById("tabs").innerHTML="";const p=document.getElementById("pages");
-  if(FBC.apiKey==="PASTE_YOUR_API_KEY_HERE"){p.innerHTML=`<div class="sus"><h2>🔧 Firebase Not Configured</h2><p>Open this file and paste your Firebase config.</p></div>`;return}
-  firebaseReady=initFB();if(!firebaseReady){p.innerHTML=`<div class="sus"><h2>❌ Error</h2></div>`;return}
-  if(familyCode){connectFamily(familyCode);return}
-  p.innerHTML=`<div class="sus"><h2>👨‍👩‍👧‍👦 Family Setup</h2><p>Enter a family code to sync across devices.</p><div class="fld"><label>Family Code</label><input id="codeIn" placeholder="e.g. smith-family" autocapitalize="off"></div><button class="btn bp" onclick="doJoin()">🚀 Start Tracking</button></div>`;
-  document.getElementById("codeIn").addEventListener("keydown",e=>{if(e.key==="Enter")doJoin()});updBadge();
+function decideScreen(){
+  if(!data){appScreen="loading";renderScreen();return}
+  if(!activeUser){appScreen="userselect";renderScreen();return}
+  // Validate stored user still valid & check passcode
+  const storedPass=getPasscode(activeUser);
+  if(storedPass){appScreen="app";setDefaultTab();renderScreen();return}
+  // No passcode set — go to create
+  passTarget=activeUser;passMode="create";appScreen="passcode";renderScreen();
 }
-function doJoin(){const c=document.getElementById("codeIn").value.trim();if(!c){alert("Enter a code!");return}connectFamily(c)}
+
+function getPasscode(user){
+  if(user==="parent")return data.parentPasscode;
+  if(user==="kid-0")return data.kids[0]?data.kids[0].passcode:"";
+  if(user==="kid-1")return data.kids[1]?data.kids[1].passcode:"";
+  return"";
+}
+function setPasscode(user,pin){
+  if(user==="parent")data.parentPasscode=pin;
+  else if(user==="kid-0"&&data.kids[0])data.kids[0].passcode=pin;
+  else if(user==="kid-1"&&data.kids[1])data.kids[1].passcode=pin;
+  save();
+}
+function getUserDisplayName(user){
+  if(user==="parent")return"Parent";
+  if(user==="kid-0")return data.kids[0]?data.kids[0].name:"Kid 1";
+  if(user==="kid-1")return data.kids[1]?data.kids[1].name:"Kid 2";
+  return"User";
+}
+
+function setDefaultTab(){
+  if(isParent()){if(!activeTab||activeTab.startsWith("kid"))activeTab="kid-0"}
+  else{activeTab="kid-"+myKidIdx()}
+}
 
 /* ══════ RENDER ══════ */
-function render(){if(!data)return;renderTabs();renderPages();updBadge()}
+function renderScreen(){
+  const tabs=document.getElementById("tabs");
+  const pages=document.getElementById("pages");
+  const swBtn=document.getElementById("swBtn");
+  const userTag=document.getElementById("userTag");
+  swBtn.style.display="none";
+  userTag.style.display="none";
+
+  if(appScreen==="loading"){tabs.innerHTML="";pages.innerHTML="";return}
+  if(appScreen==="family"){tabs.innerHTML="";renderFamilyScreen(pages);updBadge();return}
+  if(appScreen==="userselect"){tabs.innerHTML="";renderUserSelect(pages);updBadge();return}
+  if(appScreen==="passcode"){tabs.innerHTML="";renderPasscodeScreen(pages);updBadge();return}
+  // app
+  swBtn.style.display="flex";
+  userTag.style.display="block";
+  userTag.textContent=getUserDisplayName(activeUser);
+  renderTabs();renderPages();updBadge();
+}
+
+function renderFamilyScreen(p){
+  p.innerHTML=`<div class="sus"><h2>👨‍👩‍👧‍👦 Family Setup</h2><p>Enter a family code to sync across devices.</p><div class="fld"><label>Family Code</label><input id="codeIn" placeholder="e.g. smith-family" autocapitalize="off"></div><button class="btn bp" onclick="doJoin()">🚀 Start Tracking</button></div>`;
+  document.getElementById("codeIn").addEventListener("keydown",e=>{if(e.key==="Enter")doJoin()});
+}
+
+function renderUserSelect(p){
+  let h=`<div class="user-select"><h2>👋 Who's using this?</h2><p>Select your profile to continue</p><div class="user-cards">`;
+  data.kids.forEach((k,i)=>{
+    const hasPass=!!k.passcode;
+    h+=`<div class="user-card" onclick="selectUser('kid-${i}')"><div class="uc-avatar uc-av${i}">${esc(k.name.charAt(0))}</div><div class="uc-info"><div class="uc-name">${esc(k.name)}</div><div class="uc-role">${hasPass?"Enter passcode":"Create passcode"}</div></div><div class="uc-arrow">›</div></div>`;
+  });
+  h+=`<div class="user-card" onclick="selectUser('parent')"><div class="uc-avatar uc-avp">👨‍👩‍👧‍👦</div><div class="uc-info"><div class="uc-name">Parent</div><div class="uc-role">${data.parentPasscode?"Enter passcode":"Create passcode"}</div></div><div class="uc-arrow">›</div></div>`;
+  h+=`</div></div>`;
+  p.innerHTML=h;
+}
+
+function renderPasscodeScreen(p){
+  const name=getUserDisplayName(passTarget);
+  const isCreate=passMode==="create";
+  let h=`<div class="pass-screen"><h2>${isCreate?"🔑 Create Passcode":"🔒 Enter Passcode"}</h2><div class="ps-user">${esc(name)}</div><p>${isCreate?"Choose a 4-digit passcode":"Enter your 4-digit passcode"}</p>`;
+  h+=`<div class="pin-row"><input type="tel" maxlength="1" id="pc0" inputmode="numeric" autocomplete="off"><input type="tel" maxlength="1" id="pc1" inputmode="numeric" autocomplete="off"><input type="tel" maxlength="1" id="pc2" inputmode="numeric" autocomplete="off"><input type="tel" maxlength="1" id="pc3" inputmode="numeric" autocomplete="off"></div>`;
+  h+=`<div class="pin-err" id="pinErr"></div>`;
+  h+=`<button class="btn bp" onclick="submitPasscode()">${isCreate?"Set Passcode":"Unlock"}</button>`;
+  h+=`<button class="pass-back" onclick="goBackToSelect()">← Back</button></div>`;
+  p.innerHTML=h;
+  setTimeout(()=>{
+    const el=document.getElementById("pc0");if(el)el.focus();
+    for(let i=0;i<4;i++){const inp=document.getElementById("pc"+i);if(inp){
+      inp.addEventListener("input",()=>{if(inp.value.length===1){if(i<3)document.getElementById("pc"+(i+1)).focus();else setTimeout(submitPasscode,100)}});
+      inp.addEventListener("keydown",e=>{if(e.key==="Backspace"&&!inp.value&&i>0)document.getElementById("pc"+(i-1)).focus();if(e.key==="Enter")submitPasscode()});
+    }}
+  },100);
+}
+
+function selectUser(user){
+  passTarget=user;
+  const existing=getPasscode(user);
+  passMode=existing?"enter":"create";
+  appScreen="passcode";
+  renderScreen();
+}
+
+function submitPasscode(){
+  const pin=[0,1,2,3].map(i=>{const el=document.getElementById("pc"+i);return el?el.value:""}).join("");
+  if(pin.length<4){document.getElementById("pinErr").textContent="Enter all 4 digits";return}
+  if(passMode==="create"){
+    setPasscode(passTarget,pin);
+    activeUser=passTarget;
+    
+    appScreen="app";setDefaultTab();renderScreen();
+  } else {
+    const correct=getPasscode(passTarget);
+    if(pin===correct){
+      activeUser=passTarget;
+      
+      appScreen="app";setDefaultTab();renderScreen();
+    } else {
+      document.getElementById("pinErr").textContent="Wrong passcode. Try again.";
+      [0,1,2,3].forEach(i=>{const el=document.getElementById("pc"+i);if(el)el.value=""});
+      const el=document.getElementById("pc0");if(el)el.focus();
+    }
+  }
+}
+
+function goBackToSelect(){activeUser="";appScreen="userselect";renderScreen()}
+function switchUser(){activeUser="";appScreen="userselect";renderScreen()}
+
+function doJoin(){const c=document.getElementById("codeIn").value.trim();if(!c){alert("Enter a code!");return}connectFamily(c)}
+
 function renderTabs(){
-  const t=document.getElementById("tabs");let h="";
-  data.kids.forEach((k,i)=>{h+=`<button class="tab ${activeTab==="kid-"+i?"active":""}" onclick="sTab('kid-${i}')">${esc(k.name)}</button>`});
-  h+=`<button class="tab ${activeTab==="calendar"?"active":""}" onclick="sTab('calendar')">📅</button>`;
-  h+=`<button class="tab ${activeTab==="settings"?"active":""}" onclick="sTab('settings')">⚙️</button>`;
-  h+=`<button class="tab ${activeTab==="prompt"?"active":""}" onclick="sTab('prompt')">📋</button>`;
+  const t=document.getElementById("tabs");let h="";const pc=pendingCount();
+  if(isParent()){
+    data.kids.forEach((k,i)=>{h+=`<button class="tab ${activeTab==="kid-"+i?"active":""}" onclick="sTab('kid-${i}')">${esc(k.name)}</button>`});
+    h+=`<button class="tab ${activeTab==="calendar"?"active":""}" onclick="sTab('calendar')">📅</button>`;
+    h+=`<button class="tab ${activeTab==="parent"?"active":""}" onclick="sTab('parent')">🔐${pc?`<span class="badge">${pc}</span>`:""}</button>`;
+    h+=`<button class="tab ${activeTab==="settings"?"active":""}" onclick="sTab('settings')">⚙️</button>`;
+  } else {
+    const ki=myKidIdx();
+    h+=`<button class="tab ${activeTab==="kid-"+ki?"active":""}" onclick="sTab('kid-${ki}')">${esc(data.kids[ki].name)}</button>`;
+    h+=`<button class="tab ${activeTab==="calendar"?"active":""}" onclick="sTab('calendar')">📅</button>`;
+  }
   t.innerHTML=h;
 }
 
 function renderPages(){
   const p=document.getElementById("pages");let h="";
-  data.kids.forEach((k,i)=>{
-    const cls=i===1?"k2":"",ds=selDates[i],isT=ds===todayStr(),log=getLog(i,ds);
-    const dp=getDayPts(i,ds),kChores=choresForKid(i);
-    h+=`<div class="page ${cls} ${activeTab==="kid-"+i?"active":""}">`;
-    h+=`<div class="pb" style="${i===1?"--kid1:var(--kid2)":""}"><div class="lb">${esc(k.name)}'s Total Points</div><div class="sc">${k.score}</div></div>`;
-    h+=`<div class="dp"><button class="ar" onclick="chgD(${i},-1)">‹</button><div class="di"><div class="dl">${isT?"Today":"Viewing"}</div><div class="dv ${isT?"ist":""}" onclick="opP(${i})">${fmt(ds)}</div><input type="date" class="hdi" id="dp-${i}" value="${ds}" max="${todayStr()}" onchange="pkD(${i},this.value)"></div><button class="tb ${isT?"hid":""}" onclick="goT(${i})">Today</button><button class="ar" onclick="chgD(${i},1)" ${isT?"disabled style='opacity:.3'":""}>›</button></div>`;
-    h+=`<div class="ds"><div class="st"><div class="sv">${dp.done}/${kChores.length}</div><div class="sl">Done</div></div><div class="st"><div class="sv">${dp.pts>=0?"+":""}${dp.pts}</div><div class="sl">Day Pts</div></div></div>`;
-    h+=`<div class="adj"><input type="number" id="adj-${i}" placeholder="±pts" inputmode="numeric"><button onclick="apAdj(${i})">Apply</button></div>`;
-    h+=`<div class="st2">Chores</div>`;
-    kChores.forEach((c,ci)=>{const on=(log.chores||[]).includes(c.id);h+=`<div class="cc ${on?"on":""} c${ci%8}" onclick="tgC(${i},'${ds}',${c.id})"><div class="em">${CE[ci%CE.length]}</div><div class="inf"><div class="nm">${esc(c.name)}</div><div class="pt">+${c.points} pts</div></div><div class="tg"></div></div>`});
-    if(data.penalties&&data.penalties.length){
-      h+=`<div class="st2">Penalties</div>`;
-      data.penalties.forEach((pen,pi)=>{const on=(log.penalties||[]).includes(pen.id);h+=`<div class="cc pc ${on?"on":""}" onclick="tgP(${i},'${ds}',${pen.id})"><div class="em">${PE[pi%PE.length]}</div><div class="inf"><div class="nm">${esc(pen.name)}</div><div class="pt">−${pen.points} pts</div></div><div class="tg"></div></div>`});
-    }
-    h+=renderMiniCal(i);
-    h+=`<div style="margin-top:14px"><button class="btn bo" onclick="cfmRD(${i},'${ds}')">🔄 Reset ${isT?"Today's":"This Day's"} Switches</button></div></div>`;
-  });
-  h+=`<div class="page ${activeTab==="calendar"?"active":""}">${renderCalTab()}</div>`;
-  h+=`<div class="page ${activeTab==="settings"?"active":""}">${renderSettings()}</div>`;
-  h+=`<div class="page ${activeTab==="prompt"?"active":""}">${renderPrompt()}</div>`;
+  if(isParent()){
+    data.kids.forEach((k,i)=>{h+=renderKidPage(i)});
+    h+=`<div class="page ${activeTab==="calendar"?"active":""}">${renderCalTab()}</div>`;
+    h+=`<div class="page ${activeTab==="parent"?"active":""}">${renderParentPage()}</div>`;
+    h+=`<div class="page ${activeTab==="settings"?"active":""}">${renderSettings()}</div>`;
+  } else {
+    const ki=myKidIdx();
+    h+=renderKidPage(ki);
+    h+=`<div class="page ${activeTab==="calendar"?"active":""}">${renderCalTabKid(ki)}</div>`;
+  }
   p.innerHTML=h;
 }
 
-function renderMiniCal(ki){
-  const mc=mcMonths[ki],y=mc.year,m=mc.month,fd=new Date(y,m,1).getDay(),dim=new Date(y,m+1,0).getDate();
-  let h=`<div class="mc"><div class="mch"><button class="ma" onclick="shMC(${ki},-1)">‹</button><div class="mt">${MO[m]} ${y}</div><button class="ma" onclick="shMC(${ki},1)">›</button></div><div class="mg">`;
-  DS.forEach(d=>{h+=`<div class="mdow">${d.charAt(0)}</div>`});
-  for(let i=0;i<fd;i++)h+=`<div class="md emp"></div>`;
-  for(let d=1;d<=dim;d++){const ds=dStr(y,m,d),iF=ds>todayStr(),iT=ds===todayStr(),iS=ds===selDates[ki],dt=iF?"dn":getDot(ki,ds);
-    h+=`<div class="md${iF?" fut":""}${iT?" tod":""}${iS?" sel":""}" onclick="mcClick(${ki},'${ds}')">${d}<span class="dot ${dt}"></span></div>`}
-  h+=`</div><div class="lg"><span><span class="ld" style="background:var(--green)"></span>All</span><span><span class="ld" style="background:var(--orange)"></span>Partial</span></div></div>`;
-  return h;
-}
-
-function renderCalTab(){
-  let h=`<div class="ckt">`;
-  data.kids.forEach((k,i)=>{h+=`<button class="ckb ${i===ctKid?"a"+i:""}" onclick="ctKid=${i};render()">${esc(k.name)}</button>`});
-  h+=`</div><div class="cvt"><button class="cvb ${ctView==="weekly"?"act":""}" onclick="ctView='weekly';render()">📊 Weekly</button><button class="cvb ${ctView==="monthly"?"act":""}" onclick="ctView='monthly';render()">📅 Monthly</button></div>`;
-  return h+(ctView==="weekly"?renderWeek(ctKid):renderMonthFull(ctKid));
-}
-
-function renderWeek(ki){
-  const ws=cwStart,days=[];for(let i=0;i<7;i++)days.push(shD(ws,i));
-  const kChores=choresForKid(ki);
-  let h=`<div class="wn"><button class="wa" onclick="shW(-1)">‹</button><div class="wt">${fmtS(ws)} — ${fmtS(days[6])}</div><button class="wa" onclick="shW(1)">›</button></div>`;
-  h+=`<div class="wg"><div class="whr"><div class="wlc">Chore</div>`;
-  days.forEach(d=>{const iT=d===todayStr();h+=`<div class="whc${iT?" tc":""}">${DS[new Date(d+"T12:00:00").getDay()]}<br>${new Date(d+"T12:00:00").getDate()}</div>`});
-  h+=`</div>`;
-  kChores.forEach(c=>{
-    h+=`<div class="wr"><div class="wcn">${esc(c.name)}</div>`;
-    days.forEach(d=>{const iT=d===todayStr(),iF=d>todayStr(),log=data.kids[ki].choreLog&&data.kids[ki].choreLog[d],done=log&&log.chores&&log.chores.includes(c.id);
-      h+=`<div class="wc${iT?" tc":""}">${iF?"":done?"✅":"—"}</div>`});
-    h+=`</div>`;
-  });
-  h+=`<div class="wtr"><div class="wcn">Day Pts</div>`;
-  days.forEach(d=>{const iT=d===todayStr(),iF=d>todayStr(),dp=getDayPts(ki,d);h+=`<div class="wc${iT?" tc":""}">${iF?"":dp.pts}</div>`});
-  h+=`</div></div>`;
-  if(data.penalties&&data.penalties.length){
-    h+=`<div class="st2" style="margin-top:10px">Penalties</div><div class="wg"><div class="whr"><div class="wlc">Penalty</div>`;
-    days.forEach(d=>{const iT=d===todayStr();h+=`<div class="whc${iT?" tc":""}">${DS[new Date(d+"T12:00:00").getDay()]}</div>`});h+=`</div>`;
-    data.penalties.forEach(pen=>{h+=`<div class="wr"><div class="wcn">${esc(pen.name)}</div>`;days.forEach(d=>{const iT=d===todayStr(),iF=d>todayStr(),log=data.kids[ki].choreLog&&data.kids[ki].choreLog[d],on=log&&log.penalties&&log.penalties.includes(pen.id);h+=`<div class="wc${iT?" tc":""}">${iF?"":on?"🔴":"—"}</div>`});h+=`</div>`});
-    h+=`</div>`;
+function renderKidPage(i){
+  const k=data.kids[i],cls=i===1?"k2":"",ds=selDates[i],isT=ds===todayStr(),locked=isLocked(ds),log=getLog(i,ds);
+  const dp=getDayPts(i,ds),kChores=choresForKid(i);
+  let h=`<div class="page ${cls} ${activeTab==="kid-"+i?"active":""}">`;
+  h+=`<div class="pb" style="${i===1?"--kid1:var(--kid2)":""}"><div class="lb">${esc(k.name)}'s Total Points</div><div class="sc">${k.score}</div><div style="font-size:14px;font-weight:800;opacity:.9;margin-top:2px">= $${(k.score*(data.centsPerPoint||1)/100).toFixed(2)}</div></div>`;
+  // Redeem button for kids
+  if(!isParent()&&k.score>0){
+    const hasRedeem=(data.redemptions||[]).some(r=>r.kidIdx===i&&r.status==="pending");
+    if(hasRedeem){h+=`<div style="background:#FFF8E1;border-radius:12px;padding:10px 14px;margin-bottom:10px;text-align:center;border-left:4px solid var(--orange)"><span style="font-size:13px;font-weight:700;color:#7A6B00">⏳ Redemption request pending — waiting for parent</span></div>`}
+    else{h+=`<div style="margin-bottom:10px"><button class="btn bp" onclick="reqRedeem(${i})" style="background:linear-gradient(135deg,var(--orange),#E67E22)">💰 Redeem ${k.score} pts for $${(k.score*(data.centsPerPoint||1)/100).toFixed(2)}</button></div>`}
   }
-  return h;
+  h+=`<div class="dp"><button class="ar" onclick="chgD(${i},-1)">‹</button><div class="di"><div class="dl">${isT?"Today":"Viewing"}</div><div class="dv ${isT?"ist":""}" onclick="opP(${i})">${fmt(ds)}</div><input type="date" class="hdi" id="dp-${i}" value="${ds}" max="${todayStr()}" onchange="pkD(${i},this.value)"></div><button class="tb ${isT?"hid":""}" onclick="goT(${i})">Today</button><button class="ar" onclick="chgD(${i},1)" ${isT?"disabled style='opacity:.3'":""}>›</button></div>`;
+  if(locked)h+=`<div class="lock-banner"><div class="lb-icon">🔒</div><div class="lb-text">${isParent()?"Past day — parent can edit directly.":"This day is locked. Tap a chore to request a change."}</div></div>`;
+  h+=`<div class="ds"><div class="st"><div class="sv">${dp.done}/${kChores.length}</div><div class="sl">Done</div></div><div class="st"><div class="sv">${dp.pts>=0?"+":""}${dp.pts}</div><div class="sl">Day Pts</div></div></div>`;
+  if(isParent()&&isT)h+=`<div class="adj"><input type="number" id="adj-${i}" placeholder="±pts" inputmode="numeric"><button onclick="apAdj(${i})">Apply</button></div>`;
+  h+=`<div class="st2">Chores</div>`;
+  kChores.forEach((c,ci)=>{const on=(log.chores||[]).includes(c.id);const hr=hasRequest(i,ds,c.id);
+    if(locked&&!isParent()){
+      h+=`<div class="cc ${on?"on":""} locked ${hr?"has-req":""} c${ci%8}" onclick="reqChange(${i},'${ds}',${c.id},'chore',${on})"><div class="em">${CE[ci%CE.length]}</div><div class="inf"><div class="nm">${esc(c.name)}</div><div class="pt">+${c.points} pts${hr?' <span class="pending-tag">⏳ Requested</span>':''}</div></div><div class="lock-icon">${hr?"⏳":"🔒"}</div></div>`;
+    } else {
+      h+=`<div class="cc ${on?"on":""} c${ci%8}" onclick="tgC(${i},'${ds}',${c.id})"><div class="em">${CE[ci%CE.length]}</div><div class="inf"><div class="nm">${esc(c.name)}</div><div class="pt">+${c.points} pts</div></div><div class="tg"></div></div>`;
+    }
+  });
+  if(data.penalties&&data.penalties.length){
+    h+=`<div class="st2">Penalties</div>`;
+    data.penalties.forEach((pen,pi)=>{const on=(log.penalties||[]).includes(pen.id);const hr=hasRequest(i,ds,pen.id);
+      if(locked&&!isParent()){
+        h+=`<div class="cc pc ${on?"on":""} locked ${hr?"has-req":""}" onclick="reqChange(${i},'${ds}',${pen.id},'penalty',${on})"><div class="em">${PE[pi%PE.length]}</div><div class="inf"><div class="nm">${esc(pen.name)}</div><div class="pt">−${pen.points} pts${hr?' <span class="pending-tag">⏳ Requested</span>':''}</div></div><div class="lock-icon">${hr?"⏳":"🔒"}</div></div>`;
+      } else {
+        h+=`<div class="cc pc ${on?"on":""}" onclick="tgP(${i},'${ds}',${pen.id})"><div class="em">${PE[pi%PE.length]}</div><div class="inf"><div class="nm">${esc(pen.name)}</div><div class="pt">−${pen.points} pts</div></div><div class="tg"></div></div>`;
+      }
+    });
+  }
+  // Show pending requests on kid page for parent
+  if(isParent()){
+    const kidReqs=(data.requests||[]).filter(r=>r.kidIdx===i);
+    if(kidReqs.length){
+      h+=`<div class="st2">⏳ Pending Requests (${kidReqs.length})</div>`;
+      kidReqs.forEach(r=>{
+        const ri=(data.requests||[]).indexOf(r);
+        const item=r.itemType==="chore"?(data.chores||[]).find(x=>x.id===r.itemId):(data.penalties||[]).find(x=>x.id===r.itemId);
+        const itemName=item?item.name:"Unknown";
+        const actionLabel=r.itemType==="chore"?(r.action==="add"?"Mark as done":"Undo"):(r.action==="add"?"Apply penalty":"Remove penalty");
+        h+=`<div class="req-card"><div class="req-header"><span class="req-date">${fmt(r.date)}</span></div><div class="req-body"><span class="req-action ${r.action}">${r.action==="add"?"➕":"➖"} ${actionLabel}</span><br><strong>${esc(itemName)}</strong>${item?" ("+item.points+" pts)":""}</div><div class="req-btns"><button class="approve" onclick="approveReq(${ri})">✅ Approve</button><button class="deny" onclick="denyReq(${ri})">❌ Deny</button></div></div>`;
+      });
+    }
+    // Redemption requests
+    const kidRedeems=(data.redemptions||[]).filter(r=>r.kidIdx===i&&r.status==="pending");
+    if(kidRedeems.length){
+      h+=`<div class="st2">💰 Redemption Requests</div>`;
+      kidRedeems.forEach(r=>{
+        const ri=(data.redemptions||[]).indexOf(r);
+        h+=`<div class="req-card" style="border-left-color:var(--green)"><div class="req-body" style="margin-bottom:10px"><span style="font-size:24px;font-weight:900;color:var(--green)">${r.points} pts → $${r.dollars.toFixed(2)}</span><br><span style="font-size:12px;color:var(--textSoft);font-weight:600">${esc(data.kids[r.kidIdx].name)} wants to cash in their points</span></div><div class="req-btns"><button class="approve" onclick="approveRedeem(${ri})">✅ Approve & Reset</button><button class="deny" onclick="denyRedeem(${ri})">❌ Deny</button></div></div>`;
+      });
+    }
+  }
+  h+=renderMiniCal(i);
+  if(isParent()&&isT)h+=`<div style="margin-top:14px"><button class="btn bo" onclick="cfmRD(${i},'${ds}')">🔄 Reset Today's Switches</button></div>`;
+  h+=`</div>`;return h;
 }
 
-function renderMonthFull(ki){
-  const y=cMonth.year,m=cMonth.month,fd=new Date(y,m,1).getDay(),dim=new Date(y,m+1,0).getDate();
-  let h=`<div class="mf"><div class="mfh"><button class="mfa" onclick="shCM(-1)">‹</button><div class="mft">${MO[m]} ${y}</div><button class="mfa" onclick="shCM(1)">›</button></div><div class="mfg">`;
-  DS.forEach(d=>{h+=`<div class="mfdow">${d}</div>`});
-  for(let i=0;i<fd;i++)h+=`<div class="mfd emp"></div>`;
-  for(let d=1;d<=dim;d++){const ds=dStr(y,m,d),iF=ds>todayStr(),iT=ds===todayStr(),dp=getDayPts(ki,ds),dt=iF?"":getDot(ki,ds);
-    h+=`<div class="mfd${iF?" fut":""}${iT?" tod":""}" onclick="showDP(${ki},'${ds}')"><div class="mn">${d}</div>`;
-    if(!iF&&dp.pts!==0)h+=`<div class="mp">${dp.pts>0?"+":""}${dp.pts}</div>`;
-    if(!iF&&dt&&dt!=="dn")h+=`<span class="mdot ${dt}"></span>`;h+=`</div>`}
-  h+=`</div><div class="lg" style="margin-top:10px"><span><span class="ld" style="background:var(--green)"></span>All</span><span><span class="ld" style="background:var(--orange)"></span>Partial</span></div>`;
-  let tp=0,td2=0,ad=0;for(let d=1;d<=dim;d++){const ds=dStr(y,m,d);if(ds>todayStr())break;const dp=getDayPts(ki,ds);tp+=dp.pts;td2+=dp.done;if(dp.done>0)ad++}
-  h+=`<div class="dsr" style="margin-top:12px"><div class="dss"><div class="dsv">${tp}</div><div class="dsl">Month Pts</div></div><div class="dss"><div class="dsv">${ad}</div><div class="dsl">Active Days</div></div><div class="dss"><div class="dsv">${td2}</div><div class="dsl">Chores Done</div></div></div></div>`;
-  return h;
-}
+function renderMiniCal(ki){const mc=mcMonths[ki],y=mc.year,m=mc.month,fd=new Date(y,m,1).getDay(),dim=new Date(y,m+1,0).getDate();let h=`<div class="mc"><div class="mch"><button class="ma" onclick="shMC(${ki},-1)">‹</button><div class="mt">${MO[m]} ${y}</div><button class="ma" onclick="shMC(${ki},1)">›</button></div><div class="mg">`;DSN.forEach(d=>{h+=`<div class="mdow">${d.charAt(0)}</div>`});for(let i=0;i<fd;i++)h+=`<div class="md emp"></div>`;for(let d=1;d<=dim;d++){const ds=dStr(y,m,d),iF=ds>todayStr(),iT=ds===todayStr(),iS=ds===selDates[ki],dt=iF?"dn":getDot(ki,ds);h+=`<div class="md${iF?" fut":""}${iT?" tod":""}${iS?" sel":""}" onclick="mcClick(${ki},'${ds}')">${d}<span class="dot ${dt}"></span></div>`}h+=`</div><div class="lg"><span><span class="ld" style="background:var(--green)"></span>All</span><span><span class="ld" style="background:var(--orange)"></span>Partial</span></div></div>`;return h}
 
-function showDP(ki,ds){
-  if(ds>todayStr())return;
-  const k=data.kids[ki],dp=getDayPts(ki,ds),log=getLog(ki,ds),kChores=choresForKid(ki);
-  let h=`<h3>${esc(k.name)}</h3><div class="dd">${fmt(ds)}</div>`;
-  h+=`<div class="dsr"><div class="dss"><div class="dsv">${dp.done}/${kChores.length}</div><div class="dsl">Done</div></div><div class="dss"><div class="dsv">${dp.pts>=0?"+":""}${dp.pts}</div><div class="dsl">Points</div></div></div>`;
-  h+=`<div class="dps"><h4>✅ Completed</h4>`;
-  const doneC=(log.chores||[]).map(cid=>(data.chores||[]).find(x=>x.id===cid)).filter(Boolean);
-  if(doneC.length)doneC.forEach(c=>{h+=`<div class="dpi"><span style="color:var(--green)">✓</span> ${esc(c.name)}<span class="dppt" style="color:var(--green)">+${c.points}</span></div>`});
-  else h+=`<div class="dpe">No chores completed</div>`;h+=`</div>`;
-  const doneP=(log.penalties||[]).map(pid=>(data.penalties||[]).find(x=>x.id===pid)).filter(Boolean);
-  if(doneP.length){h+=`<div class="dps"><h4>⚠️ Penalties</h4>`;doneP.forEach(p2=>{h+=`<div class="dpi"><span style="color:var(--red)">✗</span> ${esc(p2.name)}<span class="dppt" style="color:var(--red)">−${p2.points}</span></div>`});h+=`</div>`}
-  const undone=kChores.filter(c=>!(log.chores||[]).includes(c.id));
-  if(undone.length){h+=`<div class="dps"><h4>⬜ Not Done</h4>`;undone.forEach(c=>{h+=`<div class="dpi" style="opacity:.45">○ ${esc(c.name)}<span class="dppt">+${c.points}</span></div>`});h+=`</div>`}
-  h+=`<button class="dpgo" onclick="gotoDP(${ki},'${ds}')">📝 Edit This Day</button><button class="dpcl" onclick="closeDP()">Close</button>`;
-  document.getElementById("dpCon").innerHTML=h;document.getElementById("dayPopup").classList.add("show");
-}
+function renderCalTab(){let h=`<div class="ckt">`;data.kids.forEach((k,i)=>{h+=`<button class="ckb ${i===ctKid?"a"+i:""}" onclick="ctKid=${i};render()">${esc(k.name)}</button>`});h+=`</div><div class="cvt"><button class="cvb ${ctView==="weekly"?"act":""}" onclick="ctView='weekly';render()">📊 Weekly</button><button class="cvb ${ctView==="monthly"?"act":""}" onclick="ctView='monthly';render()">📅 Monthly</button></div>`;return h+(ctView==="weekly"?renderWeek(ctKid):renderMonthFull(ctKid))}
+
+function renderCalTabKid(ki){ctKid=ki;let h=`<div class="cvt"><button class="cvb ${ctView==="weekly"?"act":""}" onclick="ctView='weekly';render()">📊 Weekly</button><button class="cvb ${ctView==="monthly"?"act":""}" onclick="ctView='monthly';render()">📅 Monthly</button></div>`;return h+(ctView==="weekly"?renderWeek(ki):renderMonthFull(ki))}
+
+function renderWeek(ki){const ws=cwStart,days=[];for(let i=0;i<7;i++)days.push(shD(ws,i));const kC=choresForKid(ki);let h=`<div class="wn"><button class="wa" onclick="shW(-1)">‹</button><div class="wt">${fmtS(ws)} — ${fmtS(days[6])}</div><button class="wa" onclick="shW(1)">›</button></div><div class="wg"><div class="whr"><div class="wlc">Chore</div>`;days.forEach(d=>{h+=`<div class="whc${d===todayStr()?" tc":""}">${DSN[new Date(d+"T12:00:00").getDay()]}<br>${new Date(d+"T12:00:00").getDate()}</div>`});h+=`</div>`;kC.forEach(c=>{h+=`<div class="wr"><div class="wcn">${esc(c.name)}</div>`;days.forEach(d=>{const iF=d>todayStr(),log=data.kids[ki].choreLog&&data.kids[ki].choreLog[d],done=log&&log.chores&&log.chores.includes(c.id);h+=`<div class="wc${d===todayStr()?" tc":""}">${iF?"":done?"✅":"—"}</div>`});h+=`</div>`});h+=`<div class="wtr"><div class="wcn">Day Pts</div>`;days.forEach(d=>{const iF=d>todayStr(),dp=getDayPts(ki,d);h+=`<div class="wc${d===todayStr()?" tc":""}">${iF?"":dp.pts}</div>`});h+=`</div></div>`;return h}
+
+function renderMonthFull(ki){const y=cMonth.year,m=cMonth.month,fd=new Date(y,m,1).getDay(),dim=new Date(y,m+1,0).getDate();let h=`<div class="mf"><div class="mfh"><button class="mfa" onclick="shCM(-1)">‹</button><div class="mft">${MO[m]} ${y}</div><button class="mfa" onclick="shCM(1)">›</button></div><div class="mfg">`;DSN.forEach(d=>{h+=`<div class="mfdow">${d}</div>`});for(let i=0;i<fd;i++)h+=`<div class="mfd emp"></div>`;for(let d=1;d<=dim;d++){const ds=dStr(y,m,d),iF=ds>todayStr(),dp=getDayPts(ki,ds),dt=iF?"":getDot(ki,ds);h+=`<div class="mfd${iF?" fut":""}${ds===todayStr()?" tod":""}" onclick="showDP(${ki},'${ds}')"><div class="mn">${d}</div>`;if(!iF&&dp.pts!==0)h+=`<div class="mp">${dp.pts>0?"+":""}${dp.pts}</div>`;if(!iF&&dt&&dt!=="dn")h+=`<span class="mdot ${dt}"></span>`;h+=`</div>`}h+=`</div>`;let tp=0,td2=0,ad=0;for(let d=1;d<=dim;d++){const ds=dStr(y,m,d);if(ds>todayStr())break;const dp=getDayPts(ki,ds);tp+=dp.pts;td2+=dp.done;if(dp.done>0)ad++}h+=`<div class="dsr" style="margin-top:12px"><div class="dss"><div class="dsv">${tp}</div><div class="dsl">Month Pts</div></div><div class="dss"><div class="dsv">${ad}</div><div class="dsl">Active Days</div></div><div class="dss"><div class="dsv">${td2}</div><div class="dsl">Chores Done</div></div></div></div>`;return h}
+
+function showDP(ki,ds){if(ds>todayStr())return;const k=data.kids[ki],dp=getDayPts(ki,ds),log=getLog(ki,ds),kC=choresForKid(ki);let h=`<h3>${esc(k.name)}</h3><div class="dd">${fmt(ds)}</div><div class="dsr"><div class="dss"><div class="dsv">${dp.done}/${kC.length}</div><div class="dsl">Done</div></div><div class="dss"><div class="dsv">${dp.pts>=0?"+":""}${dp.pts}</div><div class="dsl">Points</div></div></div><div class="dps"><h4>✅ Completed</h4>`;const doneC=(log.chores||[]).map(cid=>(data.chores||[]).find(x=>x.id===cid)).filter(Boolean);if(doneC.length)doneC.forEach(c=>{h+=`<div class="dpi"><span style="color:var(--green)">✓</span> ${esc(c.name)}<span class="dppt" style="color:var(--green)">+${c.points}</span></div>`});else h+=`<div class="dpe">No chores completed</div>`;h+=`</div>`;const doneP=(log.penalties||[]).map(pid=>(data.penalties||[]).find(x=>x.id===pid)).filter(Boolean);if(doneP.length){h+=`<div class="dps"><h4>⚠️ Penalties</h4>`;doneP.forEach(p2=>{h+=`<div class="dpi"><span style="color:var(--red)">✗</span> ${esc(p2.name)}<span class="dppt" style="color:var(--red)">−${p2.points}</span></div>`});h+=`</div>`}h+=`<button class="dpgo" onclick="gotoDP(${ki},'${ds}')">📝 View This Day</button><button class="dpcl" onclick="closeDP()">Close</button>`;document.getElementById("dpCon").innerHTML=h;document.getElementById("dayPopup").classList.add("show")}
 function closeDP(){document.getElementById("dayPopup").classList.remove("show")}
-function gotoDP(ki,ds){closeDP();selDates[ki]=ds;activeTab="kid-"+ki;render();document.getElementById("pages").scrollTop=0}
+function gotoDP(ki,ds){closeDP();selDates[ki]=ds;if(isParent())activeTab="kid-"+ki;render();document.getElementById("pages").scrollTop=0}
+
+function renderParentPage(){
+  const reqs=data.requests||[];
+  const redeems=(data.redemptions||[]).filter(r=>r.status==="pending");
+  const totalPending=reqs.length+redeems.length;
+  let h=`<div style="margin-bottom:16px"><h3 style="font-size:18px;font-weight:900;color:var(--purple)">🔐 Parent Dashboard</h3></div>`;
+  // Points & $ summary
+  h+=`<div style="background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:16px"><div class="st2" style="margin-top:0">💰 Points & Earnings</div>`;
+  const rate=data.centsPerPoint||1;
+  data.kids.forEach((k,i)=>{
+    const dollars=(k.score*rate/100).toFixed(2);
+    const clr=i===0?"var(--purple)":"var(--pink)";
+    h+=`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;${i>0?"border-top:1px solid #F0EDFF":""}"><div style="width:32px;height:32px;border-radius:8px;background:${clr};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px">${esc(k.name.charAt(0))}</div><div style="flex:1"><div style="font-weight:800;font-size:14px">${esc(k.name)}</div><div style="font-size:12px;color:var(--textSoft);font-weight:600">${k.score} pts</div></div><div style="font-size:20px;font-weight:900;color:${clr}">$${dollars}</div></div>`;
+  });
+  h+=`<div style="margin-top:10px;font-size:11px;color:var(--textSoft);font-weight:600;text-align:center">Rate: ${rate} cent${rate>1?"s":""} per point (${rate*10} pts = $${(rate*10*rate/100).toFixed(2)})</div></div>`;
+  // Redemption requests
+  if(redeems.length){
+    h+=`<div class="st2">💰 Redemption Requests (${redeems.length})</div>`;
+    redeems.forEach(r=>{
+      const ri=(data.redemptions||[]).indexOf(r);
+      const kidName=data.kids[r.kidIdx]?data.kids[r.kidIdx].name:"Kid";
+      h+=`<div class="req-card" style="border-left-color:var(--green)"><div class="req-header"><span class="req-kid rk${r.kidIdx}">${esc(kidName)}</span></div><div class="req-body" style="margin-bottom:10px"><span style="font-size:22px;font-weight:900;color:var(--green)">${r.points} pts → $${r.dollars.toFixed(2)}</span></div><div class="req-btns"><button class="approve" onclick="approveRedeem(${ri})">✅ Approve & Reset</button><button class="deny" onclick="denyRedeem(${ri})">❌ Deny</button></div></div>`;
+    });
+  }
+  // Change requests
+  h+=`<div class="st2">📝 Change Requests (${reqs.length})</div>`;
+  if(!reqs.length)h+=`<div class="no-req">✅ No pending requests!</div>`;
+  else reqs.forEach((r,ri)=>{
+    const kidName=data.kids[r.kidIdx]?data.kids[r.kidIdx].name:"Kid";
+    const item=r.itemType==="chore"?(data.chores||[]).find(x=>x.id===r.itemId):(data.penalties||[]).find(x=>x.id===r.itemId);
+    const itemName=item?item.name:"Unknown";
+    const actionLabel=r.itemType==="chore"?(r.action==="add"?"Mark as done":"Undo completion"):(r.action==="add"?"Apply penalty":"Remove penalty");
+    h+=`<div class="req-card"><div class="req-header"><span class="req-kid rk${r.kidIdx}">${esc(kidName)}</span><span class="req-date">${fmt(r.date)}</span></div><div class="req-body"><span class="req-action ${r.action}">${r.action==="add"?"➕":"➖"} ${actionLabel}</span><br><strong>${esc(itemName)}</strong>${item?" ("+item.points+" pts)":""}</div><div class="req-btns"><button class="approve" onclick="approveReq(${ri})">✅ Approve</button><button class="deny" onclick="denyReq(${ri})">❌ Deny</button></div></div>`;
+  });
+  h+=`<div style="margin-top:24px"><button class="btn bo" onclick="changePasscode('parent')">🔑 Change Parent Passcode</button></div>`;
+  data.kids.forEach((k,i)=>{h+=`<button class="btn bo" onclick="changePasscode('kid-${i}')">🔑 Reset ${esc(k.name)}'s Passcode</button>`});
+  return h;
+}
+
+function changePasscode(user){
+  const name=getUserDisplayName(user);
+  showOv("Reset Passcode","Set a new passcode for "+name+"?","Reset",()=>{
+    setPasscode(user,"");save();
+    if(user===activeUser){passTarget=user;passMode="create";appScreen="passcode";renderScreen()}
+    else render();
+  });
+}
 
 function renderSettings(){
   let h=`<div class="ss"><h3>👧 Kid Names</h3>`;
   data.kids.forEach((k,i)=>{h+=`<div class="si"><input value="${escA(k.name)}" onchange="rnKid(${i},this.value)"></div>`});h+=`</div>`;
-  // Per-kid chore sections
   data.kids.forEach((k,ki)=>{
-    const kidChores=choresForKid(ki);
-    const clr=ki===0?"var(--purple)":"var(--pink)";
-    const otherKi=ki===0?1:0;
-    const otherName=data.kids[otherKi]?data.kids[otherKi].name:"Kid "+(otherKi+1);
+    const kidChores=choresForKid(ki),clr=ki===0?"var(--purple)":"var(--pink)",otherKi=ki===0?1:0,otherName=data.kids[otherKi]?data.kids[otherKi].name:"Kid";
     h+=`<div class="ss"><h3 style="color:${clr}">✅ ${esc(k.name)}'s Chores (${kidChores.length})</h3>`;
     kidChores.forEach(c=>{
       const shared=(c.kidIds||[0,1]).includes(otherKi);
       const badge=shared?`<span style="font-size:9px;padding:2px 6px;border-radius:6px;background:${ki===0?"var(--pink)":"var(--purple)"};color:#fff;font-weight:800;flex-shrink:0">+${esc(otherName.charAt(0))}</span>`:"";
-      h+=`<div class="si"><input value="${escA(c.name)}" onchange="eCN(${c.id},this.value)"><input type="number" value="${c.points}" min="0" onchange="eCP(${c.id},this.value)" inputmode="numeric">${badge}<button class="db" onclick="rmFromKid(${c.id},${ki})" title="Remove from ${esc(k.name)}">×</button></div>`;
+      h+=`<div class="si"><input value="${escA(c.name)}" onchange="eCN(${c.id},this.value)"><input type="number" value="${c.points}" min="0" onchange="eCP(${c.id},this.value)" inputmode="numeric">${badge}<button class="db" onclick="rmFromKid(${c.id},${ki})">×</button></div>`;
     });
     h+=`<div class="ar2"><input id="ncn-${ki}" placeholder="Add chore for ${esc(k.name)}"><input id="ncp-${ki}" type="number" value="5" min="0" inputmode="numeric"><button onclick="aCK(${ki})">+ Add</button></div>`;
-    // Assign existing chore from other kid
-    const otherOnly=(data.chores||[]).filter(c=>{const ids=c.kidIds||[0,1];return ids.includes(otherKi)&&!ids.includes(ki)});
-    if(otherOnly.length){h+=`<div style="margin-top:8px"><select id="aex-${ki}" style="width:100%;padding:8px;border-radius:9px;border:2px solid #E0DAF0;font-size:12px;font-weight:700;font-family:inherit"><option value="">＋ Also assign from ${esc(otherName)}'s list...</option>`;
-      otherOnly.forEach(c=>{h+=`<option value="${c.id}">${esc(c.name)} (+${c.points})</option>`});
-      h+=`</select></div><script>document.getElementById("aex-${ki}").onchange=function(){if(this.value){assignToKid(parseInt(this.value),${ki});this.value=""}}<\/script>`}
+    const otherOnly=(data.chores||[]).filter(c=>(c.kidIds||[0,1]).includes(otherKi)&&!(c.kidIds||[0,1]).includes(ki));
+    if(otherOnly.length){h+=`<div style="margin-top:8px"><select id="aex-${ki}" style="width:100%;padding:8px;border-radius:9px;border:2px solid #E0DAF0;font-size:12px;font-weight:700;font-family:inherit" onchange="if(this.value){assignToKid(parseInt(this.value),${ki});this.value=''}"><option value="">＋ Also assign from ${esc(otherName)}'s list...</option>`;otherOnly.forEach(c=>{h+=`<option value="${c.id}">${esc(c.name)} (+${c.points})</option>`});h+=`</select></div>`}
     h+=`</div>`;
   });
-  // Penalties
   h+=`<div class="ss"><h3>⚠️ Penalties (both kids)</h3>`;
   (data.penalties||[]).forEach(p2=>{h+=`<div class="si"><input value="${escA(p2.name)}" onchange="ePN(${p2.id},this.value)"><input type="number" value="${p2.points}" min="0" onchange="ePP(${p2.id},this.value)" inputmode="numeric"><button class="db" onclick="dP(${p2.id})">×</button></div>`});
   h+=`<div class="ar2"><input id="npn" placeholder="New penalty"><input id="npp" type="number" value="10" min="0" inputmode="numeric"><button onclick="aP()">+ Add</button></div></div>`;
-  h+=`<div class="ss"><h3>🔗 Sync</h3><div class="cb"><h4>Family Code</h4><code>${esc(familyCode)}</code></div><button class="btn bo" onclick="chFC()">🔄 Change Code</button></div>`;
+  h+=`<div class="ss"><h3>💰 Points to $ Conversion</h3><div class="si"><span style="font-size:13px;font-weight:700;white-space:nowrap">1 point =</span><input type="number" value="${data.centsPerPoint||1}" min="1" max="100" onchange="data.centsPerPoint=Math.max(1,parseInt(this.value,10)||1);save();render()" inputmode="numeric" style="width:55px;flex:0 0 55px"><span style="font-size:13px;font-weight:700;white-space:nowrap">cent(s)</span></div><div style="font-size:12px;color:var(--textSoft);font-weight:600;margin-top:6px">10 pts = $${(10*(data.centsPerPoint||1)/100).toFixed(2)} · 50 pts = $${(50*(data.centsPerPoint||1)/100).toFixed(2)} · 100 pts = $${(100*(data.centsPerPoint||1)/100).toFixed(2)}</div></div>`;
+  h+=`<div class="ss"><h3>🔗 Sync</h3><div class="cb"><h4>Family Code</h4><code>${esc(familyCode)}</code></div><button class="btn bo" onclick="chFC()">🔄 Change Family Code</button></div>`;
   h+=`<div class="ss"><h3>🔧 Reset</h3><button class="btn bd" onclick="cfmTR()">🗑️ Total Reset</button></div>`;
   return h;
 }
 
-function renderPrompt(){
-  return `<div class="prc"><h2>📋 Recreation Prompt</h2><p class="intro">Paste this into any AI assistant to recreate this app.</p>
-<h3>Overview</h3><p>Build a colorful chore tracker for 2 kids. Single HTML file + Firebase Realtime Database sync. Per-kid chore assignments, date-based logging, calendar views.</p>
-<h3>Layout</h3><ul><li>Kid dashboard tabs with customizable names</li><li>Date picker to log chores for any day</li><li>Mini monthly calendar with color-coded dots on each kid page</li><li>Calendar tab: weekly chore grid + monthly calendar view</li><li>Tap day for detail popup with completed/missed chores</li><li>Per-kid chore assignments (colored initial pills in Settings)</li></ul>
-<h3>Features</h3><ul><li>Per-kid chore lists (assign chores to one or both kids)</li><li>Toggle chores per date, cumulative points tracked</li><li>Backfill past dates</li><li>Manual ±point adjustment</li><li>Penalties section</li><li>Weekly grid: chore × day matrix with ✅</li><li>Monthly view: dots + day points + monthly summary stats</li></ul>
-<h3>Technical</h3><ul><li>Single HTML, Firebase SDK from CDN</li><li>Per-date choreLog, kidIds array on each chore</li><li>Family code routing, PWA meta tags</li></ul></div>`;
-}
+function render(){if(!data)return;renderScreen()}
 
 /* ══════ ACTIONS ══════ */
 function sTab(t){activeTab=t;render();document.getElementById("pages").scrollTop=0}
@@ -440,51 +566,60 @@ function shMC(ki,d){const mc=mcMonths[ki];mc.month+=d;if(mc.month<0){mc.month=11
 function mcClick(ki,ds){if(ds>todayStr())return;selDates[ki]=ds;render();document.getElementById("pages").scrollTop=0}
 function shW(d){cwStart=shD(cwStart,d*7);render()}
 function shCM(d){cMonth.month+=d;if(cMonth.month<0){cMonth.month=11;cMonth.year--}if(cMonth.month>11){cMonth.month=0;cMonth.year++}render()}
-
 function tgC(ki,ds,cid){const k=data.kids[ki],c=(data.chores||[]).find(x=>x.id===cid);if(!c)return;const l=getLog(ki,ds);const idx=l.chores.indexOf(cid);if(idx>-1){l.chores.splice(idx,1);k.score-=c.points}else{l.chores.push(cid);k.score+=c.points}if(!l.chores.length&&!l.penalties.length)delete k.choreLog[ds];save()}
 function tgP(ki,ds,pid){const k=data.kids[ki],p2=(data.penalties||[]).find(x=>x.id===pid);if(!p2)return;const l=getLog(ki,ds);const idx=l.penalties.indexOf(pid);if(idx>-1){l.penalties.splice(idx,1);k.score+=p2.points}else{l.penalties.push(pid);k.score-=p2.points}if(!l.chores.length&&!l.penalties.length)delete k.choreLog[ds];save()}
 function apAdj(i){const inp=document.getElementById("adj-"+i);const v=parseInt(inp.value,10);if(isNaN(v))return;data.kids[i].score+=v;save()}
 function rnKid(i,v){data.kids[i].name=v.trim()||"Kid "+(i+1);save()}
 function eCN(id,v){const c=(data.chores||[]).find(x=>x.id===id);if(c){c.name=v.trim()||c.name;save()}}
 function eCP(id,v){const c=(data.chores||[]).find(x=>x.id===id);if(c){c.points=Math.max(0,parseInt(v,10)||0);save()}}
-function tgKid(choreId,kidIdx){
-  const c=(data.chores||[]).find(x=>x.id===choreId);if(!c)return;
-  if(!c.kidIds)c.kidIds=[0,1];
-  const idx=c.kidIds.indexOf(kidIdx);
-  if(idx>-1){if(c.kidIds.length>1)c.kidIds.splice(idx,1)}// Prevent removing both
-  else c.kidIds.push(kidIdx);
-  c.kidIds.sort();save();
-}
-function dC(id){data.chores=(data.chores||[]).filter(x=>x.id!==id);data.kids.forEach(k=>{if(k.choreLog)Object.values(k.choreLog).forEach(l=>{if(l.chores)l.chores=l.chores.filter(x=>x!==id)})});save()}
-function rmFromKid(choreId,kidIdx){
-  const c=(data.chores||[]).find(x=>x.id===choreId);if(!c)return;
-  const ids=c.kidIds||[0,1];
-  if(ids.length<=1){dC(choreId);return}// Only assigned to this kid — delete entirely
-  c.kidIds=ids.filter(x=>x!==kidIdx);save();
-}
-function aCK(ki){const n=document.getElementById("ncn-"+ki).value.trim(),pts=parseInt(document.getElementById("ncp-"+ki).value,10)||5;if(!n)return;
-  if(!data.chores)data.chores=[];data.chores.push({id:data.nextId++,name:n,points:Math.max(0,pts),kidIds:[ki]});save()}
-function assignToKid(choreId,kidIdx){
-  const c=(data.chores||[]).find(x=>x.id===choreId);if(!c)return;
-  if(!c.kidIds)c.kidIds=[0,1];
-  if(!c.kidIds.includes(kidIdx)){c.kidIds.push(kidIdx);c.kidIds.sort()}save();
-}
+function rmFromKid(choreId,kidIdx){const c=(data.chores||[]).find(x=>x.id===choreId);if(!c)return;const ids=c.kidIds||[0,1];if(ids.length<=1){data.chores=data.chores.filter(x=>x.id!==choreId);data.kids.forEach(k=>{if(k.choreLog)Object.values(k.choreLog).forEach(l=>{if(l.chores)l.chores=l.chores.filter(x=>x!==choreId)})});save();return}c.kidIds=ids.filter(x=>x!==kidIdx);save()}
+function aCK(ki){const n=document.getElementById("ncn-"+ki).value.trim(),pts=parseInt(document.getElementById("ncp-"+ki).value,10)||5;if(!n)return;if(!data.chores)data.chores=[];data.chores.push({id:data.nextId++,name:n,points:Math.max(0,pts),kidIds:[ki]});save()}
+function assignToKid(choreId,kidIdx){const c=(data.chores||[]).find(x=>x.id===choreId);if(!c)return;if(!c.kidIds)c.kidIds=[0,1];if(!c.kidIds.includes(kidIdx)){c.kidIds.push(kidIdx);c.kidIds.sort()}save()}
 function ePN(id,v){const p2=(data.penalties||[]).find(x=>x.id===id);if(p2){p2.name=v.trim()||p2.name;save()}}
 function ePP(id,v){const p2=(data.penalties||[]).find(x=>x.id===id);if(p2){p2.points=Math.max(0,parseInt(v,10)||0);save()}}
 function dP(id){data.penalties=(data.penalties||[]).filter(x=>x.id!==id);data.kids.forEach(k=>{if(k.choreLog)Object.values(k.choreLog).forEach(l=>{if(l.penalties)l.penalties=l.penalties.filter(x=>x!==id)})});save()}
 function aP(){const n=document.getElementById("npn").value.trim(),pts=parseInt(document.getElementById("npp").value,10)||10;if(!n)return;if(!data.penalties)data.penalties=[];data.penalties.push({id:data.nextId++,name:n,points:Math.max(0,pts)});save()}
-function chFC(){familyCode="";localStorage.removeItem("choreTracker_familyCode");if(dbRef){dbRef.off();dbRef=null}data=null;renderSetup()}
+function chFC(){familyCode="";localStorage.removeItem("choreTracker_familyCode");activeUser="";if(dbRef){dbRef.off();dbRef=null}data=null;appScreen="family";renderScreen()}
+function reqChange(ki,ds,itemId,itemType,currentlyOn){
+  if(hasRequest(ki,ds,itemId)){showOv("Already Requested","A request is already pending for this item.","OK",()=>{});document.querySelector(".ovb .br").innerHTML=`<button class="btn bo" onclick="closeOv()">OK</button>`;return}
+  const item=itemType==="chore"?(data.chores||[]).find(x=>x.id===itemId):(data.penalties||[]).find(x=>x.id===itemId);
+  const name=item?item.name:"this item";const action=currentlyOn?"remove":"add";
+  const desc=itemType==="chore"?(currentlyOn?"undo '"+name+"'":"mark '"+name+"' as done"):(currentlyOn?"remove '"+name+"' penalty":"apply '"+name+"' penalty");
+  showOv("Request Change?","Ask parent to "+desc+"?","Send Request",()=>{if(!data.requests)data.requests=[];data.requests.push({kidIdx:ki,date:ds,itemId,itemType,action,timestamp:new Date().toISOString()});save();render()})
+}
+function approveReq(idx){const r=(data.requests||[])[idx];if(!r)return;const k=data.kids[r.kidIdx],log=getLog(r.kidIdx,r.date);if(r.itemType==="chore"){const c=(data.chores||[]).find(x=>x.id===r.itemId);if(c){if(r.action==="add"){if(!log.chores.includes(c.id)){log.chores.push(c.id);k.score+=c.points}}else{const i2=log.chores.indexOf(c.id);if(i2>-1){log.chores.splice(i2,1);k.score-=c.points}}}}else{const p=(data.penalties||[]).find(x=>x.id===r.itemId);if(p){if(r.action==="add"){if(!log.penalties.includes(p.id)){log.penalties.push(p.id);k.score-=p.points}}else{const i2=log.penalties.indexOf(p.id);if(i2>-1){log.penalties.splice(i2,1);k.score+=p.points}}}}if(!log.chores.length&&!log.penalties.length)delete k.choreLog[r.date];data.requests.splice(idx,1);save();render()}
+function denyReq(idx){data.requests.splice(idx,1);save();render()}
+function reqRedeem(ki){
+  const k=data.kids[ki];if(k.score<=0)return;
+  const dollars=(k.score*(data.centsPerPoint||1)/100).toFixed(2);
+  showOv("Redeem Points?","Cash in "+k.score+" points for $"+dollars+"? Parent will need to approve.","Send Request",()=>{
+    if(!data.redemptions)data.redemptions=[];
+    data.redemptions.push({kidIdx:ki,points:k.score,dollars:parseFloat(dollars),status:"pending",timestamp:new Date().toISOString()});
+    save();render();
+  });
+}
+function approveRedeem(idx){
+  const r=(data.redemptions||[])[idx];if(!r)return;
+  data.kids[r.kidIdx].score=0;
+  r.status="approved";
+  data.redemptions.splice(idx,1);
+  save();render();
+}
+function denyRedeem(idx){data.redemptions.splice(idx,1);save();render()}
 
 let ovAct=null;
-function showOv(t,m,b,fn){document.getElementById("ovT").textContent=t;document.getElementById("ovM").textContent=m;const btn=document.getElementById("ovC");btn.textContent=b;ovAct=fn;btn.onclick=()=>{closeOv();if(ovAct)ovAct()};document.getElementById("overlay").classList.add("show")}
+function showOv(t,m,b,fn){document.getElementById("ovT").textContent=t;document.getElementById("ovM").textContent=m;const btn=document.getElementById("ovC");btn.textContent=b;ovAct=fn;btn.onclick=()=>{const cb=ovAct;closeOv();if(cb)cb()};document.getElementById("overlay").classList.add("show")}
 function closeOv(){document.getElementById("overlay").classList.remove("show");ovAct=null}
-function cfmRD(ki,ds){const isT=ds===todayStr();showOv("Reset Day","Undo all switches for "+data.kids[ki].name+" on "+(isT?"today":fmt(ds))+"?","Reset",()=>{const k=data.kids[ki],l=getLog(ki,ds);(l.chores||[]).forEach(cid=>{const c=(data.chores||[]).find(x=>x.id===cid);if(c)k.score-=c.points});(l.penalties||[]).forEach(pid=>{const p2=(data.penalties||[]).find(x=>x.id===pid);if(p2)k.score+=p2.points});delete k.choreLog[ds];save()})}
+function cfmRD(ki,ds){showOv("Reset Day","Undo all switches for "+data.kids[ki].name+" today?","Reset",()=>{const k=data.kids[ki],l=getLog(ki,ds);(l.chores||[]).forEach(cid=>{const c=(data.chores||[]).find(x=>x.id===cid);if(c)k.score-=c.points});(l.penalties||[]).forEach(pid=>{const p2=(data.penalties||[]).find(x=>x.id===pid);if(p2)k.score+=p2.points});delete k.choreLog[ds];save()})}
 function cfmTR(){showOv("Total Reset","Erase ALL data?","Yes, Erase",()=>{data=JSON.parse(JSON.stringify(DEFAULT_DATA));activeTab="kid-0";selDates=[todayStr(),todayStr()];save()})}
-
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 function escA(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
 
-renderSetup();
+// ── INIT ──
+if(FBC.apiKey==="PASTE_YOUR_API_KEY_HERE"){appScreen="family";renderScreen()}
+else{firebaseReady=initFB();if(!firebaseReady){appScreen="family";renderScreen()}
+else if(familyCode){connectFamily(familyCode)}
+else{appScreen="family";renderScreen()}}
 </script>
 </body>
 </html>
