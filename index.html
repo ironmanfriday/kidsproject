@@ -220,11 +220,11 @@ const DEFAULT_DATA={kids:[{name:"Sriman",score:0,choreLog:{},passcode:""},{name:
 chores:[{id:1,name:"Make bed",points:5,kidIds:[0,1]},{id:2,name:"Help with dishes",points:5,kidIds:[0,1]},{id:3,name:"Practice",points:10,kidIds:[0,1]},{id:4,name:"Exercise / Play outdoors",points:10,kidIds:[0,1]},{id:5,name:"Tidy room",points:10,kidIds:[0,1]},{id:6,name:"Cleanup after eating",points:5,kidIds:[0,1]},{id:7,name:"Help cleaning living room",points:10,kidIds:[0,1]},{id:8,name:"Homework",points:15,kidIds:[0,1]},
 {id:201,name:"Wake up at 5:30 (Mon/Wed/Thu/Fri)",points:10,kidIds:[0]},{id:202,name:"Brush neat & tongue clean",points:5,kidIds:[0]},{id:203,name:"Exercise 10 mins",points:10,kidIds:[0]},{id:204,name:"Breakfast & ready by 7:20 AM",points:10,kidIds:[0]},{id:205,name:"Don't miss the school bus",points:10,kidIds:[0]},{id:206,name:"Keep bags away & wash hands",points:5,kidIds:[0]},{id:207,name:"Eat healthy snack",points:5,kidIds:[0]},{id:208,name:"Don't miss any classes",points:10,kidIds:[0]},{id:209,name:"10-min bath",points:5,kidIds:[0]},{id:210,name:"Dirty clothes in laundry",points:5,kidIds:[0]},{id:211,name:"Moisturize & comb hair",points:5,kidIds:[0]},{id:212,name:"Finish dinner in 15 mins",points:5,kidIds:[0]},{id:213,name:"Read book 15 mins before bed",points:10,kidIds:[0]},{id:214,name:"Sleep by 9 PM",points:10,kidIds:[0]}],
 penalties:[{id:100,name:"Not eating vegetables/fruits",points:10},{id:101,name:"Too much screen time",points:20}],
-nextId:300,parentPasscode:"",requests:[]};
+nextId:300,parentPasscode:"",requests:[],redemptions:[],centsPerPoint:1};
 
 let data=null,db=null,dbRef=null,familyCode=localStorage.getItem("choreTracker_familyCode")||"",firebaseReady=false,connected=false;
 // activeUser: "parent","kid-0","kid-1", or "" (not logged in)
-let activeUser=localStorage.getItem("choreTracker_user")||"";
+let activeUser="";
 let activeTab="",appScreen="loading"; // loading, family, userselect, passcode, app
 let selDates=[todayStr(),todayStr()],mcMonths=[curMonth(),curMonth()];
 let ctKid=0,ctView="weekly",cwStart=getWS(todayStr()),cMonth=curMonth();
@@ -242,7 +242,7 @@ function getLog(ki,ds){const k=data.kids[ki];if(!k.choreLog)k.choreLog={};if(!k.
 function getDayPts(ki,ds){const k=data.kids[ki];if(!k.choreLog||!k.choreLog[ds])return{pts:0,done:0};const l=k.choreLog[ds];let pts=0,done=0;(l.chores||[]).forEach(cid=>{const c=(data.chores||[]).find(x=>x.id===cid);if(c){pts+=c.points;done++}});(l.penalties||[]).forEach(pid=>{const p=(data.penalties||[]).find(x=>x.id===pid);if(p)pts-=p.points});return{pts,done}}
 function getDot(ki,ds){const k=data.kids[ki];if(!k.choreLog||!k.choreLog[ds])return"dn";const l=k.choreLog[ds];const done=(l.chores||[]).length;if(!done&&(!l.penalties||!l.penalties.length))return"dn";return done>=choresForKid(ki).length?"dg":"dy"}
 function isLocked(ds){return ds<todayStr()}
-function pendingCount(){return(data.requests||[]).length}
+function pendingCount(){return(data.requests||[]).length+(data.redemptions||[]).filter(r=>r.status==="pending").length}
 function hasRequest(ki,ds,itemId){return(data.requests||[]).some(r=>r.kidIdx===ki&&r.date===ds&&r.itemId===itemId)}
 function isParent(){return activeUser==="parent"}
 function myKidIdx(){if(activeUser==="kid-0")return 0;if(activeUser==="kid-1")return 1;return-1}
@@ -250,7 +250,7 @@ function myKidIdx(){if(activeUser==="kid-0")return 0;if(activeUser==="kid-1")ret
 function migrate(){if(!data||!data.kids)return;data.kids.forEach(k=>{if(k.toggledChores){const dk=data.lastDate||todayStr();if(!k.choreLog)k.choreLog={};if(!k.choreLog[dk])k.choreLog[dk]={chores:[],penalties:[]};k.choreLog[dk].chores=k.toggledChores;if(k.toggledPenalties)k.choreLog[dk].penalties=k.toggledPenalties}delete k.toggledChores;delete k.toggledPenalties;if(!k.choreLog)k.choreLog={};if(!k.passcode)k.passcode=""});(data.chores||[]).forEach(c=>{if(!c.kidIds)c.kidIds=[0,1]});if(!data.requests)data.requests=[];if(!data.parentPasscode)data.parentPasscode=""}
 
 function initFB(){try{firebase.initializeApp(FBC);db=firebase.database();return true}catch(e){return false}}
-function connectFamily(code){familyCode=code.trim().toLowerCase().replace(/[^a-z0-9_-]/g,"");if(!familyCode)return;localStorage.setItem("choreTracker_familyCode",familyCode);dbRef=db.ref("families/"+familyCode);db.ref(".info/connected").on("value",s=>{connected=s.val()===true;updBadge()});dbRef.on("value",s=>{const v=s.val();if(v){data=v;data.kids=data.kids||DEFAULT_DATA.kids;data.chores=data.chores||DEFAULT_DATA.chores;data.penalties=data.penalties||[];if(!data.requests)data.requests=[];if(!data.parentPasscode)data.parentPasscode="";data.kids.forEach(k=>{if(!k.choreLog)k.choreLog={};if(!k.passcode)k.passcode=""});migrate()}else{data=JSON.parse(JSON.stringify(DEFAULT_DATA));save()}if(appScreen==="app"){render()}else{decideScreen()}})}
+function connectFamily(code){familyCode=code.trim().toLowerCase().replace(/[^a-z0-9_-]/g,"");if(!familyCode)return;localStorage.setItem("choreTracker_familyCode",familyCode);dbRef=db.ref("families/"+familyCode);db.ref(".info/connected").on("value",s=>{connected=s.val()===true;updBadge()});dbRef.on("value",s=>{const v=s.val();if(v){data=v;data.kids=data.kids||DEFAULT_DATA.kids;data.chores=data.chores||DEFAULT_DATA.chores;data.penalties=data.penalties||[];if(!data.requests)data.requests=[];if(!data.redemptions)data.redemptions=[];if(!data.centsPerPoint)data.centsPerPoint=1;if(!data.parentPasscode)data.parentPasscode="";data.kids.forEach(k=>{if(!k.choreLog)k.choreLog={};if(!k.passcode)k.passcode=""});migrate()}else{data=JSON.parse(JSON.stringify(DEFAULT_DATA));save()}if(appScreen==="app"){render()}else{decideScreen()}})}
 function save(){if(dbRef&&data){data.kids.forEach(k=>{if(!k.choreLog)k.choreLog={}});dbRef.set(data).catch(e=>console.error(e))}}
 function updBadge(){const b=document.getElementById("syncBadge");if(!firebaseReady||!familyCode){b.textContent="OFFLINE";b.className="sb off";return}b.textContent=connected?"SYNCED":"OFFLINE";b.className="sb "+(connected?"on":"off")}
 
@@ -356,13 +356,13 @@ function submitPasscode(){
   if(passMode==="create"){
     setPasscode(passTarget,pin);
     activeUser=passTarget;
-    localStorage.setItem("choreTracker_user",activeUser);
+    
     appScreen="app";setDefaultTab();renderScreen();
   } else {
     const correct=getPasscode(passTarget);
     if(pin===correct){
       activeUser=passTarget;
-      localStorage.setItem("choreTracker_user",activeUser);
+      
       appScreen="app";setDefaultTab();renderScreen();
     } else {
       document.getElementById("pinErr").textContent="Wrong passcode. Try again.";
@@ -372,8 +372,8 @@ function submitPasscode(){
   }
 }
 
-function goBackToSelect(){activeUser="";localStorage.removeItem("choreTracker_user");appScreen="userselect";renderScreen()}
-function switchUser(){activeUser="";localStorage.removeItem("choreTracker_user");appScreen="userselect";renderScreen()}
+function goBackToSelect(){activeUser="";appScreen="userselect";renderScreen()}
+function switchUser(){activeUser="";appScreen="userselect";renderScreen()}
 
 function doJoin(){const c=document.getElementById("codeIn").value.trim();if(!c){alert("Enter a code!");return}connectFamily(c)}
 
@@ -411,7 +411,13 @@ function renderKidPage(i){
   const k=data.kids[i],cls=i===1?"k2":"",ds=selDates[i],isT=ds===todayStr(),locked=isLocked(ds),log=getLog(i,ds);
   const dp=getDayPts(i,ds),kChores=choresForKid(i);
   let h=`<div class="page ${cls} ${activeTab==="kid-"+i?"active":""}">`;
-  h+=`<div class="pb" style="${i===1?"--kid1:var(--kid2)":""}"><div class="lb">${esc(k.name)}'s Total Points</div><div class="sc">${k.score}</div></div>`;
+  h+=`<div class="pb" style="${i===1?"--kid1:var(--kid2)":""}"><div class="lb">${esc(k.name)}'s Total Points</div><div class="sc">${k.score}</div><div style="font-size:14px;font-weight:800;opacity:.9;margin-top:2px">= $${(k.score*(data.centsPerPoint||1)/100).toFixed(2)}</div></div>`;
+  // Redeem button for kids
+  if(!isParent()&&k.score>0){
+    const hasRedeem=(data.redemptions||[]).some(r=>r.kidIdx===i&&r.status==="pending");
+    if(hasRedeem){h+=`<div style="background:#FFF8E1;border-radius:12px;padding:10px 14px;margin-bottom:10px;text-align:center;border-left:4px solid var(--orange)"><span style="font-size:13px;font-weight:700;color:#7A6B00">⏳ Redemption request pending — waiting for parent</span></div>`}
+    else{h+=`<div style="margin-bottom:10px"><button class="btn bp" onclick="reqRedeem(${i})" style="background:linear-gradient(135deg,var(--orange),#E67E22)">💰 Redeem ${k.score} pts for $${(k.score*(data.centsPerPoint||1)/100).toFixed(2)}</button></div>`}
+  }
   h+=`<div class="dp"><button class="ar" onclick="chgD(${i},-1)">‹</button><div class="di"><div class="dl">${isT?"Today":"Viewing"}</div><div class="dv ${isT?"ist":""}" onclick="opP(${i})">${fmt(ds)}</div><input type="date" class="hdi" id="dp-${i}" value="${ds}" max="${todayStr()}" onchange="pkD(${i},this.value)"></div><button class="tb ${isT?"hid":""}" onclick="goT(${i})">Today</button><button class="ar" onclick="chgD(${i},1)" ${isT?"disabled style='opacity:.3'":""}>›</button></div>`;
   if(locked)h+=`<div class="lock-banner"><div class="lb-icon">🔒</div><div class="lb-text">${isParent()?"Past day — parent can edit directly.":"This day is locked. Tap a chore to request a change."}</div></div>`;
   h+=`<div class="ds"><div class="st"><div class="sv">${dp.done}/${kChores.length}</div><div class="sl">Done</div></div><div class="st"><div class="sv">${dp.pts>=0?"+":""}${dp.pts}</div><div class="sl">Day Pts</div></div></div>`;
@@ -447,6 +453,15 @@ function renderKidPage(i){
         h+=`<div class="req-card"><div class="req-header"><span class="req-date">${fmt(r.date)}</span></div><div class="req-body"><span class="req-action ${r.action}">${r.action==="add"?"➕":"➖"} ${actionLabel}</span><br><strong>${esc(itemName)}</strong>${item?" ("+item.points+" pts)":""}</div><div class="req-btns"><button class="approve" onclick="approveReq(${ri})">✅ Approve</button><button class="deny" onclick="denyReq(${ri})">❌ Deny</button></div></div>`;
       });
     }
+    // Redemption requests
+    const kidRedeems=(data.redemptions||[]).filter(r=>r.kidIdx===i&&r.status==="pending");
+    if(kidRedeems.length){
+      h+=`<div class="st2">💰 Redemption Requests</div>`;
+      kidRedeems.forEach(r=>{
+        const ri=(data.redemptions||[]).indexOf(r);
+        h+=`<div class="req-card" style="border-left-color:var(--green)"><div class="req-body" style="margin-bottom:10px"><span style="font-size:24px;font-weight:900;color:var(--green)">${r.points} pts → $${r.dollars.toFixed(2)}</span><br><span style="font-size:12px;color:var(--textSoft);font-weight:600">${esc(data.kids[r.kidIdx].name)} wants to cash in their points</span></div><div class="req-btns"><button class="approve" onclick="approveRedeem(${ri})">✅ Approve & Reset</button><button class="deny" onclick="denyRedeem(${ri})">❌ Deny</button></div></div>`;
+      });
+    }
   }
   h+=renderMiniCal(i);
   if(isParent()&&isT)h+=`<div style="margin-top:14px"><button class="btn bo" onclick="cfmRD(${i},'${ds}')">🔄 Reset Today's Switches</button></div>`;
@@ -469,9 +484,30 @@ function gotoDP(ki,ds){closeDP();selDates[ki]=ds;if(isParent())activeTab="kid-"+
 
 function renderParentPage(){
   const reqs=data.requests||[];
+  const redeems=(data.redemptions||[]).filter(r=>r.status==="pending");
+  const totalPending=reqs.length+redeems.length;
   let h=`<div style="margin-bottom:16px"><h3 style="font-size:18px;font-weight:900;color:var(--purple)">🔐 Parent Dashboard</h3></div>`;
-  h+=`<div class="st2">Pending Requests (${reqs.length})</div>`;
-  if(!reqs.length)h+=`<div class="no-req">✅ No pending requests!<br>All caught up.</div>`;
+  // Points & $ summary
+  h+=`<div style="background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:16px"><div class="st2" style="margin-top:0">💰 Points & Earnings</div>`;
+  const rate=data.centsPerPoint||1;
+  data.kids.forEach((k,i)=>{
+    const dollars=(k.score*rate/100).toFixed(2);
+    const clr=i===0?"var(--purple)":"var(--pink)";
+    h+=`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;${i>0?"border-top:1px solid #F0EDFF":""}"><div style="width:32px;height:32px;border-radius:8px;background:${clr};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px">${esc(k.name.charAt(0))}</div><div style="flex:1"><div style="font-weight:800;font-size:14px">${esc(k.name)}</div><div style="font-size:12px;color:var(--textSoft);font-weight:600">${k.score} pts</div></div><div style="font-size:20px;font-weight:900;color:${clr}">$${dollars}</div></div>`;
+  });
+  h+=`<div style="margin-top:10px;font-size:11px;color:var(--textSoft);font-weight:600;text-align:center">Rate: ${rate} cent${rate>1?"s":""} per point (${rate*10} pts = $${(rate*10*rate/100).toFixed(2)})</div></div>`;
+  // Redemption requests
+  if(redeems.length){
+    h+=`<div class="st2">💰 Redemption Requests (${redeems.length})</div>`;
+    redeems.forEach(r=>{
+      const ri=(data.redemptions||[]).indexOf(r);
+      const kidName=data.kids[r.kidIdx]?data.kids[r.kidIdx].name:"Kid";
+      h+=`<div class="req-card" style="border-left-color:var(--green)"><div class="req-header"><span class="req-kid rk${r.kidIdx}">${esc(kidName)}</span></div><div class="req-body" style="margin-bottom:10px"><span style="font-size:22px;font-weight:900;color:var(--green)">${r.points} pts → $${r.dollars.toFixed(2)}</span></div><div class="req-btns"><button class="approve" onclick="approveRedeem(${ri})">✅ Approve & Reset</button><button class="deny" onclick="denyRedeem(${ri})">❌ Deny</button></div></div>`;
+    });
+  }
+  // Change requests
+  h+=`<div class="st2">📝 Change Requests (${reqs.length})</div>`;
+  if(!reqs.length)h+=`<div class="no-req">✅ No pending requests!</div>`;
   else reqs.forEach((r,ri)=>{
     const kidName=data.kids[r.kidIdx]?data.kids[r.kidIdx].name:"Kid";
     const item=r.itemType==="chore"?(data.chores||[]).find(x=>x.id===r.itemId):(data.penalties||[]).find(x=>x.id===r.itemId);
@@ -512,7 +548,9 @@ function renderSettings(){
   h+=`<div class="ss"><h3>⚠️ Penalties (both kids)</h3>`;
   (data.penalties||[]).forEach(p2=>{h+=`<div class="si"><input value="${escA(p2.name)}" onchange="ePN(${p2.id},this.value)"><input type="number" value="${p2.points}" min="0" onchange="ePP(${p2.id},this.value)" inputmode="numeric"><button class="db" onclick="dP(${p2.id})">×</button></div>`});
   h+=`<div class="ar2"><input id="npn" placeholder="New penalty"><input id="npp" type="number" value="10" min="0" inputmode="numeric"><button onclick="aP()">+ Add</button></div></div>`;
+  h+=`<div class="ss"><h3>💰 Points to $ Conversion</h3><div class="si"><span style="font-size:13px;font-weight:700;white-space:nowrap">1 point =</span><input type="number" value="${data.centsPerPoint||1}" min="1" max="100" onchange="data.centsPerPoint=Math.max(1,parseInt(this.value,10)||1);save();render()" inputmode="numeric" style="width:55px;flex:0 0 55px"><span style="font-size:13px;font-weight:700;white-space:nowrap">cent(s)</span></div><div style="font-size:12px;color:var(--textSoft);font-weight:600;margin-top:6px">10 pts = $${(10*(data.centsPerPoint||1)/100).toFixed(2)} · 50 pts = $${(50*(data.centsPerPoint||1)/100).toFixed(2)} · 100 pts = $${(100*(data.centsPerPoint||1)/100).toFixed(2)}</div></div>`;
   h+=`<div class="ss"><h3>🔗 Sync</h3><div class="cb"><h4>Family Code</h4><code>${esc(familyCode)}</code></div><button class="btn bo" onclick="chFC()">🔄 Change Family Code</button></div>`;
+  h+=`<div class="ss"><h3>💾 Backup & Restore</h3><button class="btn bp" onclick="downloadBackup()">📥 Download Backup</button><button class="btn bo" onclick="document.getElementById('restoreFile').click()">📤 Restore from Backup</button><input type="file" id="restoreFile" accept=".json" style="display:none" onchange="restoreBackup(this)"><div style="font-size:11px;color:var(--textSoft);font-weight:600;margin-top:4px">Backup saves all points, chores, history, and settings as a JSON file</div></div>`;
   h+=`<div class="ss"><h3>🔧 Reset</h3><button class="btn bd" onclick="cfmTR()">🗑️ Total Reset</button></div>`;
   return h;
 }
@@ -542,7 +580,33 @@ function ePN(id,v){const p2=(data.penalties||[]).find(x=>x.id===id);if(p2){p2.na
 function ePP(id,v){const p2=(data.penalties||[]).find(x=>x.id===id);if(p2){p2.points=Math.max(0,parseInt(v,10)||0);save()}}
 function dP(id){data.penalties=(data.penalties||[]).filter(x=>x.id!==id);data.kids.forEach(k=>{if(k.choreLog)Object.values(k.choreLog).forEach(l=>{if(l.penalties)l.penalties=l.penalties.filter(x=>x!==id)})});save()}
 function aP(){const n=document.getElementById("npn").value.trim(),pts=parseInt(document.getElementById("npp").value,10)||10;if(!n)return;if(!data.penalties)data.penalties=[];data.penalties.push({id:data.nextId++,name:n,points:Math.max(0,pts)});save()}
-function chFC(){familyCode="";localStorage.removeItem("choreTracker_familyCode");activeUser="";localStorage.removeItem("choreTracker_user");if(dbRef){dbRef.off();dbRef=null}data=null;appScreen="family";renderScreen()}
+function chFC(){familyCode="";localStorage.removeItem("choreTracker_familyCode");activeUser="";if(dbRef){dbRef.off();dbRef=null}data=null;appScreen="family";renderScreen()}
+
+function downloadBackup(){
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download="chore-tracker-backup-"+todayStr()+".json";
+  document.body.appendChild(a);a.click();
+  document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+
+function restoreBackup(input){
+  const file=input.files[0];if(!file)return;
+  showOv("Restore Backup?","This will replace ALL current data with the backup file. Are you sure?","Yes, Restore",()=>{
+    const reader=new FileReader();
+    reader.onload=function(e){
+      try{
+        const restored=JSON.parse(e.target.result);
+        if(!restored.kids||!restored.chores){alert("Invalid backup file");return}
+        data=restored;save();render();
+      }catch(err){alert("Error reading backup file")}
+    };
+    reader.readAsText(file);
+  });
+  input.value="";
+}
 function reqChange(ki,ds,itemId,itemType,currentlyOn){
   if(hasRequest(ki,ds,itemId)){showOv("Already Requested","A request is already pending for this item.","OK",()=>{});document.querySelector(".ovb .br").innerHTML=`<button class="btn bo" onclick="closeOv()">OK</button>`;return}
   const item=itemType==="chore"?(data.chores||[]).find(x=>x.id===itemId):(data.penalties||[]).find(x=>x.id===itemId);
@@ -552,6 +616,23 @@ function reqChange(ki,ds,itemId,itemType,currentlyOn){
 }
 function approveReq(idx){const r=(data.requests||[])[idx];if(!r)return;const k=data.kids[r.kidIdx],log=getLog(r.kidIdx,r.date);if(r.itemType==="chore"){const c=(data.chores||[]).find(x=>x.id===r.itemId);if(c){if(r.action==="add"){if(!log.chores.includes(c.id)){log.chores.push(c.id);k.score+=c.points}}else{const i2=log.chores.indexOf(c.id);if(i2>-1){log.chores.splice(i2,1);k.score-=c.points}}}}else{const p=(data.penalties||[]).find(x=>x.id===r.itemId);if(p){if(r.action==="add"){if(!log.penalties.includes(p.id)){log.penalties.push(p.id);k.score-=p.points}}else{const i2=log.penalties.indexOf(p.id);if(i2>-1){log.penalties.splice(i2,1);k.score+=p.points}}}}if(!log.chores.length&&!log.penalties.length)delete k.choreLog[r.date];data.requests.splice(idx,1);save();render()}
 function denyReq(idx){data.requests.splice(idx,1);save();render()}
+function reqRedeem(ki){
+  const k=data.kids[ki];if(k.score<=0)return;
+  const dollars=(k.score*(data.centsPerPoint||1)/100).toFixed(2);
+  showOv("Redeem Points?","Cash in "+k.score+" points for $"+dollars+"? Parent will need to approve.","Send Request",()=>{
+    if(!data.redemptions)data.redemptions=[];
+    data.redemptions.push({kidIdx:ki,points:k.score,dollars:parseFloat(dollars),status:"pending",timestamp:new Date().toISOString()});
+    save();render();
+  });
+}
+function approveRedeem(idx){
+  const r=(data.redemptions||[])[idx];if(!r)return;
+  data.kids[r.kidIdx].score=0;
+  r.status="approved";
+  data.redemptions.splice(idx,1);
+  save();render();
+}
+function denyRedeem(idx){data.redemptions.splice(idx,1);save();render()}
 
 let ovAct=null;
 function showOv(t,m,b,fn){document.getElementById("ovT").textContent=t;document.getElementById("ovM").textContent=m;const btn=document.getElementById("ovC");btn.textContent=b;ovAct=fn;btn.onclick=()=>{const cb=ovAct;closeOv();if(cb)cb()};document.getElementById("overlay").classList.add("show")}
